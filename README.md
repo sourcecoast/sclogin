@@ -10,7 +10,7 @@ SCLogin is an improved login module for Joomla 2.5 and 3.x. It's main features a
 * Zipped installers can be found in the [SourceCoast Download Area](http://www.sourcecoast.com/index.php?option=com_ars&view=release&Itemid=248)
 * For more information, see the [SCLogin Enhanced Registration](http://sourcecoast.com/sclogin) Overview page.
 
-SCLogin is a GPL, non-commercial extension provided by [SourceCoast Joomla Extensions](http://www.sourcecoast.com/)
+SCLogin is a GPL, free to download extension provided by [SourceCoast Joomla Extensions](http://www.sourcecoast.com/)
 
 If you use the SCLogin module, please consider leaving a rating or review on the Joomla extension directory:
 http://extensions.joomla.org/extensions/access-a-security/site-access/authentication/24054
