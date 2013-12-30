@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Original build.xml file from Michael Babker Podcast Manager extension -->
+<project name="sclogin" default="dev" basedir=".">
+    <!-- Project properties -->
+    <echo message="${project.basedir}" />
+    <property file="./build.properties"/>
+    <php expression="simplexml_load_file('mod_sclogin.xml')->version"
+       returnProperty="version" />
+    <resolvepath propertyName="build.dir.resolved" file="${builddir}"/>
+    <tstamp>
+        <format property="build.date" pattern="%Y-%m-%d"/>
+    </tstamp>
+
+    <!-- Build a package for testing -->
+    <!--    <target name="dev_head" description="Builds test packages based on the development head" depends="phpcs,rebuild-packages,copy-files,zip-packages">-->
+    <target name="dev" description="Builds test packages based on the development head" depends="clean-builddir,copy-files">
+        <echo msg="Deleting old master builds"/>
+        <delete includeemptydirs="true">
+            <fileset dir="${build.dir.resolved}">
+                <include name="mod_sclogin_${version}.zip"/>
+            </fileset>
+        </delete>
+        <echo msg="Building SCLogin..."/>
+        <if>
+            <equals arg1="${addVersionToZip}" arg2="true" />
+            <then>
+                <property name="filename" value="mod_sclogin_v${version}.zip" />
+            </then>
+            <else>
+                <property name="filename" value="mod_sclogin.zip" />
+            </else>
+        </if>
+        <zip destfile="${build.dir.resolved}/${filename}">
+            <fileset dir="${build.dir.resolved}/mod_sclogin">
+                <include name="mod_sclogin.xml"/>
+                <include name="helper.php"/>
+                <include name="install.php"/>
+                <include name="mod_sclogin.php"/>
+                <include name="sc_helper.php"/>
+                <include name="ajax/**"/>
+                <include name="images/**"/>
+                <include name="media/**"/>
+                <include name="tmpl/**"/>
+                <include name="translations/**"/>
+            </fileset>
+        </zip>
+    </target>
+
+    <!-- Build a package for release -->
+    <target name="release" description="Builds release packages based on the development head" depends="dev,clean-builddir,copy-files">
+        <!--<echo msg="Creating Git tag"/>
+        <gittag repository="${build.dir.resolved}" name="${version}" gitPath="${localgit}"/>
+        <echo msg="Pushing Version commit and tag to GitHub"/>
+        <gitpush repository="${build.dir.resolved}" gitPath="${localgit}"/>
+        <gitpush repository="${build.dir.resolved}" tags="true" gitPath="${localgit}"/>-->
+    </target>
+
+    <!-- Copy files to staging to allow for manipulation pre-package -->
+    <target name="copy-files" description="Stages the common files" depends="clean-builddir">
+        <echo msg="Staging files for packaging"/>
+
+        <echo msg="Copying SCLogin AJAX directory"/>
+        <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
+        <copy todir="${build.dir.resolved}/mod_sclogin/ajax">
+            <fileset dir="ajax"/>
+            <filterchain>
+                <replacetokens begintoken="##" endtoken="##">
+                    <token key="DATE" value="${build.date}"/>
+                    <token key="VERSION" value="${version}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo msg="Copying SCLogin images directory"/>
+        <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
+        <copy todir="${build.dir.resolved}/mod_sclogin/images">
+            <fileset dir="images"/>
+        </copy>
+
+        <echo msg="Copying SCLogin media directory"/>
+        <mkdir dir="${build.dir.resolved}"/>
+        <copy todir="${build.dir.resolved}/mod_sclogin/media">
+            <fileset dir="media"/>
+            <filterchain>
+                <replacetokens begintoken="##" endtoken="##">
+                    <token key="DATE" value="${build.date}"/>
+                    <token key="VERSION" value="${version}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo msg="Copying SCLogin tmpl directory"/>
+        <mkdir dir="${build.dir.resolved}"/>
+        <copy todir="${build.dir.resolved}/mod_sclogin/tmpl">
+            <fileset dir="tmpl"/>
+            <filterchain>
+                <replacetokens begintoken="##" endtoken="##">
+                    <token key="DATE" value="${build.date}"/>
+                    <token key="VERSION" value="${version}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo msg="Copying SCLogin translations directory"/>
+        <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
+        <copy todir="${build.dir.resolved}/mod_sclogin/translations">
+            <fileset dir="translations"/>
+            <filterchain>
+                <replacetokens begintoken="##" endtoken="##">
+                    <token key="DATE" value="${build.date}"/>
+                    <token key="VERSION" value="${version}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo msg="Copy package manifest"/>
+        <copy file="mod_sclogin.xml" tofile="${build.dir.resolved}/mod_sclogin/mod_sclogin.xml" overwrite="true">
+            <filterchain>
+                <replacetokens begintoken="##" endtoken="##">
+                    <token key="DATE" value="${build.date}"/>
+                    <token key="VERSION" value="${version}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo msg="Copy root files"/>
+        <copy file="helper.php" tofile="${build.dir.resolved}/mod_sclogin/helper.php" overwrite="true"/>
+        <copy file="install.php" tofile="${build.dir.resolved}/mod_sclogin/install.php" overwrite="true"/>
+        <copy file="mod_sclogin.php" tofile="${build.dir.resolved}/mod_sclogin/mod_sclogin.php" overwrite="true"/>
+        <copy file="sc_helper.php" tofile="${build.dir.resolved}/mod_sclogin/sc_helper.php" overwrite="true"/>
+    </target>
+
+    <!-- Rebuild the staging area -->
+    <target name="clean-builddir" description="Delete build directory files">
+        <echo msg="Deleting build directory files"/>
+        <delete dir="${build.dir.resolved}/mod_sclogin" includeemptydirs="true" failonerror="true"/>
+        <echo msg="Creating packaging directory"/>
+        <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
+    </target>
+
+    <!-- Check code style based on Joomla Coding Standard -->
+    <!--<target name="phpcs" description="Generate codestyle report using PHP_CodeSniffer">
+        <echo msg="Remove previous codestyle report"/>
+        <delete quiet="yes" includeemptydirs="true">
+            <fileset dir=".">
+                <include name="build/logs/codesniff.txt"/>
+                <include name="build/logs/checkstyle.xml"/>
+            </fileset>
+        </delete>
+        <echo msg="Running phpcs with Joomla! Coding Standard"/>
+        <phpcodesniffer
+                standard="${build.dir}/build/phpcs/Joomla"
+                format="full"
+                ignorePatterns="com_podcastmanager/admin/liveupdate,com_podcastmanager/admin/media/js,com_podcastmanager/site/media,lib_getid3,plg_content_podcastmanager/mediaelements,packaging,releases,*/tmpl/*,files_podcastmanager_*,build/*"
+                file="${build.dir}"
+                allowedFileExtensions="php"
+                verbosity="1">
+            <formatter type="full" outfile="${build.dir}/build/logs/codesniff.txt"/>
+            <formatter type="checkstyle" outfile="${build.dir}/build/logs/checkstyle.xml"/>
+        </phpcodesniffer>
+    </target>-->
+</project>
