@@ -94,7 +94,8 @@ if (!$helper->isJFBConnectInstalled && $needsBootstrap && $params->get('loadJQue
 $document->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
 
 // Two factor authentication check
-if (JFactory::getUser()->guest)
+$jVersion = new JVersion();
+if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && (JFactory::getUser()->guest))
 {
     $db = JFactory::getDbo();
     // Check if TFA is enabled. If not, just return false
