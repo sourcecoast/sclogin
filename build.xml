@@ -47,7 +47,7 @@
     </target>
 
     <!-- Build a package for release -->
-    <target name="release" description="Builds release packages based on the development head" depends="dev,clean-builddir,copy-files">
+    <target name="release" description="Builds release packages based on the development head" depends="dev,clean-builddir,copy-files" hidden="true">
         <!--<echo msg="Creating Git tag"/>
         <gittag repository="${build.dir.resolved}" name="${version}" gitPath="${localgit}"/>
         <echo msg="Pushing Version commit and tag to GitHub"/>
@@ -56,7 +56,7 @@
     </target>
 
     <!-- Copy files to staging to allow for manipulation pre-package -->
-    <target name="copy-files" description="Stages the common files" depends="clean-builddir">
+    <target name="copy-files" description="Stages the common files" depends="clean-builddir" hidden="true">
         <echo msg="Staging files for packaging"/>
 
         <echo msg="Copying SCLogin AJAX directory"/>
@@ -131,9 +131,9 @@
     </target>
 
     <!-- Rebuild the staging area -->
-    <target name="clean-builddir" description="Delete build directory files">
+    <target name="clean-builddir" description="Delete build directory files" hidden="true">
         <echo msg="Deleting build directory files"/>
-        <delete dir="${build.dir.resolved}/mod_sclogin" includeemptydirs="true" failonerror="true"/>
+        <delete dir="${build.dir.resolved}/mod_sclogin" includeemptydirs="true" failonerror="false"/>
         <echo msg="Creating packaging directory"/>
         <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
     </target>

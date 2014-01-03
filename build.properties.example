@@ -1,6 +1,6 @@
 # Build Paths
 localgit=/usr/bin/git
-builddir=/Projects/builds
+builddir=/Users/melissa/Development/github/testBuilds
 
 # Options
 # addVersionToZip - When true, will add the version information in the filename, like mod_sclogin_v2.3.4.zip. False = mod_sclogin.zip
