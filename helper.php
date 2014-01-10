@@ -120,14 +120,17 @@ class modSCLoginHelper
         {
             if ($itemId == "")
                 $itemId = JFactory::getApplication()->input->getInt('Itemid', '');
-            $db = JFactory::getDBO();
-            $query = "SELECT * FROM #__menu WHERE id=" . $db->quote($itemId);
-            $db->setQuery($query);
-            $menuItem = $db->loadObject();
-            if ($menuItem && $menuItem->access != "1")
+            if ($itemId != "")
             {
-                $default = JFactory::getApplication()->getMenu()->getDefault();
-                $url = JRoute::_($default->link . '&Itemid=' . $default->id, false);
+                $db = JFactory::getDBO();
+                $query = "SELECT * FROM #__menu WHERE id=" . $db->quote($itemId);
+                $db->setQuery($query);
+                $menuItem = $db->loadObject();
+                if ($menuItem && $menuItem->access != "1")
+                {
+                    $default = JFactory::getApplication()->getMenu()->getDefault();
+                    $url = JRoute::_($default->link . '&Itemid=' . $default->id, false);
+                }
             }
         }
 
@@ -461,7 +464,8 @@ class modSCLoginHelper
                 return $html;
             }
         }
-        return '<li><a href="' . $url . '">' . $item->title . '</a></li>';
+        $target = $item->browserNav == 1 ? ' target="_blank" ' : '';
+        return '<li><a href="' . $url . '"' . $target . '>' . $item->title . '</a></li>';
     }
 }
 
