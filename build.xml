@@ -2,10 +2,11 @@
 <!-- Original build.xml file from Michael Babker Podcast Manager extension -->
 <project name="sclogin" default="dev" basedir=".">
     <!-- Project properties -->
-    <echo message="${project.basedir}" />
+    <echo message="${project.basedir}"/>
     <property file="./build.properties"/>
+    <property name="current_year" value="2014"/>
     <php expression="simplexml_load_file('mod_sclogin.xml')->version"
-       returnProperty="version" />
+         returnProperty="version"/>
     <resolvepath propertyName="build.dir.resolved" file="${builddir}"/>
     <tstamp>
         <format property="build.date" pattern="%Y-%m-%d"/>
@@ -22,12 +23,12 @@
         </delete>
         <echo msg="Building SCLogin..."/>
         <if>
-            <equals arg1="${addVersionToZip}" arg2="true" />
+            <equals arg1="${addVersionToZip}" arg2="true"/>
             <then>
-                <property name="filename" value="mod_sclogin_v${version}.zip" />
+                <property name="filename" value="mod_sclogin_v${version}.zip"/>
             </then>
             <else>
-                <property name="filename" value="mod_sclogin.zip" />
+                <property name="filename" value="mod_sclogin.zip"/>
             </else>
         </if>
         <zip destfile="${build.dir.resolved}/${filename}">
@@ -64,9 +65,10 @@
         <copy todir="${build.dir.resolved}/mod_sclogin/ajax">
             <fileset dir="ajax"/>
             <filterchain>
-                <replacetokens begintoken="##" endtoken="##">
+                <replacetokens>
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
+                    <token key="CURRENT_YEAR" value="${current_year}"/>
                 </replacetokens>
             </filterchain>
         </copy>
@@ -82,9 +84,10 @@
         <copy todir="${build.dir.resolved}/mod_sclogin/media">
             <fileset dir="media"/>
             <filterchain>
-                <replacetokens begintoken="##" endtoken="##">
+                <replacetokens>
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
+                    <token key="CURRENT_YEAR" value="${current_year}"/>
                 </replacetokens>
             </filterchain>
         </copy>
@@ -94,9 +97,10 @@
         <copy todir="${build.dir.resolved}/mod_sclogin/tmpl">
             <fileset dir="tmpl"/>
             <filterchain>
-                <replacetokens begintoken="##" endtoken="##">
+                <replacetokens>
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
+                    <token key="CURRENT_YEAR" value="${current_year}"/>
                 </replacetokens>
             </filterchain>
         </copy>
@@ -106,9 +110,10 @@
         <copy todir="${build.dir.resolved}/mod_sclogin/translations">
             <fileset dir="translations"/>
             <filterchain>
-                <replacetokens begintoken="##" endtoken="##">
+                <replacetokens>
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
+                    <token key="CURRENT_YEAR" value="${current_year}"/>
                 </replacetokens>
             </filterchain>
         </copy>
@@ -116,9 +121,10 @@
         <echo msg="Copy package manifest"/>
         <copy file="mod_sclogin.xml" tofile="${build.dir.resolved}/mod_sclogin/mod_sclogin.xml" overwrite="true">
             <filterchain>
-                <replacetokens begintoken="##" endtoken="##">
+                <replacetokens>
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
+                    <token key="CURRENT_YEAR" value="${current_year}"/>
                 </replacetokens>
             </filterchain>
         </copy>
