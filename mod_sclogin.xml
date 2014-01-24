@@ -17,6 +17,7 @@
         <filename>mod_sclogin.xml</filename>
         <filename>sc_helper.php</filename>
         <filename>ajax/otpcheck.php</filename>
+        <filename>fields/theme.php</filename>
         <filename>images/button_linkedin.png</filename>
         <filename>images/icon_linkedin.png</filename>
         <filename>tmpl/login.php</filename>
@@ -27,7 +28,8 @@
         <filename>tmpl/otp.php</filename>
     </files>
     <media folder="media" destination="sourcecoast">
-        <filename>css/mod_sclogin.css</filename>
+        <filename>themes/sclogin/default.css</filename>
+        <filename>themes/sclogin/sourcecoast.css</filename>
         <filename>css/sc_bootstrap.css</filename>
         <filename>css/img/glyphicons-halflings-white.png</filename>
         <filename>css/img/glyphicons-halflings.png</filename>
@@ -58,7 +60,8 @@
     </languages>
     <config>
         <fields name="params">
-            <fieldset name="login" label="MOD_SCLOGIN_LOGIN_LABEL">
+            <fieldset name="login" label="MOD_SCLOGIN_LOGIN_LABEL" addfieldpath="/modules/mod_sclogin/fields/">
+                <field name="theme" type="Theme" label="MOD_SCLOGIN_THEME_LABEL" description="MOD_SCLOGIN_THEME_DESC"/>
                 <field name="displayType"
                        type="list"
                        default="inline"

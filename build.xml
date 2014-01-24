@@ -39,6 +39,7 @@
                 <include name="mod_sclogin.php"/>
                 <include name="sc_helper.php"/>
                 <include name="ajax/**"/>
+                <include name="fields/**"/>
                 <include name="images/**"/>
                 <include name="media/**"/>
                 <include name="tmpl/**"/>
@@ -71,6 +72,12 @@
                     <token key="CURRENT_YEAR" value="${current_year}"/>
                 </replacetokens>
             </filterchain>
+        </copy>
+
+        <echo msg="Copying SCLogin fields directory"/>
+        <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
+        <copy todir="${build.dir.resolved}/mod_sclogin/fields">
+            <fileset dir="fields"/>
         </copy>
 
         <echo msg="Copying SCLogin images directory"/>

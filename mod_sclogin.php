@@ -84,8 +84,12 @@ $showRegisterLinkInModal = $showRegisterLink == 2 || $showRegisterLink == 3;
 $showRegisterLinkInLogin = $showRegisterLink == 1 || $showRegisterLink == 3;
 
 // Load our CSS and Javascript files
-$document = JFactory::getDocument();
-$document->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/mod_sclogin.css');
+$theme = $params->get('theme');
+if($theme)
+{
+    $document = JFactory::getDocument();
+    $document->addStyleSheet(JURI::base(true) . $theme);
+}
 
 $needsBootstrap = $params->get('displayType') == 'modal' || ($params->get('showUserMenu') && $params->get('userMenuStyle') == 0);
 if (!$helper->isJFBConnectInstalled && $needsBootstrap && $params->get('loadJQuery'))
