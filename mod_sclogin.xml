@@ -9,7 +9,7 @@
     <copyright>Copyright (C) 2009-2013 SourceCoast. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <description>
-        <![CDATA[<div style='border: 1px solid #6ba6d7; text-align: justify;'><div style='text-align:center; font-size: 18px; color: white; background:#6ba6d7; padding: 5px;'>SCLogin Module</div><div style='padding: 4px; background:white; font-size: 12px;'>Enhanced login module with flexible styles and customizations.<br/><br/><b>Main Features:</b><ol><li>Core Joomla login functionality</li><li>Facebook, Google+ and Twitter Authentication when combined with <a href='http://www.sourcecoast.com/joomla-facebook/' target='_blank' style='color:red;'>JFBConnect</a></li><li>LinkedIn integration with <a href='http://www.sourcecoast.com/jlinked/' target='_blank' style='color:red;'>JLinked</a></li><li>Modal popups, layout choices and bootstrap styling</li><li>Supports Joomla 2.5 and 3.x</li></ol><br/>Please visit <a style='color:red;' href='http://www.sourcecoast.com/sclogin/features/' target='_blank'>SourceCoast</a> for more information or <a style='color:red;' href='http://www.sourcecoast.com/forums' target='_blank'>our forums</a> for support.<br/><br/></div></div><div style='text-align:justify; border: 4px solid #6ba6d7; color:white; background: #6ba6d7; padding:2px; font-size: 14px;'>If you use SCLogin, please post a rating and a review at the Joomla! Extensions Directory: <a style='color:#DDDDDD' href='http://extensions.joomla.org/extensions/access-a-security/site-access/authentication/24054' target='_blank'>SCLogin Enhanced Login</a></div>]]></description>
+        <![CDATA[<div style='border: 1px solid #6ba6d7; text-align: justify;'><div style='text-align:center; font-size: 18px; color: white; background:#6ba6d7; padding: 5px;'>SCLogin Module</div><div style='padding: 4px; background:white; font-size: 12px;'>Enhanced login module with flexible styles and customizations.<br/><br/><b>Main Features:</b><ol><li>Core Joomla login functionality</li><li>Facebook, Google+, Twitter and LinkedIn Authentication when combined with <a href='http://www.sourcecoast.com/joomla-facebook/' target='_blank' style='color:red;'>JFBConnect</a></li><li>Modal popups, layout choices and bootstrap styling</li><li>Supports Joomla 2.5 and 3.x</li></ol><br/>Please visit <a style='color:red;' href='http://www.sourcecoast.com/sclogin/features/' target='_blank'>SourceCoast</a> for more information or <a style='color:red;' href='http://www.sourcecoast.com/forums' target='_blank'>our forums</a> for support.<br/><br/></div></div><div style='text-align:justify; border: 4px solid #6ba6d7; color:white; background: #6ba6d7; padding:2px; font-size: 14px;'>If you use SCLogin, please post a rating and a review at the Joomla! Extensions Directory: <a style='color:#DDDDDD' href='http://extensions.joomla.org/extensions/access-a-security/site-access/authentication/24054' target='_blank'>SCLogin Enhanced Login</a></div>]]></description>
     <scriptfile>install.php</scriptfile>
     <files>
         <filename module="mod_sclogin">mod_sclogin.php</filename>
@@ -18,8 +18,6 @@
         <filename>sc_helper.php</filename>
         <filename>ajax/otpcheck.php</filename>
         <filename>fields/theme.php</filename>
-        <filename>images/button_linkedin.png</filename>
-        <filename>images/icon_linkedin.png</filename>
         <filename>tmpl/login.php</filename>
         <filename>tmpl/logout.php</filename>
         <filename>tmpl/joomlaLogin_vertical.php</filename>

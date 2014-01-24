@@ -20,7 +20,7 @@ class mod_scloginInstallerScript
             $currentVersion = $this->getInstalledVersion($req['element']);
             if ($currentVersion && version_compare($currentVersion, $req['version'], '<'))
             {
-                $installStr = 'SCLogin requires JFBConnect v5.1.0 or higher for Facebook, Google+ and Twitter functionality. Please upgrade JFBConnect to enable the Facebook, Google+ and Twitter social login features.';
+                $installStr = 'SCLogin requires JFBConnect v5.1.0 or higher for Facebook, Google+, Twitter and LinkedIn functionality. Please upgrade JFBConnect to enable the Facebook, Google+, Twitter and LinkedIn social login features.';
                 JFactory::getApplication()->enqueueMessage($installStr, 'error');
             }
         }

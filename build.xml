@@ -40,7 +40,6 @@
                 <include name="sc_helper.php"/>
                 <include name="ajax/**"/>
                 <include name="fields/**"/>
-                <include name="images/**"/>
                 <include name="media/**"/>
                 <include name="tmpl/**"/>
                 <include name="translations/**"/>
@@ -78,12 +77,6 @@
         <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
         <copy todir="${build.dir.resolved}/mod_sclogin/fields">
             <fileset dir="fields"/>
-        </copy>
-
-        <echo msg="Copying SCLogin images directory"/>
-        <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
-        <copy todir="${build.dir.resolved}/mod_sclogin/images">
-            <fileset dir="images"/>
         </copy>
 
         <echo msg="Copying SCLogin media directory"/>

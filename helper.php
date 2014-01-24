@@ -1,6 +1,6 @@
 <?php
 /**
- * @package        JFBConnect/JLinked
+ * @package        JFBConnect
  * @copyright (C) 2011-2013 by Source Coast - All rights reserved
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -14,29 +14,20 @@ define('DISPLAY_BLOCK', ' class="show"');
 
 class modSCLoginHelper
 {
-    var $isJLinkedInstalled = false;
     var $isJFBConnectInstalled = false;
 
     var $providers = array();
     var $params;
-    var $liHelper;
 
     function __construct($params)
     {
         $this->params = $params;
-
-        if (class_exists("JLinkedApiLibrary"))
-        {
-            $this->isJLinkedInstalled = true;
-            $this->liHelper = new LinkedInHelper($this->isJLinkedInstalled);
-        }
 
         if (class_exists('JFBCFactory'))
         {
             $this->isJFBConnectInstalled = true;
             $this->providers = JFBCFactory::getAllProviders();
         }
-
     }
 
     function getPoweredByLink()
@@ -45,46 +36,18 @@ class modSCLoginHelper
         if ($showPoweredBy == 0)
             return;
 
-        if ($this->isJLinkedInstalled)
-        {
-            $jlinkedAffiliateID = $this->liHelper->getAffiliateID();
-            $jlinkedShowPoweredBy = $this->liHelper->showPoweredBy();
-            $showJLinkedPoweredBy = (($showPoweredBy == '2' && $jlinkedShowPoweredBy) || ($showPoweredBy == '1'));
-        }
-        else
-            $showJLinkedPoweredBy = false;
-
         if ($this->isJFBConnectInstalled)
         {
             $jfbcAffiliateID = JFBCFactory::config()->getSetting('affiliate_id');
             $showJFBCPoweredBy = (($showPoweredBy == '2' && JFBCFactory::config()->getSetting('show_powered_by_link')) || ($showPoweredBy == '1'));
-        }
-        else
-            $showJFBCPoweredBy = false;
 
-        if ($showJFBCPoweredBy && $showJLinkedPoweredBy)
-        {
-            jimport('sourcecoast.utilities');
-            $title = 'Facebook and LinkedIn for Joomla';
-            $poweredByLabel = 'SourceCoast';
-            if ($jfbcAffiliateID)
-                $link = SCLibraryUtilities::getAffiliateLink($jfbcAffiliateID, EXT_SOURCECOAST);
-            else
-                $link = SCLibraryUtilities::getAffiliateLink($jlinkedAffiliateID, EXT_SOURCECOAST);
-        }
-        else if ($showJFBCPoweredBy)
-        {
-            jimport('sourcecoast.utilities');
-            $title = 'Facebook for Joomla';
-            $poweredByLabel = 'JFBConnect';
-            $link = SCLibraryUtilities::getAffiliateLink($jfbcAffiliateID, EXT_JFBCONNECT);
-        }
-        else if ($showJLinkedPoweredBy)
-        {
-            jimport('sourcecoast.utilities');
-            $title = 'LinkedIn for Joomla';
-            $poweredByLabel = 'JLinked';
-            $link = SCLibraryUtilities::getAffiliateLink($jlinkedAffiliateID, EXT_JLINKED);
+            if ($showJFBCPoweredBy)
+            {
+                jimport('sourcecoast.utilities');
+                $title = 'Facebook for Joomla';
+                $poweredByLabel = 'JFBConnect';
+                $link = SCLibraryUtilities::getAffiliateLink($jfbcAffiliateID);
+            }
         }
 
         if (isset($link))
@@ -262,13 +225,6 @@ class modSCLoginHelper
                 if ($html != "")
                     break;
             }
-            if ($html == '' && $this->isJLinkedInstalled)
-            {
-                $avatar = $this->liHelper->getLinkedInAvatar();
-                $avatarURL = (isset($avatar['avatar'])) ? $avatar['avatar'] : '';
-                $profileURL = (isset($avatar['profile'])) ? $avatar['profile'] : '';
-                $html = $this->getSocialAvatarImage($avatarURL, $profileURL, "_blank");
-            }
         }
         else // 'joomla')
         {
@@ -300,9 +256,6 @@ class modSCLoginHelper
                 $loginButtons .= '<div style="clear:both"></div>';
         }
 
-        if ($this->isJLinkedInstalled)
-            $loginButtons .= $this->liHelper->getLILoginButton($loginButtonType, $orientation, $alignment, $loginButtonSize, $liLoginButtonLinkImage);
-
         return $loginButtons;
     }
 
@@ -325,8 +278,6 @@ class modSCLoginHelper
             if ($addClearfix && $buttonHtml != '')
                 $buttonHtml .= '<div style="clear:both"></div>';
         }
-        if ($this->isJLinkedInstalled)
-            $buttonHtml .= $this->liHelper->getLIConnectButton($loginButtonType, $orientation, $alignment, $loginButtonSize, $liLoginButtonLinkImage);
 
         if ($buttonHtml)
             $buttonHtml = '<div class="sc-connect-user">' . JText::_('MOD_SCLOGIN_CONNECT_USER') . '</div>' . $buttonHtml;
@@ -448,16 +399,6 @@ class modSCLoginHelper
 
                     }
                 }
-                // Check for JLinked
-                if ($this->isJLinkedInstalled && !$this->liHelper->jlinkedLibrary->getMappedLinkedInUserId())
-                {
-                    if (!$sepAdded)
-                    {
-                        $html .= '<li class="connect">' . $item->title . '<br/>';
-                        $sepAdded = true;
-                    }
-                    $html .= '<a href="' . $this->liHelper->jlinkedLibrary->getLoginURL() . '"><img src="' . JUri::root() . 'media/sourcecoast/images/provider/icon_linkedin.png" /></a>';
-                }
 
                 if ($sepAdded)
                     $html .= "</li>";
@@ -466,162 +407,5 @@ class modSCLoginHelper
         }
         $target = $item->browserNav == 1 ? ' target="_blank" ' : '';
         return '<li><a href="' . $url . '"' . $target . '>' . $item->title . '</a></li>';
-    }
-}
-
-class LinkedInHelper
-{
-    var $isJLinkedInstalled = false;
-    var $jlinkedLibrary = null;
-
-    var $jlinkedRenderKey;
-
-    function __construct($jLinkedInstalled)
-    {
-        $this->isJLinkedInstalled = $jLinkedInstalled;
-        $this->jlinkedLibrary = JLinkedApiLibrary::getInstance();
-
-        $renderKey = $this->jlinkedLibrary->getSocialTagRenderKey();
-        $this->jlinkedRenderKey = $renderKey != "" ? " key=" . $renderKey : "";
-    }
-
-    function getAffiliateID()
-    {
-        $jlConfigModel = $this->jlinkedLibrary->getConfigModel();
-        $jlinkedAffiliateID = $jlConfigModel->getSetting('affiliate_id');
-        return $jlinkedAffiliateID;
-    }
-
-    function showPoweredBy()
-    {
-        $jlConfigModel = $this->jlinkedLibrary->getConfigModel();
-        $showPoweredBy = $jlConfigModel->getSetting('show_powered_by_link');
-        return $showPoweredBy;
-    }
-
-    function getLinkedInAvatar()
-    {
-        $avatar = array();
-
-        if ($this->isJLinkedInstalled && $this->jlinkedLibrary->getMappedLinkedInUserId())
-        {
-            $app = JFactory::getApplication();
-
-            $liAvatarUrl = $app->getUserState('modScLoginLiAvatar', null);
-            $liProfileURL = $app->getUserState('modScLoginLiProfileURL', null);
-
-            if ($liAvatarUrl == null || $liProfileURL == null)
-            {
-                $data = $this->jlinkedLibrary->api('profile', '~:(picture-url,public-profile-url)');
-                //Avatar URL
-                $liAvatarUrl = $data->get('picture-url');
-                $app->setUserState('modScLoginLiAvatar', $liAvatarUrl);
-                //Profile URL
-                $liProfileURL = $data->get('public-profile-url');
-                $app->setUserState('modScLoginLiProfileURL', $liProfileURL);
-            }
-
-            $avatar['avatar'] = $liAvatarUrl;
-            $avatar['profile'] = $liProfileURL;
-        }
-
-        return $avatar;
-    }
-
-    function getLILoginButton($loginButtonType, $orientation, $alignment, $buttonSize, $liLoginButtonLinkImage)
-    {
-        if ($loginButtonType == 'javascript')
-        {
-            $jlinkedLogin = $this->getJLinkedLoginButton(null, DISPLAY_BLOCK, $alignment, $buttonSize);
-        }
-        else if ($loginButtonType == 'icon_text_button')
-        {
-            $jlinkedLogin = $this->getJLinkedLoginButton(JURI::root() . 'modules/mod_sclogin/images/button_linkedin.png', DISPLAY_BLOCK, $alignment, $buttonSize);
-        }
-        else if ($loginButtonType == 'icon_button')
-        {
-            if ($orientation == 'side')
-                $display = DISPLAY_BLOCK;
-            else
-                $display = '';
-            $jlinkedLogin = $this->getJLinkedLoginButton(JURI::root() . 'modules/mod_sclogin/images/icon_linkedin.png', $display, $alignment, $buttonSize);
-        }
-        else if ($loginButtonType == "image_link")
-        {
-            $jlinkedLogin = $this->getJLinkedLoginButton($liLoginButtonLinkImage, DISPLAY_BLOCK, $alignment, $buttonSize);
-        }
-        else
-        {
-            $jlinkedLogin = '';
-        }
-
-        return $jlinkedLogin;
-    }
-
-    private function getJLinkedLoginButton($buttonImage, $display, $alignment, $buttonSize)
-    {
-        //Show JLinked Login Button
-        if ($this->isJLinkedInstalled)
-        {
-            if ($buttonImage)
-            {
-                return '<div class="jLinkedLoginImage pull-' . $alignment . '"><a' . $display . ' id="sc_lilogin" href="javascript:void(0)" onclick="jlinked.login.login();"><img src="' . $buttonImage . '" /></a></div>';
-            }
-            else
-            {
-                return '{JLinkedLogin size=' . $buttonSize . $this->jlinkedRenderKey . '}';
-            }
-        }
-        return "";
-    }
-
-    function getLIConnectButton($loginButtonType, $orientation, $alignment, $buttonSize, $liLoginButtonLinkImage)
-    {
-        if ($loginButtonType == 'javascript')
-        {
-            $jlinkedLogin = $this->getJLinkedConnectButton(null, DISPLAY_BLOCK, $alignment, $buttonSize);
-        }
-        else if ($loginButtonType == 'icon_text_button')
-        {
-            $jlinkedLogin = $this->getJLinkedConnectButton(JURI::root() . 'modules/mod_sclogin/images/button_linkedin.png', DISPLAY_BLOCK, $alignment, $buttonSize);
-        }
-        else if ($loginButtonType == 'icon_button')
-        {
-            if ($orientation == 'side')
-                $display = DISPLAY_BLOCK;
-            else
-                $display = '';
-            $jlinkedLogin = $this->getJLinkedConnectButton(JURI::root() . 'modules/mod_sclogin/images/icon_linkedin.png', $display, $alignment, $buttonSize);
-        }
-        else if ($loginButtonType == "image_link")
-        {
-            $jlinkedLogin = $this->getJLinkedConnectButton($liLoginButtonLinkImage, DISPLAY_BLOCK, $alignment, $buttonSize);
-        }
-        else
-        {
-            $jlinkedLogin = '';
-        }
-
-        return $jlinkedLogin;
-    }
-
-    private function getJLinkedConnectButton($buttonImage, $display, $alignment, $buttonSize)
-    {
-        if ($this->isJLinkedInstalled && !$this->jlinkedLibrary->getMappedLinkedInUserId())
-        {
-            if ($buttonImage)
-            {
-                return '<div class="jLinkedLoginImage pull-' . $alignment . '"><a id="sc_liconnect" href="' . $this->jlinkedLibrary->getLoginURL() . '"><img src="' . $buttonImage . '" /></a></div>';
-            }
-            else
-            {
-                $buttonHtml = '<link rel="stylesheet" href="components/com_jlinked/assets/jlinked.css" type="text/css" />';
-                $buttonHtml .= '<div class="li-connect-user">';
-                $buttonHtml .= '<div class="jLinkedLogin"><a href="' . $this->jlinkedLibrary->getLoginURL() . '"><span class="jlinkedButton ' . $buttonSize . '"></span><span class="jlinkedLoginButton ' . $buttonSize . '">' . JText::_('MOD_SCLOGIN_CONNECT_BUTTON') . '</span></a></div>';
-                $buttonHtml .= '</div>';
-                return $buttonHtml;
-            }
-        }
-        return "";
     }
 }

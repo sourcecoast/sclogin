@@ -1,6 +1,6 @@
 <?php
 /**
- * @package        JFBConnect/JLinked
+ * @package        JFBConnect
  * @copyright (C) 2011-2013 by Source Coast - All rights reserved
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
@@ -9,28 +9,12 @@ defined('_JEXEC') or die('Restricted access');
 
 class SCLibraryUtilities
 {
-    static function getAffiliateLink($affiliateID, $extension)
+    static function getAffiliateLink($affiliateID)
     {
-        if($extension == 'jfbconnect')
-        {
-            $defaultLink = 'http://www.sourcecoast.com/joomla-facebook/';
-            $textLinkId = '495360';
-        }
-        else if($extension == 'jlinked')
-        {
-            $defaultLink = 'http://www.sourcecoast.com/jlinked/';
-            $textLinkId = '495361';
-        }
-        else //SourceCoast
-        {
-            $defaultLink = 'http://www.sourcecoast.com/';
-            $textLinkId = '495362';
-        }
-
         if($affiliateID)
-            return 'http://www.shareasale.com/r.cfm?b='.$textLinkId.'&u='.$affiliateID.'&m=46720&urllink=&afftrack=';
+            return 'http://www.shareasale.com/r.cfm?b=495360&u='.$affiliateID.'&m=46720&urllink=&afftrack=';
         else
-            return $defaultLink;
+            return 'http://www.sourcecoast.com/joomla-facebook/';
     }
 
     static function getLinkFromMenuItem($itemId, $isLogout)
