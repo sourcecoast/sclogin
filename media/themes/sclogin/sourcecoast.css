@@ -26,9 +26,9 @@ input#sclogin-passwd.input-block-level {
     height: 30px;
 }
 
+
 a.forgot.btn {
     height: 28px !important;
-    padding: 0px 0px;
 }
 
 a.forgot.btn i {
@@ -64,6 +64,7 @@ a.forgot.btn i {
 .sclogin-joomla-login.vertical input#sclogin-username.input-block-level,
 .sclogin-joomla-login.vertical input#sclogin-passwd.input-block-level {
     width: 87% !important;
+    height:54px !important;
 }
 
 .sclogin-joomla-login.vertical a.forgot.btn {
@@ -150,12 +151,6 @@ a.forgot.btn i {
 
 .sclogin a.forgot.btn {
     padding:13px 0;
-}
-
-.sclogin-joomla-login.vertical input#sclogin-username.input-block-level,
-.sclogin-joomla-login.vertical input#sclogin-passwd.input-block-level {
-    width:82% !important;
-    height:54px !important;
 }
 
 .sclogin-greeting,
