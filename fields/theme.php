@@ -28,10 +28,9 @@ class JFormFieldTheme extends JFormFieldList
         $cssFiles = array_merge($mediaCssFiles, $templateCssFiles);
 
         $options = array();
-        $options[] = JHtml::_('select.option', "theme", "--Select your theme--");
         foreach ($cssFiles as $cssName=>$cssPath)
         {
-            $options[] = JHtml::_('select.option', $cssPath, $cssName);
+            $options[] = JHtml::_('select.option', $cssPath, ucfirst($cssName));
         }
         return $options;
     }
@@ -57,7 +56,7 @@ class JFormFieldTheme extends JFormFieldList
                 {
                     $optionName = str_replace(".css", "", $file);
 
-                    $mediaCssFiles[$optionName] = $folderPath . $file;
+                    $mediaCssFiles[$optionName] = $file;
                 }
             }
         }

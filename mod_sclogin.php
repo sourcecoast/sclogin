@@ -86,9 +86,13 @@ $showRegisterLinkInLogin = $showRegisterLink == 1 || $showRegisterLink == 3;
 // Load our CSS and Javascript files
 $document = JFactory::getDocument();
 
-$theme = $params->get('theme');
-if($theme)
-    $document->addStyleSheet(JURI::base(true) . $theme);
+$paths = array();
+$paths[] = JPATH_ROOT . '/templates/'.JFactory::getApplication()->getTemplate().'/html/mod_sclogin/themes/';
+$paths[] = JPATH_ROOT . '/media/sourcecoast/themes/sclogin/';
+$theme = $params->get('theme', 'default.css');
+$file = JPath::find($paths, $theme);
+$file = str_replace(JPATH_SITE, '', $file);
+$document->addStyleSheet(JURI::base(true) . $file);
 
 $needsBootstrap = $params->get('displayType') == 'modal' || ($params->get('showUserMenu') && $params->get('userMenuStyle') == 0);
 if (!$helper->isJFBConnectInstalled && $needsBootstrap && $params->get('loadJQuery'))
