@@ -186,13 +186,10 @@ class modSCLoginHelper
         }
         else if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
         {
-            $db = JFactory::getDbo();
-            $query = "SELECT avatar FROM #__comprofiler WHERE id = " . $user->id;
-            $db->setQuery($query);
-            $avatarURL = $db->loadResult();
-            if ($avatarURL)
-                $avatarURL = JRoute::_('images/comprofiler/' . $avatarURL, false);
-            $html = $this->getSocialAvatarImage($avatarURL, $profileLink, "_self");
+            include_once( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php' );
+            $cbUser = CBuser::getInstance( $user->id );
+            $avatar = $cbUser->getField( 'avatar', null, 'csv', 'none', 'list' );
+            $html = $this->getSocialAvatarImage($avatar, $profileLink, "_self");
         }
         else if ($registerType == 'kunena' && JFolder::exists(JPATH_SITE . '/components/com_kunena'))
         {
