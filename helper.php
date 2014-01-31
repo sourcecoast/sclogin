@@ -75,7 +75,7 @@ class modSCLoginHelper
         if (!$url)
         {
             $uri = JURI::getInstance();
-            $url = $uri->toString(array('scheme', 'host', 'port', 'path', 'query'));
+            $url = $uri->toString(array('path', 'query'));
         }
 
         // Finally, if we're getting the logout URL, make sure we're not going back to a registered page
