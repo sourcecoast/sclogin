@@ -151,13 +151,6 @@ class modSCLoginHelper
         return $html;
     }
 
-    /*function showSecurely()
-    {
-        $uri = JURI::getInstance();
-        $scheme = $uri->getScheme();
-        return $scheme == 'https';
-    }*/
-
     function getProviderAvatar($provider, $user)
     {
         $html = "";
