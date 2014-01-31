@@ -158,10 +158,10 @@ class modSCLoginHelper
         return $scheme == 'https';
     }*/
 
-    function getProviderAvatar($provider)
+    function getProviderAvatar($provider, $user)
     {
         $html = "";
-        $providerId = $provider->getMappedUserId();
+        $providerId = JFBCFactory::usermap()->getProviderUserId($user->get('id'), $provider->systemName);
 
         if ($providerId)
         {
@@ -221,7 +221,7 @@ class modSCLoginHelper
         {
             foreach ($this->providers as $provider)
             {
-                $html = $this->getProviderAvatar($provider);
+                $html = $this->getProviderAvatar($provider, $user);
                 if ($html != "")
                     break;
             }
