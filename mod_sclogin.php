@@ -87,7 +87,7 @@ $showRegisterLinkInLogin = $showRegisterLink == 1 || $showRegisterLink == 3;
 $document = JFactory::getDocument();
 
 $paths = array();
-$paths[] = JPATH_ROOT . '/templates/'.JFactory::getApplication()->getTemplate().'/html/mod_sclogin/themes/';
+$paths[] = JPATH_ROOT . '/templates/' . JFactory::getApplication()->getTemplate() . '/html/mod_sclogin/themes/';
 $paths[] = JPATH_ROOT . '/media/sourcecoast/themes/sclogin/';
 $theme = $params->get('theme', 'default.css');
 $file = JPath::find($paths, $theme);
@@ -100,9 +100,24 @@ if (!$helper->isJFBConnectInstalled && $needsBootstrap && $params->get('loadJQue
 
 $document->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
 
+// Add placeholder Javascript for old browsers that don't support the placeholder field
+if ($user->guest)
+{
+    jimport('joomla.environment.browser');
+    $browser = JBrowser::getInstance();
+    $browserType = $browser->getBrowser();
+    $browserVersion = $browser->getMajor();
+    if (($browserType == 'msie') && ($browserVersion <= 9))
+    {
+        // Using addCustomTag to ensure this is the last section added to the head, which ensures that jfbcJQuery has been defined
+        $document->addCustomTag('<script src="' . JURI::base(true) . '/media/sourcecoast/js/jquery.placeholder.js" type="text/javascript"> </script>');
+        $document->addCustomTag("<script>jfbcJQuery(document).ready(function() { jfbcJQuery('input').placeholder(); });</script>");
+    }
+}
+
 // Two factor authentication check
 $jVersion = new JVersion();
-if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && (JFactory::getUser()->guest))
+if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($user->guest))
 {
     $db = JFactory::getDbo();
     // Check if TFA is enabled. If not, just return false

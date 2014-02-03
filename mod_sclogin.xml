@@ -32,6 +32,7 @@
         <filename>css/img/glyphicons-halflings-white.png</filename>
         <filename>css/img/glyphicons-halflings.png</filename>
         <filename>js/jq-bootstrap-1.8.3.js</filename>
+        <filename>js/jquery.placeholder.js</filename>
         <filename>js/mod_sclogin.js</filename>
     </media>
     <languages folder="translations">
