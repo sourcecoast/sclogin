@@ -236,6 +236,7 @@ class modSCLoginHelper
         $params['orientation'] = $orientation;
         $params['facebookLinkImage'] = $fbLoginButtonLinkImage;
         $params['googleLinkImage'] = $goLoginButtonLinkImage;
+        $params['linkedinLinkImage'] = $liLoginButtonLinkImage;
         $params['twitterLinkImage'] = $twLoginButtonLinkImage;
         $params['buttonSize'] = $loginButtonSize;
 
@@ -258,6 +259,7 @@ class modSCLoginHelper
         $params['orientation'] = $orientation;
         $params['facebookLinkImage'] = $fbLoginButtonLinkImage;
         $params['googleLinkImage'] = $goLoginButtonLinkImage;
+        $params['linkedinLinkImage'] = $liLoginButtonLinkImage;
         $params['twitterLinkImage'] = $twLoginButtonLinkImage;
         $params['buttonSize'] = $loginButtonSize;
         $params['buttonText'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
