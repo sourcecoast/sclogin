@@ -96,10 +96,10 @@ $document->addStyleSheet(JURI::base(true) . $file);
 
 $needsBootstrap = $params->get('displayType') == 'modal' || ($params->get('showUserMenu') && $params->get('userMenuStyle') == 0);
 if (!$helper->isJFBConnectInstalled && $needsBootstrap && $params->get('loadJQuery'))
+{
     $document->addScript(JURI::base(true) . '/media/sourcecoast/js/jq-bootstrap-1.8.3.js');
-
-$document->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
-
+    $document->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
+}
 // Add placeholder Javascript for old browsers that don't support the placeholder field
 if ($user->guest)
 {
