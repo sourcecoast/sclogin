@@ -2,7 +2,7 @@
 <extension version="1.6" type="module" method="upgrade" client="site">
     <name>SCLogin</name>
     <version>4.0.0</version>
-    <creationDate>2013/02/14</creationDate>
+    <creationDate>2014/02/17</creationDate>
     <author>SourceCoast | www.sourcecoast.com</author>
     <authorEmail>support@sourcecoast.com</authorEmail>
     <authorUrl>http://www.sourcecoast.com</authorUrl>
