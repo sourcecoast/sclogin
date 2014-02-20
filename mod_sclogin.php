@@ -94,12 +94,6 @@ $file = JPath::find($paths, $theme);
 $file = str_replace(JPATH_SITE, '', $file);
 $document->addStyleSheet(JURI::base(true) . $file);
 
-$needsBootstrap = $params->get('displayType') == 'modal' || ($params->get('showUserMenu') && $params->get('userMenuStyle') == 0);
-if (!$helper->isJFBConnectInstalled && $needsBootstrap && $params->get('loadJQuery'))
-{
-    $document->addScript(JURI::base(true) . '/media/sourcecoast/js/jq-bootstrap-1.8.3.js');
-    $document->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
-}
 // Add placeholder Javascript for old browsers that don't support the placeholder field
 if ($user->guest)
 {
@@ -117,6 +111,7 @@ if ($user->guest)
 
 // Two factor authentication check
 $jVersion = new JVersion();
+$tfaLoaded = false;
 if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($user->guest))
 {
     $db = JFactory::getDbo();
@@ -131,14 +126,28 @@ if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($user->gues
 
     if ($tfaCount > 0)
     {
-        $document->addScript(Juri::base(true) . '/media/sourcecoast/js/mod_sclogin.js');
-        $document->addScriptDeclaration('sclogin.token = "' . JSession::getFormToken() . '";' .
-            "jfbcJQuery(window).on('load',  function() {
-                sclogin.init();
-            });
-            sclogin.base = '" . JURI::base() . "';\n"
-        );
+        $tfaLoaded = true;
     }
+}
+
+$needsBootstrap = $params->get('displayType') == 'modal' || ($params->get('showUserMenu') && $params->get('userMenuStyle') == 0);
+if (!$helper->isJFBConnectInstalled && $params->get('loadJQuery') && ($needsBootstrap || $tfaLoaded))
+{
+    $document->addScript(JURI::base(true) . '/media/sourcecoast/js/jq-bootstrap-1.8.3.js');
+    $document->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
+}
+
+if ($tfaLoaded)
+{
+    $document->addScript(Juri::base(true) . '/media/sourcecoast/js/mod_sclogin.js');
+    $document->addScriptDeclaration('sclogin.token = "' . JSession::getFormToken() . '";' .
+        //"jfbcJQuery(window).on('load',  function() {
+        // Can't use jQuery here because we don't know if jfbcJQuery has been loaded or not.
+        "window.onload = function() {
+            sclogin.init();
+        };
+        sclogin.base = '" . JURI::base() . "';\n"
+    );
 }
 
 //if ($params->get('loadBootstrap'))

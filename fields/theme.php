@@ -9,6 +9,7 @@
 defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.form.helper');
+jimport('joomla.filesystem.folder');
 JFormHelper::loadFieldClass('list');
 
 class JFormFieldTheme extends JFormFieldList
