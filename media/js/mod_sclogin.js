@@ -72,6 +72,9 @@ var sclogin =
     },
     init: function ()
     {
+        if (typeof jfbcJQuery == "undefined")
+            jfbcJQuery = jQuery;
+
         jfbcJQuery('form[id^="sclogin-form"]').submit(function (e)
         {
             return sclogin.otp.check(e);
