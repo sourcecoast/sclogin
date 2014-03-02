@@ -28,7 +28,7 @@ if ($params->get('showLoginForm'))
                 <div class="control-group pull-left" id="form-sclogin-username">
                     <div class="controls">
                         <div class="input-append">
-                            <input name="username" tabindex="1" id="sclogin-username" alt="username" type="text" class="input-small"
+                            <input name="username" tabindex="0" id="sclogin-username" alt="username" type="text" class="input-small"
                                    placeholder="<?php echo JText::_('MOD_SCLOGIN_USERNAME'); ?>">
                             <?php echo $forgotUsername; ?>
                         </div>
@@ -37,7 +37,7 @@ if ($params->get('showLoginForm'))
                 <div class="control-group pull-left" id="form-sclogin-password">
                     <div class="controls">
                         <div class="input-append">
-                            <input name="<?php echo $passwordName; ?>" tabindex="2" id="sclogin-passwd" alt="password" type="password" class="input-small"
+                            <input name="<?php echo $passwordName; ?>" tabindex="0" id="sclogin-passwd" alt="password" type="password" class="input-small"
                                    placeholder="<?php echo JText::_('MOD_SCLOGIN_PASSWORD') ?>">
                             <?php echo $forgotPassword; ?>
                         </div>

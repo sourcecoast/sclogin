@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.6" type="module" method="upgrade" client="site">
     <name>SCLogin</name>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
     <creationDate>2014/02/19</creationDate>
     <author>SourceCoast | www.sourcecoast.com</author>
     <authorEmail>support@sourcecoast.com</authorEmail>

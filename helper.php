@@ -283,11 +283,11 @@ class modSCLoginHelper
 
         if ($showForgotUsername && $registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
         {
-            $forgotUsername = '<a href="' . $forgotLink . '" class="forgot btn width-auto hasTooltip" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"></i></a>';
+            $forgotUsername = '<a href="' . $forgotLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"></i></a>';
         }
         else if ($showForgotUsername)
         {
-            $forgotUsername = '<a href="' . $forgotUsernameLink . '" class="forgot btn width-auto hasTooltip" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '"></i></a>';
+            $forgotUsername = '<a href="' . $forgotUsernameLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '"></i></a>';
         }
 
         return $forgotUsername;
@@ -299,11 +299,11 @@ class modSCLoginHelper
 
         if ($showForgotPassword && $registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
         {
-            $forgotPassword = '<a href="' . $forgotLink . '" class="forgot btn width-auto hasTooltip" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"></i></a>';
+            $forgotPassword = '<a href="' . $forgotLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"></i></a>';
         }
         else if ($showForgotPassword)
         {
-            $forgotPassword = '<a href="' . $forgotPasswordLink . '" class="forgot btn width-auto hasTooltip" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '"></i></a>';
+            $forgotPassword = '<a href="' . $forgotPasswordLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '"></i></a>';
         }
 
         return $forgotPassword;
