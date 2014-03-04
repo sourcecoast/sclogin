@@ -31,7 +31,7 @@ if ($params->get('displayType') == 'modal')
 }
 ?>
 
-    <div class="sclogin sourcecoast" id="sclogin-<?php echo $module->id; ?>" data->
+    <div class="sclogin sourcecoast" id="sclogin-<?php echo $module->id; ?>">
         <?php if ($params->get('user_intro')): ?>
             <div class="sclogin-desc pretext">
                 <?php echo $params->get('user_intro'); ?>
