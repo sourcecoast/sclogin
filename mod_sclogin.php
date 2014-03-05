@@ -92,6 +92,7 @@ $paths[] = JPATH_ROOT . '/media/sourcecoast/themes/sclogin/';
 $theme = $params->get('theme', 'default.css');
 $file = JPath::find($paths, $theme);
 $file = str_replace(JPATH_SITE, '', $file);
+$file = str_replace('\\', "/", $file); //Windows support for file separators
 $document->addStyleSheet(JURI::base(true) . $file);
 
 // Add placeholder Javascript for old browsers that don't support the placeholder field
