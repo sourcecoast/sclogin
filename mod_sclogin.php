@@ -85,6 +85,7 @@ $showRegisterLinkInLogin = $showRegisterLink == 1 || $showRegisterLink == 3;
 
 // Load our CSS and Javascript files
 $document = JFactory::getDocument();
+$document->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/sc_bootstrap.css');
 
 $paths = array();
 $paths[] = JPATH_ROOT . '/templates/' . JFactory::getApplication()->getTemplate() . '/html/mod_sclogin/themes/';
@@ -150,9 +151,6 @@ if ($tfaLoaded)
         sclogin.base = '" . JURI::base() . "';\n"
     );
 }
-
-//if ($params->get('loadBootstrap'))
-$document->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/sc_bootstrap.css');
 
 // Setup our parameters
 $layout = $params->get('socialButtonsLayout', 'vertical'); //horizontal or vertical
