@@ -49,7 +49,7 @@ else if ($registerType == "virtuemart" && file_exists(JPATH_ADMINISTRATOR . '/co
     if (class_exists('vmVersion') && property_exists('vmVersion', 'RELEASE'))
     {
         if (version_compare('1.99', vmVersion::$RELEASE)) // -1 if ver1, 1 if 2.0+
-        $registerLink = JRoute::_("index.php?option=com_virtuemart&view=user", false);
+            $registerLink = JRoute::_("index.php?option=com_virtuemart&view=user", false);
         else
         {
             if (file_exists(JPATH_SITE . '/components/com_virtuemart/virtuemart_parser.php'))
@@ -119,10 +119,10 @@ if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($user->gues
     $db = JFactory::getDbo();
     // Check if TFA is enabled. If not, just return false
     $query = $db->getQuery(true)
-            ->select('COUNT(*)')
-            ->from('#__extensions')
-            ->where('enabled=' . $db->q(1))
-            ->where('folder=' . $db->q('twofactorauth'));
+        ->select('COUNT(*)')
+        ->from('#__extensions')
+        ->where('enabled=' . $db->q(1))
+        ->where('folder=' . $db->q('twofactorauth'));
     $db->setQuery($query);
     $tfaCount = $db->loadResult();
 
@@ -163,17 +163,18 @@ if ($layout == 'horizontal')
     $joomlaSpan = 'pull-left';
     $socialSpan = 'pull-' . $alignment;
 }
-else if ($orientation == 'side' && $loginButtonType == "icon_button")
+else if ($orientation == 'side' && $helper->isJFBConnectInstalled)
 {
-    $joomlaSpan = 'span10';
-    $socialSpan = 'span2';
-
-}
-else if ($orientation == 'side' && $loginButtonType == "icon_text_button")
-{
-    $joomlaSpan = 'span8';
-    $socialSpan = 'span4';
-
+    if($loginButtonType == "icon_button")
+    {
+        $joomlaSpan = 'span10';
+        $socialSpan = 'span2';
+    }
+    else if($loginButtonType == "icon_text_button")
+    {
+        $joomlaSpan = 'span8';
+        $socialSpan = 'span4';
+    }
 }
 else //orientation == 'bottom'
 {
@@ -182,7 +183,7 @@ else //orientation == 'bottom'
 }
 
 $addClearfix = ($layout == 'vertical' && $orientation == "side") ||
-        ($layout == "horizontal" && $orientation == "side" && $params->get('displayType') == 'modal');
+    ($layout == "horizontal" && $orientation == "side" && $params->get('displayType') == 'modal');
 $loginButtons = $helper->getLoginButtons($addClearfix, $loginButtonType, $orientation, $alignment, $params->get("loginButtonSize"), $params->get('facebookLoginButtonLinkImage'), $params->get('linkedInLoginButtonLinkImage'), $params->get('googleLoginButtonLinkImage'), $params->get('twitterLoginButtonLinkImage'));
 
 require(JModuleHelper::getLayoutPath('mod_sclogin', $helper->getType()));
