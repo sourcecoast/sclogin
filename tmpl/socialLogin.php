@@ -8,9 +8,11 @@ defined('_JEXEC') or die('Restricted access');
 
 if ($loginButtons != '')
 {
-    ?>
-    <div class="sclogin-social-login <?php echo $socialSpan . ' ' . $layout . ' ' . $orientation; ?>">
-        <?php echo $loginButtons; ?>
-    </div>
-<?php
+    $introText = JText::_('MOD_SCLOGIN_SOCIAL_INTRO_TEXT_LABEL');
+
+    echo '<div class="sclogin-social-login '.$socialSpan . ' ' . $layout . ' ' . $orientation.'">';
+    if($introText)
+        echo '<span class="sclogin-social-intro '.$socialSpan.'">'.$introText.'</span>';
+    echo $loginButtons;
+    echo '</div>';
 }
