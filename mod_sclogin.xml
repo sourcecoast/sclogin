@@ -132,6 +132,16 @@
                     <option value="2">MOD_SCLOGIN_LOGIN_SHOW_REGISTER_BUTTON_VALUE_MODALONLY</option>
                     <option value="3">MOD_SCLOGIN_LOGIN_SHOW_REGISTER_BUTTON_VALUE_BOTH</option>
                 </field>
+                <field name="showRememberMe"
+                        type="list"
+                        default="0"
+                        label="MOD_SCLOGIN_SHOW_REMEMBER_ME_LABEL"
+                        description="MOD_SCLOGIN_SHOW_REMEMBER_ME_DESC">
+                    <option value="0">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_SHOW_UNCHECKED</option>
+                    <option value="1">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_SHOW_CHECKED</option>
+                    <option value="2">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_HIDE_UNCHECKED</option>
+                    <option value="3">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_HIDE_CHECKED</option>
+                </field>
                 <field name="register_type"
                        type="list"
                        default="joomla"

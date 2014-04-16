@@ -52,14 +52,21 @@ if ($params->get('showLoginForm'))
                         <a class="btn" href="<?php echo $registerLink; ?>"><?php echo JText::_('MOD_SCLOGIN_REGISTER_FOR_THIS_SITE'); ?></a>
                     <?php endif; ?>
                 </div>
-                <?php if (JPluginHelper::isEnabled('system', 'remember')) : ?>
-                    <div class="control-group" id="form-sclogin-remember">
-                        <label for="sclogin-remember">
-                            <input id="sclogin-remember" type="checkbox" name="remember" class="inputbox" value="yes" alt="Remember Me" />
-                            <?php echo JText::_('JGLOBAL_REMEMBER_ME'); ?>
-                        </label>
-                    </div>
-                <?php endif; ?>
+                <?php if (JPluginHelper::isEnabled('system', 'remember')) :
+                    if($helper->showRememberMe())
+                    {?>
+                        <div class="control-group" id="form-sclogin-remember">
+                            <label for="sclogin-remember">
+                                <input id="sclogin-remember" type="checkbox" name="remember" class="inputbox" <?php echo $helper->getRememberMeValue();?> alt="Remember Me" />
+                                <?php echo JText::_('JGLOBAL_REMEMBER_ME');?>
+                            </label>
+                        </div>
+                    <?php }
+                    else
+                    { ?>
+                        <input id="sclogin-remember" type="hidden" name="remember" class="inputbox" <?php echo $helper->getRememberMeValue();?> alt="Remember Me" />
+                    <?php }
+                endif; ?>
 
 
                 <?php

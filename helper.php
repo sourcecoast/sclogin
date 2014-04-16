@@ -400,4 +400,22 @@ class modSCLoginHelper
         $target = $item->browserNav == 1 ? ' target="_blank" ' : '';
         return '<li><a href="' . $url . '"' . $target . '>' . $item->title . '</a></li>';
     }
+
+    public function getRememberMeValue()
+    {
+        $showRememberMeParam = $this->params->get('showRememberMe');
+        if($showRememberMeParam == '0' || $showRememberMeParam == '2')
+            return "";
+        else
+            return 'checked="checked"';
+    }
+
+    public function showRememberMe()
+    {
+        $showRememberMeParam = $this->params->get('showRememberMe');
+        if($showRememberMeParam == '2' || $showRememberMeParam == '3')
+            return false;
+        else
+            return true;
+    }
 }
