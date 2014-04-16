@@ -94,6 +94,21 @@ a.forgot.btn i {
     color: #FFFFFF;
 }
 
+/* Modal */
+.sourcecoast.modal .modal-title
+{
+    font-size: 28px;
+    font-weight: 300;
+    margin-top:0;
+    margin-bottom: 26px;
+    line-height: 40px;
+    color: #333;
+}
+
+.sourcecoast .modal-header {
+    border-bottom: 0px none;
+}
+
 /* Logged in User options */
 .sclogin .flat-list {
     display: block !important;

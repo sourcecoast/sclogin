@@ -58,6 +58,7 @@ if ($params->get('displayType') == 'modal')
     if ($doc->getType() == 'html')
     {
         echo '<div id="login-modal" class="sourcecoast modal hide fade" tabindex="-1" role="dialog" aria-labelledby="login-modalLabel" aria-hidden="true" style="display:none">' .
+                '<div class="modal-header"><button type="button" class="close" data-dismiss="'.$modalName.'" aria-hidden="true">&times;</button><span class="modal-title">'.$module->title.'</span></div>'.
                 '<div class="modal-body">' .
                 $modalContents .
                 '</div></div>';
