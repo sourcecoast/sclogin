@@ -132,11 +132,14 @@ if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($user->gues
     }
 }
 
-$needsBootstrap = $params->get('displayType') == 'modal' || ($params->get('showUserMenu') && $params->get('userMenuStyle') == 0);
-if (!$helper->isJFBConnectInstalled && $params->get('loadJQuery') && ($needsBootstrap || $tfaLoaded))
+$needsBootstrap = $params->get('displayType') == 'modal' ||
+    (!JFactory::getUser()->guest && ($params->get('showUserMenu') && $params->get('userMenuStyle') == 0));
+if (!$helper->isJFBConnectInstalled)
 {
-    $document->addScript(JURI::base(true) . '/media/sourcecoast/js/jq-bootstrap-1.8.3.js');
-    $document->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
+    if ($params->get('loadJQuery'))
+        $document->addScript(JURI::base(true) . '/media/sourcecoast/js/jq-bootstrap-1.8.3.js');
+    if  ($needsBootstrap || $tfaLoaded)
+        $document->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
 }
 
 if ($tfaLoaded)
