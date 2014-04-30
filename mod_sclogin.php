@@ -32,10 +32,11 @@ if ($registerType == "jomsocial" && file_exists(JPATH_BASE . '/components/com_co
 }
 else if ($registerType == 'easysocial' && file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/foundry.php'))
 {
-    $registerLink = JRoute::_('index.php?option=com_easysocial&view=registration');
-    $forgotUsernameLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetusername');
-    $forgotPasswordLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetpassword');
-    $profileLink = JRoute::_('index.php?option=com_easysocial&view=profile');
+    $registerLink = FRoute::registration();
+    $Itemid = FRoute::getDefaultItemId( 'account' );
+    $forgotUsernameLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetusername&Itemid=' . $Itemid);
+    $forgotPasswordLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetpassword&Itemid=' . $Itemid);
+    $profileLink = FRoute::profile();
 }
 else if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
 {
