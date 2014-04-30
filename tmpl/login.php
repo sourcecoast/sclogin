@@ -40,8 +40,16 @@ if ($params->get('displayType') == 'modal')
 
         <div class="row-fluid">
             <?php
-            require(JModuleHelper::getLayoutPath("mod_sclogin", "joomlaLogin_" . $layout));
-            require(JModuleHelper::getLayoutPath('mod_sclogin', "socialLogin"));
+            if($params->get('socialButtonsOrientation') == 'top')
+            {
+                require(JModuleHelper::getLayoutPath('mod_sclogin', "socialLogin"));
+                require(JModuleHelper::getLayoutPath("mod_sclogin", "joomlaLogin_" . $layout));
+            }
+            else
+            {
+                require(JModuleHelper::getLayoutPath("mod_sclogin", "joomlaLogin_" . $layout));
+                require(JModuleHelper::getLayoutPath('mod_sclogin', "socialLogin"));
+            }
             ?>
         </div>
 

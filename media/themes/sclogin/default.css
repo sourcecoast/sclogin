@@ -127,3 +127,12 @@ a.forgot.btn i {
 .sc-connect-user {
     clear: both;
 }
+
+.sclogin .top {
+    padding-top: 0px;
+    padding-bottom: 15px;
+}
+
+.sclogin .side {
+    padding-left: 15px;
+}

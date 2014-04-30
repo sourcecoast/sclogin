@@ -160,6 +160,16 @@ a.forgot.btn i {
     padding-bottom:0px;
 }
 
+.sclogin .top {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.sclogin .side {
+    padding-left: 15px;
+}
+
 .sclogin-social-login .pull-left {
     margin-right:10px;
 }
@@ -203,4 +213,8 @@ a.forgot.btn i {
 
 .sourcecoast .bottom {
     border-top: 1px solid #ddd;
+}
+
+.sourcecoast .top {
+    border-bottom: 1px solid #ddd;
 }

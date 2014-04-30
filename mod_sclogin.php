@@ -157,7 +157,7 @@ if ($tfaLoaded)
 
 // Setup our parameters
 $layout = $params->get('socialButtonsLayout', 'vertical'); //horizontal or vertical
-$orientation = $params->get('socialButtonsOrientation'); //bottom or side
+$orientation = $params->get('socialButtonsOrientation'); //bottom, side or top
 $alignment = $params->get('socialButtonsAlignment');
 $loginButtonType = $params->get('loginButtonType');
 
@@ -179,7 +179,7 @@ else if ($orientation == 'side' && $helper->isJFBConnectInstalled)
         $socialSpan = 'span4';
     }
 }
-else //orientation == 'bottom'
+else //$orientation == 'bottom' || $orientation == 'top'
 {
     $joomlaSpan = 'span12';
     $socialSpan = 'span12';

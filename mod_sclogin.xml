@@ -281,6 +281,7 @@
                        description="MOD_SCLOGIN_SOCIAL_ORIENTATION_DESC">
                     <option value="bottom">MOD_SCLOGIN_SOCIAL_ORIENTATION_VALUE_BOTTOM</option>
                     <option value="side">MOD_SCLOGIN_SOCIAL_ORIENTATION_VALUE_SIDE</option>
+                    <option value="top">MOD_SCLOGIN_SOCIAL_ORIENTATION_VALUE_TOP</option>
                 </field>
                 <field name="socialButtonsAlignment"
                        type="list"
