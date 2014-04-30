@@ -79,6 +79,15 @@
                     <option value="button">MOD_SCLOGIN_LOGIN_MODAL_STYLE_VALUE_BUTTON</option>
                     <option value="text">MOD_SCLOGIN_LOGIN_MODAL_STYLE_VALUE_TEXT</option>
                 </field>
+                <field name="modalCloseButton"
+                       type="radio"
+                       class="btn-group"
+                       default="1"
+                       label="MOD_SCLOGIN_LOGIN_MODAL_SHOW_CLOSE_LABEL"
+                       description="MOD_SCLOGIN_LOGIN_MODAL_SHOW_CLOSE_DESC">
+                    <option value="0">MOD_SCLOGIN_VALUE_HIDE</option>
+                    <option value="1">MOD_SCLOGIN_VALUE_SHOW</option>
+                </field>
                 <field name="socialButtonsLayout"
                        type="list"
                        default="vertical"
