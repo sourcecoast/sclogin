@@ -231,6 +231,7 @@ class modSCLoginHelper
     {
         $loginButtons = '';
 
+        $params['addStyles'] = 'false';
         $params['buttonType'] = $loginButtonType;
         $params['alignment'] = $alignment;
         $params['orientation'] = $orientation;
@@ -242,6 +243,8 @@ class modSCLoginHelper
 
         foreach ($this->providers as $provider)
         {
+            $params['providers'] = $provider->name;
+
             $loginButtons .= $provider->loginButton($params);
             if ($addClearfix && $loginButtons != '')
                 $loginButtons .= '<div style="clear:both"></div>';
