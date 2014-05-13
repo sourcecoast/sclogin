@@ -227,7 +227,7 @@ class modSCLoginHelper
         return $html;
     }
 
-    function getLoginButtons($addClearfix, $loginButtonType, $orientation, $alignment, $loginButtonSize, $fbLoginButtonLinkImage, $liLoginButtonLinkImage, $goLoginButtonLinkImage, $twLoginButtonLinkImage)
+    function getLoginButtons($addClearfix, $loginButtonType, $orientation, $alignment, $loginButtonSize, $fbLoginButtonLinkImage, $liLoginButtonLinkImage, $goLoginButtonLinkImage, $twLoginButtonLinkImage, $vkLoginButtonLinkImage)
     {
         $loginButtons = '';
 
@@ -239,6 +239,7 @@ class modSCLoginHelper
         $params['googleLinkImage'] = $goLoginButtonLinkImage;
         $params['linkedinLinkImage'] = $liLoginButtonLinkImage;
         $params['twitterLinkImage'] = $twLoginButtonLinkImage;
+        $params['vkLinkImage'] = $vkLoginButtonLinkImage;
         $params['buttonSize'] = $loginButtonSize;
 
         foreach ($this->providers as $provider)
@@ -253,7 +254,7 @@ class modSCLoginHelper
         return $loginButtons;
     }
 
-    function getReconnectButtons($addClearfix, $loginButtonType, $orientation, $alignment, $loginButtonSize, $fbLoginButtonLinkImage, $liLoginButtonLinkImage, $goLoginButtonLinkImage, $twLoginButtonLinkImage)
+    function getReconnectButtons($addClearfix, $loginButtonType, $orientation, $alignment, $loginButtonSize, $fbLoginButtonLinkImage, $liLoginButtonLinkImage, $goLoginButtonLinkImage, $twLoginButtonLinkImage, $vkLoginButtonLinkImage)
     {
         $buttonHtml = '';
 
@@ -264,6 +265,7 @@ class modSCLoginHelper
         $params['googleLinkImage'] = $goLoginButtonLinkImage;
         $params['linkedinLinkImage'] = $liLoginButtonLinkImage;
         $params['twitterLinkImage'] = $twLoginButtonLinkImage;
+        $params['vkLinkImage'] = $vkLoginButtonLinkImage;
         $params['buttonSize'] = $loginButtonSize;
         $params['buttonText'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
 
