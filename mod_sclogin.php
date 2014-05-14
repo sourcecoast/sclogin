@@ -188,7 +188,6 @@ else //$orientation == 'bottom' || $orientation == 'top'
 
 $addClearfix = ($layout == 'vertical' && $orientation == "side") ||
     ($layout == "horizontal" && $orientation == "side" && $params->get('displayType') == 'modal');
-$loginButtons = $helper->getLoginButtons($addClearfix, $loginButtonType, $orientation, $alignment, $params->get("loginButtonSize"), $params->get('facebookLoginButtonLinkImage'), $params->get('linkedInLoginButtonLinkImage'), $params->get('googleLoginButtonLinkImage'), $params->get('twitterLoginButtonLinkImage'), $params->get('vkLoginButtonLinkImage'));
 
 require(JModuleHelper::getLayoutPath('mod_sclogin', $helper->getType()));
 ?>

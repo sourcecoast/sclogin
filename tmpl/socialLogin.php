@@ -6,6 +6,8 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
+$loginButtons = $helper->getLoginButtons($addClearfix, $loginButtonType, $orientation, $alignment, $params->get("loginButtonSize"), $params->get('facebookLoginButtonLinkImage'), $params->get('linkedInLoginButtonLinkImage'), $params->get('googleLoginButtonLinkImage'), $params->get('twitterLoginButtonLinkImage'), $params->get('vkLoginButtonLinkImage'));
+
 if ($loginButtons != '')
 {
     $introText = JText::_('MOD_SCLOGIN_SOCIAL_INTRO_TEXT_LABEL');
