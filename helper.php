@@ -19,6 +19,12 @@ class modSCLoginHelper
     var $providers = array();
     var $params;
 
+    var $forgotLink;
+    var $forgotUsernameLink;
+    var $forgotPasswordLink;
+    var $registerLink;
+    var $profileLink;
+
     function __construct($params)
     {
         $this->params = $params;
@@ -28,6 +34,8 @@ class modSCLoginHelper
             $this->isJFBConnectInstalled = true;
             $this->providers = JFBCFactory::getAllProviders();
         }
+
+        $this->getPasswordAndProfileLinks();
     }
 
     function getPoweredByLink()
@@ -61,6 +69,72 @@ class modSCLoginHelper
     {
         $user = JFactory::getUser();
         return (!$user->get('guest')) ? 'logout' : 'login';
+    }
+
+    function getPasswordAndProfileLinks()
+    {
+        $registerType = $this->params->get('register_type');
+        $this->forgotLink = '';
+        if ($registerType == "jomsocial" && file_exists(JPATH_BASE . '/components/com_community/libraries/core.php'))
+        {
+            $jspath = JPATH_BASE . '/components/com_community';
+            include_once($jspath . '/libraries/core.php');
+            $this->registerLink = CRoute::_('index.php?option=com_community&view=register');
+            $this->profileLink = CRoute::_('index.php?option=com_community');
+        }
+        else if ($registerType == 'easysocial' && file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/foundry.php'))
+        {
+            include_once(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/foundry.php');
+            $this->registerLink = FRoute::registration();
+            if(method_exists('FRoute', 'getDefaultItemId'))
+                $Itemid = '&Itemid=' . FRoute::getDefaultItemId( 'account' );
+            else
+                $Itemid = '';
+            $forgotUsernameLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetusername' . $Itemid);
+            $forgotPasswordLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetpassword' . $Itemid);
+            $this->profileLink = FRoute::profile();
+        }
+        else if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
+        {
+            $this->registerLink = JRoute::_("index.php?option=com_comprofiler&task=registers", false);
+            $this->forgotLink = JRoute::_("index.php?option=com_comprofiler&task=lostPassword");
+            $this->profileLink = JRoute::_("index.php?option=com_comprofiler", false);
+        }
+        else if ($registerType == "virtuemart" && file_exists(JPATH_ADMINISTRATOR . '/components/com_virtuemart/version.php'))
+        {
+            require_once(JPATH_ADMINISTRATOR . '/components/com_virtuemart/version.php');
+            if (class_exists('vmVersion') && property_exists('vmVersion', 'RELEASE'))
+            {
+                if (version_compare('1.99', vmVersion::$RELEASE)) // -1 if ver1, 1 if 2.0+
+                    $this->registerLink = JRoute::_("index.php?option=com_virtuemart&view=user", false);
+                else
+                {
+                    if (file_exists(JPATH_SITE . '/components/com_virtuemart/virtuemart_parser.php'))
+                    {
+                        require_once(JPATH_SITE . '/components/com_virtuemart/virtuemart_parser.php');
+                        global $sess;
+                        $this->registerLink = $sess->url(SECUREURL . 'index.php?option=com_virtuemart&amp;page=shop.registration');
+                    }
+                }
+            }
+            $this->profileLink = '';
+        }
+        else if ($registerType == 'kunena' && JFolder::exists(JPATH_SITE . '/components/com_kunena'))
+        {
+            $this->profileLink = JRoute::_('index.php?option=com_kunena&view=user', false);
+            $this->registerLink = JRoute::_('index.php?option=com_users&view=registration', false);
+        }
+        else
+        {
+            $this->profileLink = '';
+            $this->registerLink = JRoute::_('index.php?option=com_users&view=registration', false);
+        }
+// common for J!, JomSocial, and Virtuemart
+
+        if (!isset($forgotUsernameLink))
+            $this->forgotUsernameLink = JRoute::_('index.php?option=com_users&view=remind', false);
+        if (!isset($forgotPasswordLink))
+            $this->forgotPasswordLink = JRoute::_('index.php?option=com_users&view=reset', false);
     }
 
     function getLoginRedirect($loginType)
@@ -175,7 +249,7 @@ class modSCLoginHelper
         $html = '';
         if ($registerType == 'jomsocial' && file_exists(JPATH_BASE . '/components/com_community/libraries/core.php'))
         {
-            $jsUser = & CFactory::getUser($user->id);
+            $jsUser = CFactory::getUser($user->id);
             $avatarURL = $jsUser->getAvatar();
             $html = $this->getSocialAvatarImage($avatarURL, $profileLink, "_self");
         }
@@ -282,36 +356,53 @@ class modSCLoginHelper
         return $buttonHtml;
     }
 
-    function getForgotUser($registerType, $showForgotUsername, $forgotLink, $forgotUsernameLink, $buttonImageColor)
+    function getForgotUserButton()
     {
-        $forgotUsername = '';
-
-        if ($showForgotUsername && $registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
-        {
-            $forgotUsername = '<a href="' . $forgotLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"></i></a>';
-        }
-        else if ($showForgotUsername)
-        {
-            $forgotUsername = '<a href="' . $forgotUsernameLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '"></i></a>';
-        }
-
-        return $forgotUsername;
+        return $this->getForgotButton($this->params->get('showForgotUsername'), $this->forgotLink, $this->forgotUsernameLink, JText::_('MOD_SCLOGIN_FORGOT_LOGIN'), JText::_('MOD_SCLOGIN_FORGOT_USERNAME'), $this->params->get('register_type'));
     }
 
-    function getForgotPassword($registerType, $showForgotPassword, $forgotLink, $forgotPasswordLink, $buttonImageColor)
+    function getForgotPasswordButton()
     {
-        $forgotPassword = '';
+        return $this->getForgotButton($this->params->get('showForgotPassword'), $this->forgotLink, $this->forgotPasswordLink, JText::_('MOD_SCLOGIN_FORGOT_LOGIN'), JText::_('MOD_SCLOGIN_FORGOT_PASSWORD'), $this->params->get('register_type'));
+    }
 
-        if ($showForgotPassword && $registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
-        {
-            $forgotPassword = '<a href="' . $forgotLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_LOGIN') . '"></i></a>';
-        }
-        else if ($showForgotPassword)
-        {
-            $forgotPassword = '<a href="' . $forgotPasswordLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '"></i></a>';
-        }
+    private function getForgotButton($showForgotButtonType, $forgotSharedLink, $forgotButtonLink, $forgotSharedText, $forgotButtonText, $registerType)
+    {
+        $forgotButton = '';
 
-        return $forgotPassword;
+        if($showForgotButtonType == 'button_black' || $showForgotButtonType == 'button_white')
+        {
+            if($showForgotButtonType == 'button_white')
+                $buttonImageColor = ' icon-white';
+            else
+                $buttonImageColor = '';
+
+            if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
+            {
+                $forgotButton = '<a href="' . $forgotSharedLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . $forgotSharedText . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . $forgotSharedText . '"></i></a>';
+            }
+            else
+            {
+                $forgotButton = '<a href="' . $forgotButtonLink . '" class="forgot btn width-auto hasTooltip" tabindex="-1" data-placement="right" data-original-title="' . $forgotButtonText . '"><i class="icon-question-sign' . $buttonImageColor . '" title="' . $forgotButtonText . '"></i></a>';
+            }
+        }
+        return $forgotButton;
+    }
+
+    function getForgotLinks()
+    {
+        $links = '';
+        $linksToShow = array();
+
+        if($this->params->get('showForgotUsername') == 'link')
+            $linksToShow[] = '<li><a href="' . $this->forgotUsernameLink . '">' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '</a></li>';
+        if($this->params->get('showForgotPassword') == 'link')
+            $linksToShow[] = '<li><a href="' . $this->forgotPasswordLink . '">' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '</a></li>';
+
+        if(count($linksToShow) > 0)
+            $links = '<ul>'.implode('',$linksToShow).'</ul>';
+
+        return $links;
     }
 
     function getUserMenu($userMenu, $menuStyle)

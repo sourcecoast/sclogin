@@ -13,13 +13,6 @@ else
 
 if ($params->get('showLoginForm'))
 {
-    if ($params->get('forgotColor') == 'white')
-        $forgotColor = ' icon-white';
-    else
-        $forgotColor = '';
-
-    $forgotUsername = $helper->getForgotUser($params->get('register_type'), $params->get('showForgotUsername'), $forgotLink, $forgotUsernameLink, $forgotColor);
-    $forgotPassword = $helper->getForgotPassword($params->get('register_type'), $params->get('showForgotPassword'), $forgotLink, $forgotPasswordLink, $forgotColor);
     ?>
 
     <div class="sclogin-joomla-login vertical <?php echo $joomlaSpan; ?>">
@@ -30,7 +23,7 @@ if ($params->get('showLoginForm'))
                         <div class="input-append input-block-level">
                             <input name="username" tabindex="0" id="sclogin-username" class="input-block-level" alt="username" type="text"
                                    placeholder="<?php echo JText::_('MOD_SCLOGIN_USERNAME'); ?>">
-                            <?php echo $forgotUsername; ?>
+                            <?php echo $helper->getForgotUserButton(); ?>
                         </div>
                     </div>
                 </div>
@@ -39,7 +32,7 @@ if ($params->get('showLoginForm'))
                         <div class="input-append input-block-level">
                             <input name="<?php echo $passwordName; ?>" tabindex="0" id="sclogin-passwd" class="input-block-level" alt="password" type="password"
                                    placeholder="<?php echo JText::_('MOD_SCLOGIN_PASSWORD') ?>">
-                            <?php echo $forgotPassword; ?>
+                            <?php echo $helper->getForgotPasswordButton(); ?>
                         </div>
                     </div>
                 </div>
@@ -49,7 +42,7 @@ if ($params->get('showLoginForm'))
                         echo 'span12';
                     } ?>"><?php echo JText::_('MOD_SCLOGIN_LOGIN') ?></button>
                     <?php if ($showRegisterLinkInLogin) : ?>
-                        <a class="btn" href="<?php echo $registerLink; ?>"><?php echo JText::_('MOD_SCLOGIN_REGISTER_FOR_THIS_SITE'); ?></a>
+                        <a class="btn" href="<?php echo $helper->registerLink; ?>"><?php echo JText::_('MOD_SCLOGIN_REGISTER_FOR_THIS_SITE'); ?></a>
                     <?php endif; ?>
                 </div>
                 <?php if (JPluginHelper::isEnabled('system', 'remember')) :
@@ -89,8 +82,10 @@ if ($params->get('showLoginForm'))
                     echo '<input type="hidden" name="return" value="' . $jLoginUrl . '"/>';
                 }
                 echo '<input type="hidden" name="mod_id" value="' . $module->id . '"/>';
-                echo JHTML::_('form.token'); ?>
+                echo JHTML::_('form.token');
 
+                echo $helper->getForgotLinks();
+                ?>
             </fieldset>
         </form>
     </div>

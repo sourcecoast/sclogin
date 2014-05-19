@@ -107,30 +107,26 @@
                     <option value="1">MOD_SCLOGIN_VALUE_SHOW</option>
                 </field>
                 <field name="showForgotUsername"
-                       type="radio"
+                       type="list"
                        class="btn-group"
-                       default="1"
+                       default="none"
                        label="MOD_SCLOGIN_LOGIN_SHOW_FORGOT_USERNAME_LABEL"
                        description="MOD_SCLOGIN_LOGIN_SHOW_FORGOT_USERNAME_DESC">
-                    <option value="0">MOD_SCLOGIN_VALUE_HIDE</option>
-                    <option value="1">MOD_SCLOGIN_VALUE_SHOW</option>
+                    <option value="none">MOD_SCLOGIN_LOGIN_FORGOT_VALUE_NONE</option>
+                    <option value="button_black">MOD_SCLOGIN_LOGIN_FORGOT_VALUE_BUTTON_BLACK</option>
+                    <option value="button_white">MOD_SCLOGIN_LOGIN_FORGOT_VALUE_BUTTON_WHITE</option>
+                    <option value="link">MOD_SCLOGIN_LOGIN_FORGOT_VALUE_LINK</option>
                 </field>
                 <field name="showForgotPassword"
-                       type="radio"
+                       type="list"
                        class="btn-group"
-                       default="1"
+                       default="none"
                        label="MOD_SCLOGIN_LOGIN_SHOW_FORGOT_PASSWORD_LABEL"
                        description="MOD_SCLOGIN_LOGIN_SHOW_FORGOT_PASSWORD_DESC">
-                    <option value="0">MOD_SCLOGIN_VALUE_HIDE</option>
-                    <option value="1">MOD_SCLOGIN_VALUE_SHOW</option>
-                </field>
-                <field name="forgotColor"
-                       type="list"
-                       default="black"
-                       label="MOD_SCLOGIN_LOGIN_FORGOT_IMAGE_COLOR_LABEL"
-                       description="MOD_SCLOGIN_LOGIN_FORGOT_IMAGE_COLOR_DESC">
-                    <option value="black">MOD_SCLOGIN_LOGIN_FORGOT_IMAGE_COLOR_VALUE_BLACK</option>
-                    <option value="white">MOD_SCLOGIN_LOGIN_FORGOT_IMAGE_COLOR_VALUE_WHITE</option>
+                    <option value="none">MOD_SCLOGIN_LOGIN_FORGOT_VALUE_NONE</option>
+                    <option value="button_black">MOD_SCLOGIN_LOGIN_FORGOT_VALUE_BUTTON_BLACK</option>
+                    <option value="button_white">MOD_SCLOGIN_LOGIN_FORGOT_VALUE_BUTTON_WHITE</option>
+                    <option value="link">MOD_SCLOGIN_LOGIN_FORGOT_VALUE_LINK</option>
                 </field>
                 <field name="showRegisterLink"
                        type="list"

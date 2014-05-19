@@ -20,66 +20,7 @@ $user = JFactory::getUser();
 
 $jLoginUrl = $helper->getLoginRedirect('jlogin');
 $jLogoutUrl = $helper->getLoginRedirect('jlogout');
-
 $registerType = $params->get('register_type');
-$forgotLink = '';
-if ($registerType == "jomsocial" && file_exists(JPATH_BASE . '/components/com_community/libraries/core.php'))
-{
-    $jspath = JPATH_BASE . '/components/com_community';
-    include_once($jspath . '/libraries/core.php');
-    $registerLink = CRoute::_('index.php?option=com_community&view=register');
-    $profileLink = CRoute::_('index.php?option=com_community');
-}
-else if ($registerType == 'easysocial' && file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/foundry.php'))
-{
-    $registerLink = FRoute::registration();
-    $Itemid = FRoute::getDefaultItemId( 'account' );
-    $forgotUsernameLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetusername&Itemid=' . $Itemid);
-    $forgotPasswordLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetpassword&Itemid=' . $Itemid);
-    $profileLink = FRoute::profile();
-}
-else if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
-{
-    $registerLink = JRoute::_("index.php?option=com_comprofiler&task=registers", false);
-    $forgotLink = JRoute::_("index.php?option=com_comprofiler&task=lostPassword");
-    $profileLink = JRoute::_("index.php?option=com_comprofiler", false);
-}
-else if ($registerType == "virtuemart" && file_exists(JPATH_ADMINISTRATOR . '/components/com_virtuemart/version.php'))
-{
-    require_once(JPATH_ADMINISTRATOR . '/components/com_virtuemart/version.php');
-    if (class_exists('vmVersion') && property_exists('vmVersion', 'RELEASE'))
-    {
-        if (version_compare('1.99', vmVersion::$RELEASE)) // -1 if ver1, 1 if 2.0+
-            $registerLink = JRoute::_("index.php?option=com_virtuemart&view=user", false);
-        else
-        {
-            if (file_exists(JPATH_SITE . '/components/com_virtuemart/virtuemart_parser.php'))
-            {
-                require_once(JPATH_SITE . '/components/com_virtuemart/virtuemart_parser.php');
-                global $sess;
-                $registerLink = $sess->url(SECUREURL . 'index.php?option=com_virtuemart&amp;page=shop.registration');
-            }
-        }
-    }
-    $profileLink = '';
-}
-else if ($registerType == 'kunena' && JFolder::exists(JPATH_SITE . '/components/com_kunena'))
-{
-    $profileLink = JRoute::_('index.php?option=com_kunena&view=user', false);
-    $registerLink = JRoute::_('index.php?option=com_users&view=registration', false);
-}
-else
-{
-    $profileLink = '';
-    $registerLink = JRoute::_('index.php?option=com_users&view=registration', false);
-}
-// common for J!, JomSocial, and Virtuemart
-
-if (!isset($forgotUsernameLink))
-    $forgotUsernameLink = JRoute::_('index.php?option=com_users&view=remind', false);
-if (!isset($forgotPasswordLink))
-    $forgotPasswordLink = JRoute::_('index.php?option=com_users&view=reset', false);
-
 $showRegisterLink = $params->get('showRegisterLink');
 $showRegisterLinkInModal = $showRegisterLink == 2 || $showRegisterLink == 3;
 $showRegisterLinkInLogin = $showRegisterLink == 1 || $showRegisterLink == 3;

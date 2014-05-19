@@ -11,7 +11,7 @@ defined('_JEXEC') or die('Restricted access');
 
 <?php
 if ($params->get('enableProfilePic'))
-    echo $helper->getSocialAvatar($registerType, $profileLink, $user);
+    echo $helper->getSocialAvatar($registerType, $helper->profileLink, $user);
 
 if ($params->get('greetingName') != 2)
 {
