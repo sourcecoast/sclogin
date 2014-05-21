@@ -11,10 +11,11 @@ defined('_JEXEC') or die('Restricted access');
 
 <?php
 if ($params->get('enableProfilePic'))
-    echo $helper->getSocialAvatar($registerType, $helper->profileLink, $user);
+    echo $helper->getSocialAvatar($registerType, $helper->profileLink);
 
 if ($params->get('greetingName') != 2)
 {
+    $user = JFactory::getUser();
     if ($params->get('greetingName') == 0)
         $name = $user->get('username');
     else

@@ -25,9 +25,15 @@ class modSCLoginHelper
     var $registerLink;
     var $profileLink;
 
+    var $user;
+    var $tfaLoaded = false;
+    var $doc;
+
     function __construct($params)
     {
         $this->params = $params;
+        $this->user = JFactory::getUser();
+        $this->doc = JFactory::getDocument();
 
         if (class_exists('JFBCFactory'))
         {
@@ -36,6 +42,86 @@ class modSCLoginHelper
         }
 
         $this->getPasswordAndProfileLinks();
+    }
+
+    public function setupTheme()
+    {
+        // Load our CSS and Javascript files
+        $this->doc->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/sc_bootstrap.css');
+
+        $paths = array();
+        $paths[] = JPATH_ROOT . '/templates/' . JFactory::getApplication()->getTemplate() . '/html/mod_sclogin/themes/';
+        $paths[] = JPATH_ROOT . '/media/sourcecoast/themes/sclogin/';
+        $theme = $this->params->get('theme', 'default.css');
+        $file = JPath::find($paths, $theme);
+        $file = str_replace(JPATH_SITE, '', $file);
+        $file = str_replace('\\', "/", $file); //Windows support for file separators
+        $this->doc->addStyleSheet(JURI::base(true) . $file);
+
+        // Add placeholder Javascript for old browsers that don't support the placeholder field
+        if ($this->user->guest)
+        {
+            jimport('joomla.environment.browser');
+            $browser = JBrowser::getInstance();
+            $browserType = $browser->getBrowser();
+            $browserVersion = $browser->getMajor();
+            if (($browserType == 'msie') && ($browserVersion <= 9))
+            {
+                // Using addCustomTag to ensure this is the last section added to the head, which ensures that jfbcJQuery has been defined
+                $this->doc->addCustomTag('<script src="' . JURI::base(true) . '/media/sourcecoast/js/jquery.placeholder.js" type="text/javascript"> </script>');
+                $this->doc->addCustomTag("<script>jfbcJQuery(document).ready(function() { jfbcJQuery('input').placeholder(); });</script>");
+            }
+        }
+    }
+
+    public function setupTwoFactorAuthentication()
+    {
+        // Two factor authentication check
+        $jVersion = new JVersion();
+        if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($this->user->guest))
+        {
+            $db = JFactory::getDbo();
+            // Check if TFA is enabled. If not, just return false
+            $query = $db->getQuery(true)
+                ->select('COUNT(*)')
+                ->from('#__extensions')
+                ->where('enabled=' . $db->q(1))
+                ->where('folder=' . $db->q('twofactorauth'));
+            $db->setQuery($query);
+            $tfaCount = $db->loadResult();
+
+            if ($tfaCount > 0)
+            {
+                $this->tfaLoaded = true;
+            }
+        }
+    }
+
+    public function setupJavascript()
+    {
+        $needsBootstrap = $this->params->get('displayType') == 'modal' ||
+            (!$this->user->guest && ($this->params->get('showUserMenu') && $this->params->get('userMenuStyle') == 0));
+        if (!$this->isJFBConnectInstalled)
+        {
+            if ($this->params->get('loadJQuery'))
+                $this->doc->addScript(JURI::base(true) . '/media/sourcecoast/js/jq-bootstrap-1.8.3.js');
+            if  ($needsBootstrap || $this->tfaLoaded)
+                $this->doc->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
+        }
+
+        if ($this->tfaLoaded)
+        {
+            $this->doc->addScript(Juri::base(true) . '/media/sourcecoast/js/mod_sclogin.js');
+            $this->doc->addScriptDeclaration('sclogin.token = "' . JSession::getFormToken() . '";' .
+                //"jfbcJQuery(window).on('load',  function() {
+                // Can't use jQuery here because we don't know if jfbcJQuery has been loaded or not.
+                "window.onload = function() {
+                    sclogin.init();
+                };
+                sclogin.base = '" . JURI::base() . "';\n"
+            );
+        }
+
     }
 
     function getPoweredByLink()
@@ -206,7 +292,7 @@ class modSCLoginHelper
         return $url;
     }
 
-    function getSocialAvatarImage($avatarURL, $profileURL, $profileURLTarget)
+    function getAvatarHtml($avatarURL, $profileURL, $profileURLTarget)
     {
         $html = '';
         if ($avatarURL)
@@ -239,7 +325,7 @@ class modSCLoginHelper
 
             $avatarURL = $provider->profile->getAvatarUrl($providerId, false, $params);
             $profileURL = $provider->profile->getProfileUrl($providerId);
-            $html = $this->getSocialAvatarImage($avatarURL, $profileURL, "_blank");
+            $html = $this->getAvatarHtml($avatarURL, $profileURL, "_blank");
         }
         return $html;
     }
@@ -251,19 +337,19 @@ class modSCLoginHelper
         {
             $jsUser = CFactory::getUser($user->id);
             $avatarURL = $jsUser->getAvatar();
-            $html = $this->getSocialAvatarImage($avatarURL, $profileLink, "_self");
+            $html = $this->getAvatarHtml($avatarURL, $profileLink, "_self");
         }
         else if ($registerType == 'easysocial' && file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/foundry.php'))
         {
             $avatarURL = Foundry::user($user->id)->getAvatar();
-            $html = $this->getSocialAvatarImage($avatarURL, $profileLink, "_self");
+            $html = $this->getAvatarHtml($avatarURL, $profileLink, "_self");
         }
         else if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
         {
             include_once( JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php' );
             $cbUser = CBuser::getInstance( $user->id );
             $avatar = $cbUser->getField( 'avatar', null, 'csv', 'none', 'list' );
-            $html = $this->getSocialAvatarImage($avatar, $profileLink, "_self");
+            $html = $this->getAvatarHtml($avatar, $profileLink, "_self");
         }
         else if ($registerType == 'kunena' && JFolder::exists(JPATH_SITE . '/components/com_kunena'))
         {
@@ -273,26 +359,26 @@ class modSCLoginHelper
             $avatarURL = $db->loadResult();
             if ($avatarURL)
                 $avatarURL = JRoute::_('media/kunena/avatars/' . $avatarURL, false);
-            $html = $this->getSocialAvatarImage($avatarURL, $profileLink, "_self");
+            $html = $this->getAvatarHtml($avatarURL, $profileLink, "_self");
         }
         return $html;
     }
 
-    function getSocialAvatar($registerType, $profileLink, $user)
+    function getSocialAvatar($registerType, $profileLink)
     {
         $html = "";
         if ($this->params->get('enableProfilePic') == 'social')
         {
             foreach ($this->providers as $provider)
             {
-                $html = $this->getProviderAvatar($provider, $user);
+                $html = $this->getProviderAvatar($provider, $this->user);
                 if ($html != "")
                     break;
             }
         }
         else // 'joomla')
         {
-            $html = $this->getJoomlaAvatar($registerType, $profileLink, $user);
+            $html = $this->getJoomlaAvatar($registerType, $profileLink, $this->user);
         }
 
         if ($html != "")
