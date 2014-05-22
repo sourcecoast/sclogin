@@ -392,15 +392,15 @@ class modSCLoginHelper
         $loginButtons = '';
 
         $params['addStyles'] = 'false';
-        $params['buttonType'] = $loginButtonType;
+        $params['button_type'] = $loginButtonType;
         $params['alignment'] = $alignment;
         $params['orientation'] = $orientation;
-        $params['facebookLinkImage'] = $fbLoginButtonLinkImage;
-        $params['googleLinkImage'] = $goLoginButtonLinkImage;
-        $params['linkedinLinkImage'] = $liLoginButtonLinkImage;
-        $params['twitterLinkImage'] = $twLoginButtonLinkImage;
-        $params['vkLinkImage'] = $vkLoginButtonLinkImage;
-        $params['buttonSize'] = $loginButtonSize;
+        $params['facebook_link_image'] = $fbLoginButtonLinkImage;
+        $params['google_link_image'] = $goLoginButtonLinkImage;
+        $params['linkedin_link_image'] = $liLoginButtonLinkImage;
+        $params['twitter_link_image'] = $twLoginButtonLinkImage;
+        $params['vk_link_image'] = $vkLoginButtonLinkImage;
+        $params['button_size'] = $loginButtonSize;
 
         foreach ($this->providers as $provider)
         {
@@ -418,16 +418,16 @@ class modSCLoginHelper
     {
         $buttonHtml = '';
 
-        $params['buttonType'] = $loginButtonType;
+        $params['button_type'] = $loginButtonType;
         $params['alignment'] = $alignment;
         $params['orientation'] = $orientation;
-        $params['facebookLinkImage'] = $fbLoginButtonLinkImage;
-        $params['googleLinkImage'] = $goLoginButtonLinkImage;
-        $params['linkedinLinkImage'] = $liLoginButtonLinkImage;
-        $params['twitterLinkImage'] = $twLoginButtonLinkImage;
-        $params['vkLinkImage'] = $vkLoginButtonLinkImage;
-        $params['buttonSize'] = $loginButtonSize;
-        $params['buttonText'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
+        $params['facebook_link_image'] = $fbLoginButtonLinkImage;
+        $params['google_link_image'] = $goLoginButtonLinkImage;
+        $params['linkedin_link_image'] = $liLoginButtonLinkImage;
+        $params['twitter_link_image'] = $twLoginButtonLinkImage;
+        $params['vk_link_image'] = $vkLoginButtonLinkImage;
+        $params['button_size'] = $loginButtonSize;
+        $params['button_text'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
 
         foreach ($this->providers as $provider)
         {
@@ -555,10 +555,10 @@ class modSCLoginHelper
                 $sepAdded = false;
                 $html = '';
 
-                $params['buttonType'] = 'icon_button';
+                $params['button_type'] = 'icon_button';
                 $params['alignment'] = 'left';
                 $params['orientation'] = 'side';
-                $params['buttonText'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
+                $params['button_text'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
 
                 foreach ($providers as $p)
                 {
