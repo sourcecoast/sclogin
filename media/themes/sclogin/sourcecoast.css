@@ -27,12 +27,13 @@ input#sclogin-passwd.input-block-level {
 }
 
 
-a.forgot.btn {
-    height: 28px !important;
+.sclogin a.forgot.btn {
+    height: 54px !important;
+    padding:0;
 }
 
-a.forgot.btn i {
-    margin-top: 6px;
+.sclogin a.forgot.btn i {
+    margin-top: 16px;
 }
 
 #form-sclogin-submitcreate a,
@@ -172,10 +173,6 @@ a.forgot.btn i {
 
 .sclogin-social-login .pull-left {
     margin-right:10px;
-}
-
-.sclogin a.forgot.btn {
-    padding:13px 0;
 }
 
 .sclogin-greeting,
