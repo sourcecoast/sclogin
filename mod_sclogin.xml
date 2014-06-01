@@ -18,6 +18,7 @@
         <filename>sc_helper.php</filename>
         <filename>ajax/otpcheck.php</filename>
         <filename>fields/theme.php</filename>
+        <filename>fields/socialbuttons.php</filename>
         <filename>tmpl/login.php</filename>
         <filename>tmpl/logout.php</filename>
         <filename>tmpl/joomlaLogin_vertical.php</filename>
@@ -260,16 +261,6 @@
                 </field>
             </fieldset>
             <fieldset name="social" label="MOD_SCLOGIN_SOCIAL_LABEL">
-                <field name="loginButtonType"
-                       type="list"
-                       default="icon_text_button"
-                       label="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_DESC">
-                    <option value="javascript">MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_VALUE_JAVASCRIPT</option>
-                    <option value="icon_text_button">MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_VALUE_ICONTEXT</option>
-                    <option value="icon_button">MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_VALUE_ICON</option>
-                    <option value="image_link">MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_VALUE_CUSTOMIMAGE</option>
-                </field>
                 <field name="socialButtonsOrientation"
                        type="list"
                        default="bottom"
@@ -287,41 +278,10 @@
                     <option value="left">MOD_SCLOGIN_SOCIAL_ALIGNMENT_VALUE_LEFT</option>
                     <option value="right">MOD_SCLOGIN_SOCIAL_ALIGNMENT_VALUE_RIGHT</option>
                 </field>
-                <field name="loginButtonSize"
-                       type="list"
-                       default="medium"
-                       label="MOD_SCLOGIN_SOCIAL_JS_BUTTON_SIZE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_JS_BUTTON_SIZE_DESC">
-                    <option value="small">MOD_SCLOGIN_SOCIAL_JS_BUTTON_SIZE_VALUE_SMALL</option>
-                    <option value="medium">MOD_SCLOGIN_SOCIAL_JS_BUTTON_SIZE_VALUE_MEDIUM</option>
-                    <option value="large">MOD_SCLOGIN_SOCIAL_JS_BUTTON_SIZE_VALUE_LARGE</option>
-                    <option value="xlarge">MOD_SCLOGIN_SOCIAL_JS_BUTTON_SIZE_VALUE_XLARGE</option>
-                </field>
-                <field name="facebookLoginButtonLinkImage"
-                       type="text"
-                       default=""
-                       label="MOD_SCLOGIN_SOCIAL_FB_CUSTOM_IMAGE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_FB_CUSTOM_IMAGE_DESC"/>
-                <field name="googleLoginButtonLinkImage"
-                       type="text"
-                       default=""
-                       label="MOD_SCLOGIN_SOCIAL_GO_CUSTOM_IMAGE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_GO_CUSTOM_IMAGE_DESC"/>
-                <field name="twitterLoginButtonLinkImage"
-                       type="text"
-                       default=""
-                       label="MOD_SCLOGIN_SOCIAL_TW_CUSTOM_IMAGE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_TW_CUSTOM_IMAGE_DESC"/>
-                <field name="linkedInLoginButtonLinkImage"
-                       type="text"
-                       default=""
-                       label="MOD_SCLOGIN_SOCIAL_LI_CUSTOM_IMAGE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_LI_CUSTOM_IMAGE_DESC"/>
-                <field name="vkLoginButtonLinkImage"
-                       type="text"
-                       default=""
-                       label="MOD_SCLOGIN_SOCIAL_VK_CUSTOM_IMAGE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_VK_CUSTOM_IMAGE_DESC"/>
+                <field name="loginbuttons"
+                       type="socialbuttons"
+                       label="MOD_SCLOGIN_SOCIAL_BUTTONS_LABEL"
+                       description="MOD_SCLOGIN_SOCIAL_BUTTONS_DESC" />
             </fieldset>
             <fieldset name="advanced" label="MOD_SCLOGIN_ADV_LABEL">
                 <field name="user_intro"

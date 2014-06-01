@@ -41,16 +41,9 @@ if ($layout == 'horizontal')
 }
 else if ($orientation == 'side' && $helper->isJFBConnectInstalled)
 {
-    if($loginButtonType == "icon_button")
-    {
-        $joomlaSpan = 'span10';
-        $socialSpan = 'span2';
-    }
-    else if($loginButtonType == "icon_text_button")
-    {
-        $joomlaSpan = 'span8';
-        $socialSpan = 'span4';
-    }
+    // probably need settings for these spans instead of auto-guessing them, since any images can be used nowadays
+    $joomlaSpan = 'span8';
+    $socialSpan = 'span4';
 }
 else //$orientation == 'bottom' || $orientation == 'top'
 {
@@ -58,8 +51,8 @@ else //$orientation == 'bottom' || $orientation == 'top'
     $socialSpan = 'span12';
 }
 
-$addClearfix = ($layout == 'vertical' && $orientation == "side") ||
-    ($layout == "horizontal" && $orientation == "side" && $params->get('displayType') == 'modal');
+$addClearfix = false; //($layout == 'vertical' && $orientation == "side") ||
+// ($layout == "horizontal" && $orientation == "side" && $params->get('displayType') == 'modal');
 
 require(JModuleHelper::getLayoutPath('mod_sclogin', $helper->getType()));
 ?>

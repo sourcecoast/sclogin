@@ -387,53 +387,38 @@ class modSCLoginHelper
         return $html;
     }
 
-    function getLoginButtons($addClearfix, $loginButtonType, $orientation, $alignment, $loginButtonSize, $fbLoginButtonLinkImage, $liLoginButtonLinkImage, $goLoginButtonLinkImage, $twLoginButtonLinkImage, $vkLoginButtonLinkImage)
+    function getLoginButtons($orientation, $alignment)
     {
         $loginButtons = '';
 
         $params['addStyles'] = 'false';
-        $params['button_type'] = $loginButtonType;
         $params['alignment'] = $alignment;
         $params['orientation'] = $orientation;
-        $params['facebook_link_image'] = $fbLoginButtonLinkImage;
-        $params['google_link_image'] = $goLoginButtonLinkImage;
-        $params['linkedin_link_image'] = $liLoginButtonLinkImage;
-        $params['twitter_link_image'] = $twLoginButtonLinkImage;
-        $params['vk_link_image'] = $vkLoginButtonLinkImage;
-        $params['button_size'] = $loginButtonSize;
+
+        $customImages = $this->params->get('loginbuttons');
 
         foreach ($this->providers as $provider)
         {
             $params['providers'] = $provider->name;
-
+            $pName = $provider->systemName;
+            $params['image'] = isset($customImages->$pName) ? $customImages->$pName : null;
             $loginButtons .= $provider->loginButton($params);
-            if ($addClearfix && $loginButtons != '')
-                $loginButtons .= '<div style="clear:both"></div>';
         }
 
         return $loginButtons;
     }
 
-    function getReconnectButtons($addClearfix, $loginButtonType, $orientation, $alignment, $loginButtonSize, $fbLoginButtonLinkImage, $liLoginButtonLinkImage, $goLoginButtonLinkImage, $twLoginButtonLinkImage, $vkLoginButtonLinkImage)
+    function getReconnectButtons($orientation, $alignment)
     {
         $buttonHtml = '';
 
-        $params['button_type'] = $loginButtonType;
         $params['alignment'] = $alignment;
         $params['orientation'] = $orientation;
-        $params['facebook_link_image'] = $fbLoginButtonLinkImage;
-        $params['google_link_image'] = $goLoginButtonLinkImage;
-        $params['linkedin_link_image'] = $liLoginButtonLinkImage;
-        $params['twitter_link_image'] = $twLoginButtonLinkImage;
-        $params['vk_link_image'] = $vkLoginButtonLinkImage;
-        $params['button_size'] = $loginButtonSize;
         $params['button_text'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
 
         foreach ($this->providers as $provider)
         {
             $buttonHtml .= $provider->connectButton($params);
-            if ($addClearfix && $buttonHtml != '')
-                $buttonHtml .= '<div style="clear:both"></div>';
         }
 
         if ($buttonHtml)

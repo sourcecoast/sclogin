@@ -6,7 +6,7 @@
  */
 defined('_JEXEC') or die('Restricted access');
 
-$loginButtons = $helper->getLoginButtons($addClearfix, $loginButtonType, $orientation, $alignment, $params->get("loginButtonSize"), $params->get('facebookLoginButtonLinkImage'), $params->get('linkedInLoginButtonLinkImage'), $params->get('googleLoginButtonLinkImage'), $params->get('twitterLoginButtonLinkImage'), $params->get('vkLoginButtonLinkImage'));
+$loginButtons = $helper->getLoginButtons($orientation, $alignment);
 
 if ($loginButtons != '')
 {
