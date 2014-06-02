@@ -22,7 +22,7 @@ class JFormFieldSocialbuttons extends JFormField
 
         require_once(JPATH_ADMINISTRATOR . '/components/com_jfbconnect/models/fields/providerloginbutton.php');
         $html = array();
-        $data = $this->form->getData()->get('params.' . $this->fieldname);
+        $data = $this->form->getValue($this->fieldname, 'params', null);
         foreach (JFBCFactory::getAllProviders() as $p)
         {
             $value = (is_array($data) && array_key_exists($p->systemName, $data)) ? $data[$p->systemName] : $p->systemName . '_icon_label.png';
