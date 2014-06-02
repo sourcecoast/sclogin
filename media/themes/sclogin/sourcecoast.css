@@ -1,12 +1,4 @@
 /* SCLogin Theme for sourcecoast.com look - Add new themes to templates/YOUR_TEMPLATE_NAME/html/mod_sclogin/themes directory */
-
-div.jLinkedLogin div.javascript,
-div.scGoogleLoginTag div.javascript,
-div.scTwitterLoginTag div.javascript{
-    height: 20px;
-    margin-top: 9px;
-}
-
 .sclogin {
     overflow: visible;
 }

@@ -49,7 +49,7 @@ if ($params->get('showUserMenu'))
 if ($params->get('showConnectButton'))
 { ?>
     <div class="sclogin-social-connect">
-        <?php echo $helper->getReconnectButtons($addClearfix, $params->get('loginButtonType'), $params->get('socialButtonsOrientation'), $params->get('socialButtonsAlignment'), $params->get('loginButtonSize'), $params->get('facebookLoginButtonLinkImage'), $params->get('linkedInLoginButtonLinkImage'), $params->get('googleLoginButtonLinkImage'), $params->get('twitterLoginButtonLinkImage'), $params->get('vkLoginButtonLinkImage'));?>
+        <?php echo $helper->getReconnectButtons($params->get('socialButtonsOrientation'), $params->get('socialButtonsAlignment'));?>
     </div>
 <?php
 }

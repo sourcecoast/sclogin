@@ -280,8 +280,8 @@
                 </field>
                 <field name="loginbuttons"
                        type="socialbuttons"
-                       label="MOD_SCLOGIN_SOCIAL_BUTTONS_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_BUTTONS_DESC" />
+                       label="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_LABEL"
+                       description="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_DESC" />
             </fieldset>
             <fieldset name="advanced" label="MOD_SCLOGIN_ADV_LABEL">
                 <field name="user_intro"
