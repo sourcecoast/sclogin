@@ -395,7 +395,10 @@ class modSCLoginHelper
         $params['alignment'] = $alignment;
         $params['orientation'] = $orientation;
 
-        $customImages = $this->params->get('loginbuttons');
+        if ($this->params->get('loginbuttonstype', 'default') == 'custom')
+            $customImages = $this->params->get('loginbuttons');
+        else
+            $customImages = null;
 
         foreach ($this->providers as $provider)
         {
