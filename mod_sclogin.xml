@@ -278,6 +278,34 @@
                     <option value="left">MOD_SCLOGIN_SOCIAL_ALIGNMENT_VALUE_LEFT</option>
                     <option value="right">MOD_SCLOGIN_SOCIAL_ALIGNMENT_VALUE_RIGHT</option>
                 </field>
+                <field name="loginbuttonstype"
+                       type="list"
+                       default="default"
+                       label="MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_LABEL"
+                       description="MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_DESC"
+                       onchange="if (this.value=='default')
+                        {
+                            document.getElementById('loginbutton_custom_notice').style.display='block';
+                            var fieldsets = document.getElementsByTagName('fieldset');
+                            for(var i = 0; i &lt; fieldsets.length; i++) {
+                                if(fieldsets[i].id.indexOf('jform_params_loginbuttons_') == 0) {
+                                    fieldsets[i].style.display='none';
+                                }
+                            }
+                        }
+                        else
+                        {
+                            document.getElementById('loginbutton_custom_notice').style.display='none';
+                            var fieldsets = document.getElementsByTagName('fieldset');
+                            for(var i = 0; i &lt; fieldsets.length; i++) {
+                                if(fieldsets[i].id.indexOf('jform_params_loginbuttons_') == 0) {
+                                    fieldsets[i].style.display='block';
+                                }
+                            }
+                        }">
+                    <option value="default">MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_DEFAULT</option>
+                    <option value="custom">MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_CUSTOM</option>
+                </field>
                 <field name="loginbuttons"
                        type="scloginsocialbuttons"
                        label="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_LABEL"
