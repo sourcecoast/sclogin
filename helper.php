@@ -176,8 +176,8 @@ class modSCLoginHelper
                 $Itemid = '&Itemid=' . FRoute::getDefaultItemId( 'account' );
             else
                 $Itemid = '';
-            $forgotUsernameLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetusername' . $Itemid);
-            $forgotPasswordLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetpassword' . $Itemid);
+            $this->forgotUsernameLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetUsername' . $Itemid);
+            $this->forgotPasswordLink = JRoute::_('index.php?option=com_easysocial&view=account&layout=forgetpassword' . $Itemid);
             $this->profileLink = FRoute::profile();
         }
         else if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php'))
@@ -217,9 +217,9 @@ class modSCLoginHelper
         }
 // common for J!, JomSocial, and Virtuemart
 
-        if (!isset($forgotUsernameLink))
+        if (!$this->forgotUsernameLink)
             $this->forgotUsernameLink = JRoute::_('index.php?option=com_users&view=remind', false);
-        if (!isset($forgotPasswordLink))
+        if (!$this->forgotPasswordLink)
             $this->forgotPasswordLink = JRoute::_('index.php?option=com_users&view=reset', false);
     }
 
@@ -400,7 +400,7 @@ class modSCLoginHelper
         else
             $customImages = null;
 
-        foreach ($this->providers as $provider)
+        foreach ($this->getLoginButtonOrdering() as $provider)
         {
             $params['providers'] = $provider->name;
             $pName = $provider->systemName;
@@ -409,6 +409,31 @@ class modSCLoginHelper
         }
 
         return $loginButtons;
+    }
+
+    private function getLoginButtonOrdering()
+    {
+        $providers = $this->params->get('loginbuttonsorder', '');
+        if ($providers != '')
+        {
+            // Simple replacements to support commas and carriage returns
+            $providers = str_replace("\r\n", ",", $providers);
+            $providers = explode(",", $providers);
+            $returns = array();
+            foreach ($providers as $provider)
+            {
+                $p = JFBCFactory::provider($provider);
+                if (!$p)
+                {
+                    JFactory::getApplication()->enqueueMessage('Provider "' . $provider . '" set in SCLogin is invalid. Custom login button ordering cannot be set', 'error');
+                    return $this->providers;
+                }
+                else
+                    $returns[] = $p;
+            }
+            return $returns;
+        }
+        return $this->providers;
     }
 
     function getReconnectButtons($orientation, $alignment)
