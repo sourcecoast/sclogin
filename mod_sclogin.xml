@@ -19,6 +19,7 @@
         <filename>ajax/otpcheck.php</filename>
         <filename>fields/theme.php</filename>
         <filename>fields/scloginsocialbuttons.php</filename>
+        <filename>fields/scloginbuttonstype.php</filename>
         <filename>tmpl/login.php</filename>
         <filename>tmpl/logout.php</filename>
         <filename>tmpl/joomlaLogin_vertical.php</filename>
@@ -140,10 +141,10 @@
                     <option value="3">MOD_SCLOGIN_LOGIN_SHOW_REGISTER_BUTTON_VALUE_BOTH</option>
                 </field>
                 <field name="showRememberMe"
-                        type="list"
-                        default="0"
-                        label="MOD_SCLOGIN_SHOW_REMEMBER_ME_LABEL"
-                        description="MOD_SCLOGIN_SHOW_REMEMBER_ME_DESC">
+                       type="list"
+                       default="0"
+                       label="MOD_SCLOGIN_SHOW_REMEMBER_ME_LABEL"
+                       description="MOD_SCLOGIN_SHOW_REMEMBER_ME_DESC">
                     <option value="0">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_SHOW_UNCHECKED</option>
                     <option value="1">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_SHOW_CHECKED</option>
                     <option value="2">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_HIDE_UNCHECKED</option>
@@ -260,7 +261,7 @@
                     <option value="">MOD_SCLOGIN_VALUE_SAMEPAGE</option>
                 </field>
             </fieldset>
-            <fieldset name="social" label="MOD_SCLOGIN_SOCIAL_LABEL" addfieldpath="/administrator/components/com_jfbconnect/models/config/fields/">
+            <fieldset name="social" label="MOD_SCLOGIN_SOCIAL_LABEL">
                 <field name="socialButtonsOrientation"
                        type="list"
                        default="bottom"
@@ -283,39 +284,17 @@
                        rows="5"
                        cols="70"
                        label="MOD_SCLOGIN_SOCIAL_BUTTON_ORDER_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_BUTTON_ORDER_DESC" />
+                       description="MOD_SCLOGIN_SOCIAL_BUTTON_ORDER_DESC"/>
                 <field name="loginbuttonstype"
-                       type="list"
+                       type="scloginbuttonstype"
                        default="default"
                        label="MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_DESC"
-                       onchange="if (this.value=='default')
-                        {
-                            document.getElementById('loginbutton_custom_notice').style.display='block';
-                            var fieldsets = document.getElementsByTagName('fieldset');
-                            for(var i = 0; i &lt; fieldsets.length; i++) {
-                                if(fieldsets[i].id.indexOf('jform_params_loginbuttons_') == 0) {
-                                    fieldsets[i].style.display='none';
-                                }
-                            }
-                        }
-                        else
-                        {
-                            document.getElementById('loginbutton_custom_notice').style.display='none';
-                            var fieldsets = document.getElementsByTagName('fieldset');
-                            for(var i = 0; i &lt; fieldsets.length; i++) {
-                                if(fieldsets[i].id.indexOf('jform_params_loginbuttons_') == 0) {
-                                    fieldsets[i].style.display='block';
-                                }
-                            }
-                        }">
-                    <option value="default">MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_DEFAULT</option>
-                    <option value="custom">MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_CUSTOM</option>
+                       description="MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_DESC">
                 </field>
                 <field name="loginbuttons"
                        type="scloginsocialbuttons"
                        label="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_DESC" />
+                       description="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_DESC"/>
             </fieldset>
             <fieldset name="advanced" label="MOD_SCLOGIN_ADV_LABEL">
                 <field name="user_intro"
