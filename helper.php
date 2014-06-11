@@ -389,70 +389,42 @@ class modSCLoginHelper
 
     function getLoginButtons($orientation, $alignment)
     {
-        $loginButtons = '';
+        $params['providers'] = $this->getLoginButtonOrdering();
+        $params['loginbuttonstype'] = $this->params->get('loginbuttonstype', 'default');
+        $params['loginbuttons'] = $this->params->get('loginbuttons');
 
         $params['addStyles'] = 'false';
         $params['alignment'] = $alignment;
         $params['orientation'] = $orientation;
+        return JFBCFactory::getLoginButtons($params);
+    }
 
-        if ($this->params->get('loginbuttonstype', 'default') == 'custom')
-            $customImages = $this->params->get('loginbuttons');
-        else
-            $customImages = null;
+    function getReconnectButtons($orientation, $alignment)
+    {
+        $params['providers'] = $this->getLoginButtonOrdering();
+        $params['loginbuttonstype'] = $this->params->get('loginbuttonstype', 'default');
+        $params['loginbuttons'] = $this->params->get('loginbuttons');
 
-        foreach ($this->getLoginButtonOrdering() as $provider)
-        {
-            $params['providers'] = $provider->name;
-            $pName = $provider->systemName;
-            $params['image'] = isset($customImages->$pName) ? $customImages->$pName : null;
-            $loginButtons .= $provider->loginButton($params);
-        }
+        $params['addStyles'] = 'false';
+        $params['alignment'] = $alignment;
+        $params['orientation'] = $orientation;
+        $params['text'] = JText::_('MOD_SCLOGIN_CONNECT_USER');
 
-        return $loginButtons;
+        return JFBCFactory::getReconnectButtons($params);
     }
 
     private function getLoginButtonOrdering()
     {
         $providers = $this->params->get('loginbuttonsorder', '');
         if ($providers != '')
+            return $providers;
+        else
         {
-            // Simple replacements to support commas and carriage returns
-            $providers = str_replace("\r\n", ",", $providers);
-            $providers = explode(",", $providers);
-            $returns = array();
-            foreach ($providers as $provider)
-            {
-                $p = JFBCFactory::provider($provider);
-                if (!$p)
-                {
-                    JFactory::getApplication()->enqueueMessage('Provider "' . $provider . '" set in SCLogin is invalid. Custom login button ordering cannot be set', 'error');
-                    return $this->providers;
-                }
-                else
-                    $returns[] = $p;
-            }
-            return $returns;
+            $providers = array();
+            foreach ($this->providers as $p)
+                $providers[] = $p->systemName;
+            return $providers;
         }
-        return $this->providers;
-    }
-
-    function getReconnectButtons($orientation, $alignment)
-    {
-        $buttonHtml = '';
-
-        $params['alignment'] = $alignment;
-        $params['orientation'] = $orientation;
-        $params['button_text'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
-
-        foreach ($this->providers as $provider)
-        {
-            $buttonHtml .= $provider->connectButton($params);
-        }
-
-        if ($buttonHtml)
-            $buttonHtml = '<div class="sc-connect-user">' . JText::_('MOD_SCLOGIN_CONNECT_USER') . '</div>' . $buttonHtml;
-
-        return $buttonHtml;
     }
 
     function getForgotUserButton()
