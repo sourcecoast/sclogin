@@ -13,11 +13,15 @@ div.sclogin-social-connect a.show {
     margin-bottom: 9px;
 }
 
+div.sclogin-social-connect,
+div.social-login.reconnect:nth-of-type(2) {
+    clear:left;
+}
+
 input#sclogin-username.input-block-level,
 input#sclogin-passwd.input-block-level {
     height: 30px;
 }
-
 
 .sclogin a.forgot.btn {
     height: 54px !important;
