@@ -2,7 +2,7 @@
 /**
  * @package    SCLogin - 2FA login check. Return true if login credentials are correct and 2FA screen should be shown.
  *
- * @copyright  Copyright (C) 2005 - 2013 SourceCoast, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - @CURRENT_YEAR@ SourceCoast, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 

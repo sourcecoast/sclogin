@@ -2,7 +2,7 @@
 
 /**
  * @package        JFBConnect
- * @copyright (C) 2009-2014 by Source Coast - All rights reserved
+ * @copyright (C) 2009-@CURRENT_YEAR@ by Source Coast - All rights reserved
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
  */
 

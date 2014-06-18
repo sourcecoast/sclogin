@@ -1,6 +1,6 @@
 /**
  * @package        SCLogin
- * @copyright (C) 2009-2014 by Source Coast - All rights reserved
+ * @copyright (C) 2009-@CURRENT_YEAR@ by Source Coast - All rights reserved
  * @license Commercial / Proprietary
  */
 var sclogin =
