@@ -65,7 +65,7 @@
         <copy todir="${build.dir.resolved}/mod_sclogin/ajax">
             <fileset dir="ajax"/>
             <filterchain>
-                <replacetokens>
+                <replacetokens begintoken="@" endtoken="@">
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
                     <token key="CURRENT_YEAR" value="${current_year}"/>
@@ -84,7 +84,7 @@
         <copy todir="${build.dir.resolved}/mod_sclogin/media">
             <fileset dir="media"/>
             <filterchain>
-                <replacetokens>
+                <replacetokens begintoken="@" endtoken="@">
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
                     <token key="CURRENT_YEAR" value="${current_year}"/>
@@ -97,7 +97,7 @@
         <copy todir="${build.dir.resolved}/mod_sclogin/tmpl">
             <fileset dir="tmpl"/>
             <filterchain>
-                <replacetokens>
+                <replacetokens begintoken="@" endtoken="@">
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
                     <token key="CURRENT_YEAR" value="${current_year}"/>
@@ -110,7 +110,7 @@
         <copy todir="${build.dir.resolved}/mod_sclogin/translations">
             <fileset dir="translations"/>
             <filterchain>
-                <replacetokens>
+                <replacetokens begintoken="@" endtoken="@">
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
                     <token key="CURRENT_YEAR" value="${current_year}"/>
@@ -121,7 +121,7 @@
         <echo msg="Copy package manifest"/>
         <copy file="mod_sclogin.xml" tofile="${build.dir.resolved}/mod_sclogin/mod_sclogin.xml" overwrite="true">
             <filterchain>
-                <replacetokens>
+                <replacetokens begintoken="@" endtoken="@">
                     <token key="DATE" value="${build.date}"/>
                     <token key="VERSION" value="${version}"/>
                     <token key="CURRENT_YEAR" value="${current_year}"/>
