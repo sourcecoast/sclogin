@@ -77,6 +77,13 @@
         <mkdir dir="${build.dir.resolved}/mod_sclogin"/>
         <copy todir="${build.dir.resolved}/mod_sclogin/fields">
             <fileset dir="fields"/>
+            <filterchain>
+                <replacetokens begintoken="@" endtoken="@">
+                    <token key="DATE" value="${build.date}"/>
+                    <token key="VERSION" value="${version}"/>
+                    <token key="CURRENT_YEAR" value="${current_year}"/>
+                </replacetokens>
+            </filterchain>
         </copy>
 
         <echo msg="Copying SCLogin media directory"/>
