@@ -1,9 +1,10 @@
 <?php
 /**
- * @package    SCLogin - 2FA login check. Return true if login credentials are correct and 2FA screen should be shown.
- *
- * @copyright  Copyright (C) 2005 - @CURRENT_YEAR@ SourceCoast, Inc. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @package         SCLogin - 2FA login check. Return true if login credentials are correct and 2FA screen should be shown.
+ * @copyright (c)   2009-@CURRENT_YEAR@ by SourceCoast - All Rights Reserved
+ * @license         http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @version         Release v@VERSION@
+ * @build-date      @DATE@
  */
 
 // We are a valid entry point.
