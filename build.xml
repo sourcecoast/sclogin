@@ -9,7 +9,7 @@
          returnProperty="version"/>
     <resolvepath propertyName="build.dir.resolved" file="${builddir}"/>
     <tstamp>
-        <format property="build.date" pattern="%Y-%m-%d"/>
+        <format property="build.date" pattern="%Y/%m/%d"/>
     </tstamp>
 
     <!-- Build a package for testing -->
@@ -118,8 +118,15 @@
             </filterchain>
         </copy>
 
-        <echo msg="Copy package manifest"/>
-        <copy file="mod_sclogin.xml" tofile="${build.dir.resolved}/mod_sclogin/mod_sclogin.xml" overwrite="true">
+        <echo msg="Copy manifest and root files"/>
+        <copy todir="${build.dir.resolved}/mod_sclogin/">
+            <fileset dir="./">
+                <include name="mod_sclogin.xml" />
+                <include name="helper.php" />
+                <include name="install.php" />
+                <include name="mod_sclogin.php" />
+                <include name="sc_helper.php" />
+            </fileset>
             <filterchain>
                 <replacetokens begintoken="@" endtoken="@">
                     <token key="DATE" value="${build.date}"/>
@@ -128,12 +135,6 @@
                 </replacetokens>
             </filterchain>
         </copy>
-
-        <echo msg="Copy root files"/>
-        <copy file="helper.php" tofile="${build.dir.resolved}/mod_sclogin/helper.php" overwrite="true"/>
-        <copy file="install.php" tofile="${build.dir.resolved}/mod_sclogin/install.php" overwrite="true"/>
-        <copy file="mod_sclogin.php" tofile="${build.dir.resolved}/mod_sclogin/mod_sclogin.php" overwrite="true"/>
-        <copy file="sc_helper.php" tofile="${build.dir.resolved}/mod_sclogin/sc_helper.php" overwrite="true"/>
     </target>
 
     <!-- Rebuild the staging area -->
