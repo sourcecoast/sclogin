@@ -18,6 +18,7 @@ if (JFile::exists($factoryPath))
 
 if (class_exists('JFBCFactory'))
 {
+    SCStringUtilities::loadLanguage('com_jfbconnect', JPATH_ADMINISTRATOR);
     require_once(JPATH_ADMINISTRATOR . '/components/com_jfbconnect/models/fields/socialbuttons.php');
     class JFormFieldScloginSocialbuttons extends JFormFieldSocialbuttons
     {

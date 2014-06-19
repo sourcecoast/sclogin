@@ -283,18 +283,18 @@
                        type="textarea"
                        rows="5"
                        cols="70"
-                       label="MOD_SCLOGIN_SOCIAL_BUTTON_ORDER_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_BUTTON_ORDER_DESC"/>
+                       label="COM_JFBCONNECT_WIDGET_LOGIN_PROVIDER_LABEL"
+                       description="COM_JFBCONNECT_WIDGET_LOGIN_PROVIDER_DESCRIPTION"/>
                 <field name="loginbuttonstype"
                        type="scloginbuttonstype"
                        default="default"
-                       label="MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_LOGIN_BUTTON_TYPE_DESC">
+                       label="COM_JFBCONNECT_WIDGET_LOGIN_BUTTON_TYPE_LABEL"
+                       description="COM_JFBCONNECT_WIDGET_LOGIN_BUTTON_TYPE_DESC">
                 </field>
                 <field name="loginbuttons"
                        type="scloginsocialbuttons"
-                       label="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_LABEL"
-                       description="MOD_SCLOGIN_SOCIAL_BUTTON_TYPE_DESC"/>
+                       label="COM_JFBCONNECT_WIDGET_IMAGE_STYLE_LABEL"
+                       description="COM_JFBCONNECT_WIDGET_IMAGE_STYLE_DESC"/>
             </fieldset>
             <fieldset name="advanced" label="MOD_SCLOGIN_ADV_LABEL">
                 <field name="user_intro"
