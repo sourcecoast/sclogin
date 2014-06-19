@@ -577,7 +577,7 @@ class modSCLoginHelper
         if($showRememberMeParam == '0' || $showRememberMeParam == '2')
             return "";
         else
-            return 'checked="checked"';
+            return 'checked="checked" value="yes"';
     }
 
     public function showRememberMe()
