@@ -404,6 +404,9 @@ class modSCLoginHelper
 
     function getReconnectButtons($orientation, $alignment)
     {
+        if (!$this->isJFBConnectInstalled)
+            return '';
+
         $params['providers'] = $this->getLoginButtonOrdering();
         $params['loginbuttonstype'] = $this->params->get('loginbuttonstype', 'default');
         $params['loginbuttons'] = $this->params->get('loginbuttons');
