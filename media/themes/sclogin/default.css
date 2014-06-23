@@ -3,6 +3,10 @@
     overflow: visible;
 }
 
+#login-modal {
+top:15%;
+}
+
 .sclogin .powered-by {
     clear: both;
 }
@@ -16,6 +20,14 @@ div.sclogin-social-connect a.show {
 div.sclogin-social-connect,
 div.social-login.reconnect:nth-of-type(2) {
     clear:left;
+}
+
+.sclogin-social-login .pull-left {
+    margin:5px;
+}
+
+.sclogin-social-login.bottom {
+    padding:5px 0;
 }
 
 input#sclogin-username.input-block-level,

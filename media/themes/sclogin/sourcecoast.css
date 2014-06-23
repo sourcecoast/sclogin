@@ -7,6 +7,10 @@
     clear: both;
 }
 
+#login-modal {
+top:15%;
+}
+
 div.sclogin-social-login a.show,
 div.sclogin-joomla-login a.show,
 div.sclogin-social-connect a.show {
@@ -16,6 +20,11 @@ div.sclogin-social-connect a.show {
 div.sclogin-social-connect,
 div.social-login.reconnect:nth-of-type(2) {
     clear:left;
+}
+
+.sclogin li.connect .social-login.reconnect
+{
+    clear:none;
 }
 
 input#sclogin-username.input-block-level,
@@ -152,15 +161,24 @@ input#sclogin-passwd.input-block-level {
     margin-right:0px;
 }
 
+.sclogin li.connect {
+    margin-top: 5px;
+}
+.sclogin li.connect .reconnect a {
+    padding:0;
+}
+
 .sclogin .bottom {
+    border-top: 1px solid #ddd;
     padding-top:15px;
     padding-bottom:0px;
 }
 
 .sclogin .top {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
     padding-top: 0px;
     padding-bottom: 15px;
-    margin-bottom: 20px;
 }
 
 .sclogin .side {
@@ -168,7 +186,7 @@ input#sclogin-passwd.input-block-level {
 }
 
 .sclogin-social-login .pull-left {
-    margin-right:10px;
+    margin:5px;
 }
 
 .sclogin-greeting,
@@ -203,11 +221,3 @@ input#sclogin-passwd.input-block-level {
 .sourcecoast .btn-primary{background-color:#46b277}
 
 .sourcecoast .btn-primary:hover{background-color:rgba(70,178,119,0.6)}
-
-.sourcecoast .bottom {
-    border-top: 1px solid #ddd;
-}
-
-.sourcecoast .top {
-    border-bottom: 1px solid #ddd;
-}

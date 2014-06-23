@@ -539,31 +539,10 @@ class modSCLoginHelper
                 $url = JRoute::_('index.php?option=com_users&task=user.logout&return=' . $this->getLoginRedirect('jlogout') . '&' . JSession::getFormToken() . '=1');
             if ($item->link == 'scconnect')
             {
-                $providers = JFBCFactory::getAllProviders();
-                $sepAdded = false;
-                $html = '';
-
-                $params['button_type'] = 'icon_button';
-                $params['alignment'] = 'left';
-                $params['orientation'] = 'side';
-                $params['button_text'] = JText::_('MOD_SCLOGIN_CONNECT_BUTTON');
-
-                foreach ($providers as $p)
-                {
-                    if (!JFBCFactory::usermap()->getProviderUserId(JFactory::getUser()->id, $p->name))
-                    {
-                        if (!$sepAdded)
-                        {
-                            $html .= '<li class="connect">' . $item->title . '<br/>';
-                            $sepAdded = true;
-                        }
-                        $html .= $p->connectButton($params);
-
-                    }
-                }
-
-                if ($sepAdded)
-                    $html .= "</li>";
+                $params['image'] = 'icon.png';
+                $html = '<li class="connect">' . $item->title;
+                $html .= JFBCFactory::getReconnectButtons($params);
+                $html .= '</li>';
                 return $html;
             }
         }
