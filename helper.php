@@ -187,6 +187,8 @@ class modSCLoginHelper
         {
             $this->registerLink = JRoute::_("index.php?option=com_comprofiler&task=registers", false);
             $this->forgotLink = JRoute::_("index.php?option=com_comprofiler&task=lostPassword");
+            $this->forgotUsernameLink = $this->forgotLink;
+            $this->forgotPasswordLink = $this->forgotLink;
             $this->profileLink = JRoute::_("index.php?option=com_comprofiler", false);
         }
         else if ($registerType == "virtuemart" && file_exists(JPATH_ADMINISTRATOR . '/components/com_virtuemart/version.php'))
