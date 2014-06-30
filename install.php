@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 class mod_scloginInstallerScript
 {
     var $extReqs = array(
-        array('name' => 'JFBConnect', 'version' => '5.1.0', 'element' => 'com_jfbconnect')
+        array('name' => 'JFBConnect', 'version' => '6.1.0', 'element' => 'com_jfbconnect')
     );
 
     public function preflight($type, $parent)
@@ -23,7 +23,7 @@ class mod_scloginInstallerScript
             $currentVersion = $this->getInstalledVersion($req['element']);
             if ($currentVersion && version_compare($currentVersion, $req['version'], '<'))
             {
-                $installStr = 'SCLogin requires JFBConnect v5.1.0 or higher for Facebook, Google+, Twitter and LinkedIn functionality. Please upgrade JFBConnect to enable the Facebook, Google+, Twitter and LinkedIn social login features.';
+                $installStr = 'SCLogin requires JFBConnect v6.1.0 or higher for Social Network functionality. Please upgrade JFBConnect to enable the Social Network login features.';
                 JFactory::getApplication()->enqueueMessage($installStr, 'error');
             }
         }
