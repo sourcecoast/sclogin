@@ -572,4 +572,15 @@ class modSCLoginHelper
         else
             return true;
     }
+
+    /* DEPRECATED 6.1 */
+    function getForgotUser($registerType, $showForgotUsername, $forgotLink, $forgotUsernameLink, $buttonImageColor)
+    {
+        return getForgotUserButton();
+    }
+
+    function getForgotPassword($registerType, $showForgotPassword, $forgotLink, $forgotPasswordLink, $buttonImageColor)
+    {
+        return getForgotPasswordButton();
+    }
 }
