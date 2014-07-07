@@ -10,6 +10,8 @@
 defined('JPATH_PLATFORM') or die;
 
 jimport('joomla.form.helper');
+jimport('sourcecoast.utilities');
+
 $factoryPath = JPATH_SITE . '/components/com_jfbconnect/libraries/factory.php';
 if (JFile::exists($factoryPath))
 {
