@@ -20,6 +20,7 @@
         <filename>fields/theme.php</filename>
         <filename>fields/jfbconnectsettings.php</filename>
         <filename>fields/jfbconnectsettings.xml</filename>
+        <filename>fields/images/socialloginbuttons.png</filename>
         <filename>tmpl/login.php</filename>
         <filename>tmpl/logout.php</filename>
         <filename>tmpl/joomlaLogin_vertical.php</filename>
