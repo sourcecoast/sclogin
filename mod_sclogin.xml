@@ -20,6 +20,7 @@
         <filename>fields/theme.php</filename>
         <filename>fields/jfbconnectsettings.php</filename>
         <filename>fields/jfbconnectsettings.xml</filename>
+        <filename>fields/placeholder.php</filename>
         <filename>fields/images/socialloginbuttons.png</filename>
         <filename>tmpl/login.php</filename>
         <filename>tmpl/logout.php</filename>
@@ -267,6 +268,16 @@
                        type="jfbconnectsettings"
                        hidden="true"
                         />
+                <field name="socialButtonsOrientation"
+                       type="placeholder" />
+                <field name="socialButtonsAlignment"
+                       type="placeholder" />
+                <field name="loginbuttonsorder"
+                       type="placeholder" />
+                <field name="loginbuttonstype"
+                       type="placeholder" />
+                <field name="loginbuttons"
+                       type="placeholder" />
             </fieldset>
             <fieldset name="advanced" label="MOD_SCLOGIN_ADV_LABEL">
                 <field name="user_intro"
