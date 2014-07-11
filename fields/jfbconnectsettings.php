@@ -72,11 +72,11 @@ else
                     .jfbcLearnMore {clear:left;margin-top:30px;}
                     .jfbcLearnMore a {color:#FFFFFF;}
                     .jfbc-btn-buynow{background-color:#F79C4B; padding:16px 20px; font-size:14px;text-decoration:none;}
-                    .jfbc-btn-buynow:hover{background-color:rgba(247,130,60,0.6);text-decoration:none;}
+                    .jfbc-btn-buynow:hover{background-color:rgba(247,130,60,0.6);text-decoration:none;border-radius:5px}
                 ');
 
-            $jfbcNotDetected = '<h3>Add JFBConnect for Complete Social Network Integration</h3>';
-            $jfbcInstructions = 'JFBConnect is the premiere social network integration extension, used on the Joomla Extension Directory itself! To add social network authentication, widgets, newsfeeds and more to your site, get JFBConnect now.';
+            $jfbcNotDetected = '<h3>Add JFBConnect for Social Network Integration</h3>';
+            $jfbcInstructions = '<p>JFBConnect is the premiere social network integration extension, used on the Joomla Extension Directory itself!</p><p>To add social network authentication, social sharing, newsfeeds and more to your site, get JFBConnect now.</p>';
             $loginImage = '<div  class="jfbcButtonImg"><img src="' . JURI::root() . 'modules/mod_sclogin/fields/images/socialloginbuttons.png' . '"/></div>';
             $buyNow = '<div class="jfbcLearnMore"><a class="jfbc-btn-buynow" href="https://www.sourcecoast.com/l/jfbconnect-for-sclogin" target="_blank">Learn More</a></div>';
 
