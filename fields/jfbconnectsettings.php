@@ -35,11 +35,11 @@ if (class_exists('JFBCFactory'))
 
             foreach ($form->getFieldsets() as $fiedsets => $fieldset)
             {
-                if (version_compare(JVERSION, '3.2.0', '<'))
+                if (version_compare(JVERSION, '3.2.3', '<='))
                     $html[] = '<ul class="adminformlist">';
                 foreach ($form->getFieldset($fieldset->name) as $field)
                 {
-                    if (version_compare(JVERSION, '3.2.0', '<'))
+                    if (version_compare(JVERSION, '3.2.3', '<='))
                     {
                         $label = $field->getLabel();
                         $input = $field->getInput();
@@ -48,7 +48,7 @@ if (class_exists('JFBCFactory'))
                     else
                         $html[] = $field->renderField();
                 }
-                if (version_compare(JVERSION, '3.2.0', '<'))
+                if (version_compare(JVERSION, '3.2.3', '<='))
                     $html[] = '</ul>';
             }
 
