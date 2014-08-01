@@ -576,11 +576,11 @@ class modSCLoginHelper
     /* DEPRECATED 6.1 */
     function getForgotUser($registerType, $showForgotUsername, $forgotLink, $forgotUsernameLink, $buttonImageColor)
     {
-        return getForgotUserButton();
+        return $this->getForgotUserButton();
     }
 
     function getForgotPassword($registerType, $showForgotPassword, $forgotLink, $forgotPasswordLink, $buttonImageColor)
     {
-        return getForgotPasswordButton();
+        return $this->getForgotPasswordButton();
     }
 }
