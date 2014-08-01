@@ -22,7 +22,11 @@ class JFormFieldTheme extends JFormFieldList
         $mediaCssFiles = $this->getCssFiles('/media/sourcecoast/themes/sclogin/');
 
         $db = JFactory::getDBO();
-        $query = "SELECT template FROM #__template_styles WHERE client_id = 0 AND home = 1";
+        $query = $db->getQuery(true);
+        $query->select("template")
+            ->from("#__template_styles")
+            ->where("client_id = 0")
+            ->where("home = 1");
         $db->setQuery($query);
         $templateFolder = $db->loadResult();
         $templateCssFiles = $this->getCssFiles('/templates/'.$templateFolder.'/html/mod_sclogin/themes/');
