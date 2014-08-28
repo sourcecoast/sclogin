@@ -241,8 +241,8 @@
                         default="0"
                         label="MOD_SCLOGIN_LOGOUT_USERMENU_TITLE_LABEL"
                         description="MOD_SCLOGIN_LOGOUT_USERMENU_TITLE_DESC">
-                    <option value="1">MOD_SCLOGIN_LOGOUT_USERMENU_TITLE_VALUE_MENUNAME</option>
-                    <option value="0">MOD_SCLOGIN_LOGOUT_USERMENU_TITLE_VALUE_USERNAME</option>
+                    <option value="1">MOD_SCLOGIN_LOGOUT_USERMENU_TITLE_VALUE_USERNAME</option>
+                    <option value="0">MOD_SCLOGIN_LOGOUT_USERMENU_TITLE_VALUE_MENUNAME</option>
                 </field>
                 <field name="showLogoutButton"
                        type="radio"
