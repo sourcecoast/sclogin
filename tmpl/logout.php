@@ -46,7 +46,7 @@ if ($params->get('showLogoutButton'))
 
 if ($params->get('showUserMenu'))
 {
-    echo $helper->getUserMenu($params->get('showUserMenu'), $params->get('userMenuStyle'));
+    echo $helper->getUserMenu($params->get('showUserMenu'), $params->get('userMenuStyle'), $params->get('userMenuTitle'));
 }
 
 if ($params->get('showConnectButton'))

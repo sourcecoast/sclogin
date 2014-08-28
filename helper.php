@@ -484,7 +484,7 @@ class modSCLoginHelper
         return $links;
     }
 
-    function getUserMenu($userMenu, $menuStyle)
+    function getUserMenu($userMenu, $menuStyle, $menuTitle='0')
     {
         $app = JFactory::getApplication();
         $menu = $app->getMenu();
@@ -492,10 +492,18 @@ class modSCLoginHelper
 
         if (!empty($menu_items))
         {
-            $db = JFactory::getDbo();
-            $query = 'SELECT title FROM #__menu_types WHERE menutype=' . $db->quote($userMenu);
-            $db->setQuery($query);
-            $parentTitle = $db->loadResult();
+            if($menuTitle == '0') //Get User's name
+            {
+                $user = JFactory::getUser();
+                $parentTitle = $user->get('name');
+            }
+            else
+            {
+                $db = JFactory::getDbo();
+                $query = 'SELECT title FROM #__menu_types WHERE menutype=' . $db->quote($userMenu);
+                $db->setQuery($query);
+                $parentTitle = $db->loadResult();
+            }
 
             if ($menuStyle) //Show in List view
             {
