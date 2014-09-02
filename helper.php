@@ -374,11 +374,19 @@ class modSCLoginHelper
         $html = "";
         if ($this->params->get('enableProfilePic') == 'social')
         {
-            foreach ($this->providers as $provider)
+            $userId = $this->user->get('id');
+            $html = JFBCFactory::cache()->get('sclogin.avatar.' . $userId);
+            if ($html === false)
             {
-                $html = $this->getProviderAvatar($provider, $this->user);
-                if ($html != "")
-                    break;
+                foreach ($this->providers as $provider)
+                {
+                    $html = $this->getProviderAvatar($provider, $this->user);
+                    if ($html != "")
+                    {
+                        JFBCFactory::cache()->store($html, 'sclogin.avatar.' . $userId);
+                        break;
+                    }
+                }
             }
         }
         else // 'joomla')
