@@ -500,7 +500,7 @@ class modSCLoginHelper
 
         if (!empty($menu_items))
         {
-            if($menuTitle == '0') //Get User's name
+            if($menuTitle == '1') //Get User's name
             {
                 $user = JFactory::getUser();
                 $parentTitle = $user->get('name');
