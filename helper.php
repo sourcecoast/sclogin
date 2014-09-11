@@ -50,7 +50,10 @@ class modSCLoginHelper
     public function setupTheme()
     {
         // Load our CSS and Javascript files
-        $this->doc->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/sc_bootstrap.css');
+        if (!$this->isJFBConnectInstalled)
+            $this->doc->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/sc_bootstrap.css');
+
+        $this->doc->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/common.css');
 
         $paths = array();
         $paths[] = JPATH_ROOT . '/templates/' . JFactory::getApplication()->getTemplate() . '/html/mod_sclogin/themes/';

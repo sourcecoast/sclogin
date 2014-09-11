@@ -13,7 +13,6 @@
   // Modify this for custom colors, font-sizes, etc
 @import "mixins.less";
   // Need some special prefixes here, so don't do the generic wrap of .sourcecoast
-@import "modals.less";
 
 .sourcecoast {
 
@@ -21,7 +20,10 @@
 @import "reset.less"; @import "component-animations.less";
 
   // Grid system and page structure
-@import "scaffolding.less"; @import "grid.less"; @import "layouts.less";
+//@import "scaffolding.less";
+@import "grid.less"; @import "layouts.less";
+
+@import "modals.less";
 
   // Base CSS
   //@import "type.less";
@@ -55,18 +57,4 @@
 
   // Utility classes
 @import "utilities.less"; // Has to be last to override when necessary
-
-  .autotune ul.nav-stacked {
-    padding:0;
-  }
-
-@import "jquery-ui-autocomplete.less";
-  // Included for Open Graph Action popups in JFBConnect
-
-@import "jfbconnect.less";
 }
-
-.sclogin {
-  text-align:left;
-}
-

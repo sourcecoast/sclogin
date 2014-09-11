@@ -32,6 +32,7 @@
     <media folder="media" destination="sourcecoast">
         <filename>themes/sclogin/default.css</filename>
         <filename>themes/sclogin/sourcecoast.css</filename>
+        <filename>css/common.css</filename>
         <filename>css/sc_bootstrap.css</filename>
         <filename>css/img/glyphicons-halflings-white.png</filename>
         <filename>css/img/glyphicons-halflings.png</filename>

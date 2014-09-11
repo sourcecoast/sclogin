@@ -12,13 +12,7 @@
   z-index:@zindexModalBackdrop;
   background-color:@black;
   // Fade for backdrop
-  &.fade {
-    opacity:0;
-    -webkit-transition:opacity 0.15s linear;
-    -moz-transition:opacity 0.15s linear;
-    -o-transition:opacity 0.15s linear;
-    transition:opacity 0.15s linear;
-  }
+  &.fade { opacity:0; }
 }
 
 .modal-backdrop,
@@ -27,14 +21,13 @@
 }
 
 // Base modal
-.sourcecoast.modal {
+.modal {
   position:fixed;
-  top:25%;
+  top:10%;
   left:50%;
   z-index:@zindexModal;
-  max-width:560px;
-  width:80%;
-  margin:0 0 0 -40%;
+  width:560px;
+  margin-left: -280px;
   background-color:@white;
   border:1px solid #999;
   border:1px solid rgba(0, 0, 0, .3);
@@ -48,24 +41,16 @@
   &.fade {
     .transition(e('opacity .3s linear, top .3s ease-out'));
     top:-25%;
-    opacity:0;
-    &.in {
-      opacity:1;
-    }
   }
 
-  &.fade.in {
-    top:25%;
-  }
+  &.fade.in { top:10%; }
 }
 
-.sourcecoast .modal-header {
+.modal-header {
   padding:9px 15px;
   border-bottom:1px solid #eee;
   // Close icon
-  .close {
-    margin-top:2px;
-  }
+  .close { margin-top:2px; }
   // Heading
   h3 {
     margin:0;
@@ -74,20 +59,20 @@
 }
 
 // Body (where all modal content resides)
-.sourcecoast .modal-body {
+.modal-body {
   position:relative;
-  overflow-y:visible;
+  overflow-y:auto;
   max-height:400px;
   padding:15px;
 }
 
 // Remove bottom margin if need be
-.sourcecoast .modal-form {
+.modal-form {
   margin-bottom:0;
 }
 
 // Footer (for actions)
-.sourcecoast .modal-footer {
+.modal-footer {
   padding:14px 15px 15px;
   margin-bottom:0;
   text-align:right; // right align buttons

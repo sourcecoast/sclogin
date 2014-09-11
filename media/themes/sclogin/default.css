@@ -1,6 +1,7 @@
 /* Default SCLogin Theme - Add new themes to templates/YOUR_TEMPLATE_NAME/html/mod_sclogin/themes directory */
 .sclogin {
     overflow: visible;
+    text-align: left;
 }
 
 #login-modal {
