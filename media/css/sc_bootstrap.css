@@ -1435,7 +1435,7 @@
   -webkit-margin-top-collapse: separate;
 }
 .sourcecoast .form-horizontal .control-group {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   *zoom: 1;
 }
 .sourcecoast .form-horizontal .control-group:before,
@@ -2435,7 +2435,6 @@
   *zoom: 1;
   padding: 4px 12px;
   margin-bottom: 0;
-  margin-top: 0;
   font-size: 14px;
   line-height: 20px;
   text-align: center;
