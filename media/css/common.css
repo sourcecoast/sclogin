@@ -6,8 +6,27 @@
 .sourcecoast .btn {
   margin-top: 0;
 }
-.sourcecoast .modal-backdrop {
+
+.sourcecoast.modal-backdrop {
   z-index: 99990;
+  position:fixed;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  background-color: #000000;
+}
+
+.sourcecoast.modal-backdrop.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -moz-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+
+.sourcecoast.modal-backdrop.fade.in {
+    opacity: 0.8;
 }
 
 .sourcecoast.modal {
@@ -47,13 +66,6 @@
 }
 .sourcecoast.modal.fade.in {
   top: 25%;
-}
-.sourcecoast .modal-backdrop.fade {
-  opacity: 0;
-  -webkit-transition: opacity 0.15s linear;
-  -moz-transition: opacity 0.15s linear;
-  -o-transition: opacity 0.15s linear;
-  transition: opacity 0.15s linear;
 }
 
 .sourcecoast .modal-body {
