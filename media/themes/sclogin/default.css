@@ -121,6 +121,14 @@ a.forgot.btn i {
     margin-right: 5px;
 }
 
+.sclogin .logout-link {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+    color: #095197;
+    cursor: pointer;
+}
+
 .sclogin .scuser-menu.dropdown-view {
     float: left;
 }

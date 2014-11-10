@@ -134,6 +134,14 @@ input#sclogin-passwd.input-block-level {
     margin-right: 5px;
 }
 
+.sclogin .logout-link {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+    color: #000000;
+    cursor: pointer;
+}
+
 .sclogin .scuser-menu.dropdown-view {
     float: left;
 }
