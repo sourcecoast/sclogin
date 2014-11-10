@@ -27,12 +27,17 @@ if ($params->get('greetingName') != 2)
 }
 
 if ($params->get('showLogoutButton'))
-{ ?>
+{
+    if($params->get('showLogoutButton') == 1)
+        $logoutClass='button btn btn-primary';
+    else
+        $logoutClass='logout-link';
+    ?>
     <div class="sclogout-button">
         <div class="sclogin-joomla-login">
             <form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure'));?>" method="post" id="sclogin-form">
                 <div class="logout-button" id="scLogoutButton">
-                    <input type="submit" name="Submit" class="button btn btn-primary" value="<?php echo JText::_('JLOGOUT');?>" />
+                    <input type="submit" name="Submit" class="<?php echo $logoutClass;?>" value="<?php echo JText::_('JLOGOUT');?>" />
                     <input type="hidden" name="option" value="com_users" />
                     <input type="hidden" name="task" value="user.logout" />
                     <input type="hidden" name="return" value="<?php echo $jLogoutUrl;?>" />
