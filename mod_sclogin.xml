@@ -21,6 +21,7 @@
         <filename>fields/jfbconnectsettings.php</filename>
         <filename>fields/jfbconnectsettings.xml</filename>
         <filename>fields/placeholder.php</filename>
+        <filename>fields/registrationlink.php</filename>
         <filename>fields/images/socialloginbuttons.png</filename>
         <filename>tmpl/login.php</filename>
         <filename>tmpl/logout.php</filename>
@@ -160,14 +161,18 @@
                        type="list"
                        default="joomla"
                        label="MOD_SCLOGIN_LOGIN_REG_COMPONENT_LABEL"
-                       description="MOD_SCLOGIN_LOGIN_REG_COMPONENT_DESC">
+                       description="MOD_SCLOGIN_LOGIN_REG_COMPONENT_DESC" onchange="if(this.value=='custom'){document.getElementById('reglinknotice').style.display='none';document.getElementById('registrationlink').style.display='block';}else{document.getElementById('reglinknotice').style.display='block';document.getElementById('registrationlink').style.display='none';}">
                     <option value="communitybuilder">Community Builder</option>
                     <option value="easysocial">EasySocial</option>
                     <option value="jomsocial">JomSocial</option>
                     <option value="joomla">Joomla</option>
                     <option value="kunena">Kunena</option>
                     <option value="virtuemart">Virtuemart</option>
+                    <option value="custom">MOD_SCLOGIN_LOGIN_REG_COMPONENT_OPTION_CUSTOM</option>
                 </field>
+                <field name="registrationlink" type="registrationlink"
+                       label="MOD_SCLOGIN_LOGIN_CUSTOM_REG_LINK_LABEL"
+                       description="MOD_SCLOGIN_LOGIN_CUSTOM_REG_LINK_DESC" />
                 <field name="jlogin"
                        type="menuitem"
                        default=""

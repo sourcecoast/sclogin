@@ -218,6 +218,11 @@ class modSCLoginHelper
             $this->profileLink = JRoute::_('index.php?option=com_kunena&view=user', false);
             $this->registerLink = JRoute::_('index.php?option=com_users&view=registration', false);
         }
+        else if ($registerType == 'custom')
+        {
+            $this->profileLink = '';
+            $this->registerLink = $this->getLoginRedirect('registrationlink', false);
+        }
         else
         {
             $this->profileLink = '';
@@ -231,7 +236,7 @@ class modSCLoginHelper
             $this->forgotPasswordLink = JRoute::_('index.php?option=com_users&view=reset', false);
     }
 
-    function getLoginRedirect($loginType)
+    function getLoginRedirect($loginType, $base64_encode = true)
     {
         if (JRequest::getString('return'))
             return JRequest::getString('return');
@@ -265,7 +270,7 @@ class modSCLoginHelper
             }
         }
 
-        return base64_encode($url);
+        return $base64_encode ? base64_encode($url) : $url;
     }
 
     private function getMenuIdUrl($itemId)
