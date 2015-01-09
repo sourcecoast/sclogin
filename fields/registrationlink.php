@@ -196,7 +196,7 @@ class JFormFieldRegistrationLink extends JFormFieldGroupedList
         $register_type = $this->form->getValue('register_type', 'params', null);
         $notice_display = $register_type == "custom" ? "none" : "block";
         $input_display = $register_type == "custom" ? "block" : "none";
-        $html = '<div id="reglinknotice" style="display:'.$notice_display.'">'.JText::_("MOD_SCLOGIN_LOGIN_CUSTOM_REG_LINK_NOTICE").'</div>';
+        $html = '<div id="reglinknotice" style="display:'.$notice_display.'; clear:both;">'.JText::_("MOD_SCLOGIN_LOGIN_CUSTOM_REG_LINK_NOTICE").'</div>';
 
         return $html.'<div id="registrationlink" style="display:'.$input_display.'">'.parent::getInput().'</div>';
     }
