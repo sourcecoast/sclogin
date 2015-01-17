@@ -410,14 +410,19 @@ class modSCLoginHelper
 
     function getLoginButtons($orientation, $alignment)
     {
-        $params['providers'] = $this->getLoginButtonOrdering();
-        $params['loginbuttonstype'] = $this->params->get('loginbuttonstype', 'default');
-        $params['loginbuttons'] = $this->params->get('loginbuttons');
+        $login = '';
+        if( $this->params->get('showSociaLoginButton', 1))
+        {
+            $params['providers'] = $this->getLoginButtonOrdering();
+            $params['loginbuttonstype'] = $this->params->get('loginbuttonstype', 'default');
+            $params['loginbuttons'] = $this->params->get('loginbuttons');
 
-        $params['addStyles'] = 'false';
-        $params['alignment'] = $alignment;
-        $params['orientation'] = $orientation;
-        return JFBCFactory::getLoginButtons($params);
+            $params['addStyles'] = 'false';
+            $params['alignment'] = $alignment;
+            $params['orientation'] = $orientation;
+            $login = JFBCFactory::getLoginButtons($params);
+        }
+        return $login;
     }
 
     function getReconnectButtons($orientation, $alignment)
