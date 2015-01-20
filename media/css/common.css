@@ -76,3 +76,16 @@
 .sourcecoast .form-horizontal .control-group {
   margin-bottom:10px;
 }
+
+.sourcecoast.facebook,
+.sourcecoast.linkedin,
+.sourcecoast.twitter,
+.sourcecoast.google,
+.sourcecoast.pinterest,
+.sourcecoast .facebook,
+.sourcecoast .linkedin,
+.sourcecoast .twitter,
+.sourcecoast .google,
+.sourcecoast .pinterest {
+    background:none;
+}
