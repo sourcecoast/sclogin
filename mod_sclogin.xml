@@ -190,6 +190,15 @@
                     <option value="0">MOD_SCLOGIN_VALUE_NO</option>
                     <option value="1">MOD_SCLOGIN_VALUE_YES</option>
                 </field>
+                <field name="showSociaLoginButton"
+                       type="radio"
+                       class="btn-group"
+                       default="1"
+                       label="MOD_SCLOGIN_LOGIN_SHOW_SOCIAL_LOGIN_LABEL"
+                       description="MOD_SCLOGIN_LOGIN_SHOW_SOCIAL_LOGIN_DESC">
+                    <option value="0">MOD_SCLOGIN_VALUE_HIDE</option>
+                    <option value="1">MOD_SCLOGIN_VALUE_SHOW</option>
+                </field>
             </fieldset>
             <fieldset name="logout" label="MOD_SCLOGIN_LOGOUT_LABEL">
                 <field name="enableProfilePic"
