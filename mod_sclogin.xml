@@ -253,6 +253,15 @@
                     <option value="1">MOD_SCLOGIN_LOGOUT_USERMENU_TITLE_VALUE_USERNAME</option>
                     <option value="0">MOD_SCLOGIN_LOGOUT_USERMENU_TITLE_VALUE_MENUNAME</option>
                 </field>
+                <field name="showMenuTitle"
+                       type="radio"
+                       class="btn-group"
+                       default="1"
+                       label="MOD_SCLOGIN_LOGOUT_SHOW_MENU_TITLE_LABEL"
+                       description="MOD_SCLOGIN_LOGOUT_SHOW_MENU_TITLE_DESC">
+                    <option value="0">MOD_SCLOGIN_VALUE_HIDE</option>
+                    <option value="1">MOD_SCLOGIN_VALUE_SHOW</option>
+                </field>
                 <field name="showLogoutButton"
                        type="list"
                        default="1"

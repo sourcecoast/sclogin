@@ -7,7 +7,7 @@
  * @build-date      @DATE@
  */
 
- // no direct access
+// no direct access
 defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.filesystem.file');
@@ -45,122 +45,6 @@ class modSCLoginHelper
         }
 
         $this->getPasswordAndProfileLinks();
-    }
-
-    public function setupTheme()
-    {
-        // Load our CSS and Javascript files
-        if (!$this->isJFBConnectInstalled)
-            $this->doc->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/sc_bootstrap.css');
-
-        $this->doc->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/common.css');
-
-        $paths = array();
-        $paths[] = JPATH_ROOT . '/templates/' . JFactory::getApplication()->getTemplate() . '/html/mod_sclogin/themes/';
-        $paths[] = JPATH_ROOT . '/media/sourcecoast/themes/sclogin/';
-        $theme = $this->params->get('theme', 'default.css');
-        $file = JPath::find($paths, $theme);
-        $file = str_replace(JPATH_SITE, '', $file);
-        $file = str_replace('\\', "/", $file); //Windows support for file separators
-        $this->doc->addStyleSheet(JURI::base(true) . $file);
-
-        // Add placeholder Javascript for old browsers that don't support the placeholder field
-        if ($this->user->guest)
-        {
-            jimport('joomla.environment.browser');
-            $browser = JBrowser::getInstance();
-            $browserType = $browser->getBrowser();
-            $browserVersion = $browser->getMajor();
-            if (($browserType == 'msie') && ($browserVersion <= 9))
-            {
-                // Using addCustomTag to ensure this is the last section added to the head, which ensures that jfbcJQuery has been defined
-                $this->doc->addCustomTag('<script src="' . JURI::base(true) . '/media/sourcecoast/js/jquery.placeholder.js" type="text/javascript"> </script>');
-                $this->doc->addCustomTag("<script>jfbcJQuery(document).ready(function() { jfbcJQuery('input').placeholder(); });</script>");
-            }
-        }
-    }
-
-    public function setupTwoFactorAuthentication()
-    {
-        // Two factor authentication check
-        $jVersion = new JVersion();
-        if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($this->user->guest))
-        {
-            $db = JFactory::getDbo();
-            // Check if TFA is enabled. If not, just return false
-            $query = $db->getQuery(true)
-                ->select('COUNT(*)')
-                ->from('#__extensions')
-                ->where('enabled=' . $db->q(1))
-                ->where('folder=' . $db->q('twofactorauth'));
-            $db->setQuery($query);
-            $tfaCount = $db->loadResult();
-
-            if ($tfaCount > 0)
-            {
-                $this->tfaLoaded = true;
-            }
-        }
-    }
-
-    public function setupJavascript()
-    {
-        $needsBootstrap = $this->params->get('displayType') == 'modal' ||
-            (!$this->user->guest && ($this->params->get('showUserMenu') && $this->params->get('userMenuStyle') == 0));
-        if (!$this->isJFBConnectInstalled)
-        {
-            if ($this->params->get('loadJQuery'))
-                $this->doc->addScript(JURI::base(true) . '/media/sourcecoast/js/jq-bootstrap-1.8.3.js');
-            if  ($needsBootstrap || $this->tfaLoaded)
-                $this->doc->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
-        }
-
-        if ($this->tfaLoaded)
-        {
-            $this->doc->addScript(Juri::base(true) . '/media/sourcecoast/js/mod_sclogin.js');
-            $this->doc->addScriptDeclaration('sclogin.token = "' . JSession::getFormToken() . '";' .
-                //"jfbcJQuery(window).on('load',  function() {
-                // Can't use jQuery here because we don't know if jfbcJQuery has been loaded or not.
-                "window.onload = function() {
-                    sclogin.init();
-                };
-                sclogin.base = '" . JURI::base() . "';\n"
-            );
-        }
-
-    }
-
-    function getPoweredByLink()
-    {
-        $showPoweredBy = $this->params->get('showPoweredByLink');
-        if ($showPoweredBy == 0)
-            return;
-
-        if ($this->isJFBConnectInstalled)
-        {
-            $jfbcAffiliateID = JFBCFactory::config()->getSetting('affiliate_id');
-            $showJFBCPoweredBy = (($showPoweredBy == '2' && JFBCFactory::config()->getSetting('show_powered_by_link')) || ($showPoweredBy == '1'));
-
-            if ($showJFBCPoweredBy)
-            {
-                jimport('sourcecoast.utilities');
-                $title = 'Facebook for Joomla';
-                $poweredByLabel = 'JFBConnect';
-                $link = SCLibraryUtilities::getAffiliateLink($jfbcAffiliateID);
-            }
-        }
-
-        if (isset($link))
-        {
-            return '<div class="powered-by">' . JText::_('MOD_SCLOGIN_POWERED_BY') . ' <a target="_blank" href="' . $link . '" title="' . $title . '">' . $poweredByLabel . '</a></div>';
-        }
-        return "";
-    }
-
-    function getType()
-    {
-        $user = JFactory::getUser();
-        return (!$user->get('guest')) ? 'logout' : 'login';
     }
 
     function getPasswordAndProfileLinks()
@@ -305,22 +189,150 @@ class modSCLoginHelper
         return $url;
     }
 
-    function getAvatarHtml($avatarURL, $profileURL, $profileURLTarget)
+    public function setupTheme()
     {
-        $html = '';
-        if ($avatarURL)
+        // Load our CSS and Javascript files
+        if (!$this->isJFBConnectInstalled)
+            $this->doc->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/sc_bootstrap.css');
+
+        $this->doc->addStyleSheet(JURI::base(true) . '/media/sourcecoast/css/common.css');
+
+        $paths = array();
+        $paths[] = JPATH_ROOT . '/templates/' . JFactory::getApplication()->getTemplate() . '/html/mod_sclogin/themes/';
+        $paths[] = JPATH_ROOT . '/media/sourcecoast/themes/sclogin/';
+        $theme = $this->params->get('theme', 'default.css');
+        $file = JPath::find($paths, $theme);
+        $file = str_replace(JPATH_SITE, '', $file);
+        $file = str_replace('\\', "/", $file); //Windows support for file separators
+        $this->doc->addStyleSheet(JURI::base(true) . $file);
+
+        // Add placeholder Javascript for old browsers that don't support the placeholder field
+        if ($this->user->guest)
         {
-            $picHeightParam = $this->params->get("profileHeight");
-            $picWidthParam = $this->params->get("profileWidth");
-            $picHeight = $picHeightParam != "" ? 'height="' . $picHeightParam . 'px"' : "";
-            $picWidth = $picWidthParam != "" ? 'width="' . $picWidthParam . 'px"' : "";
-
-            $html = '<img src="' . $avatarURL . '" ' . $picWidth . " " . $picHeight . ' />';
-
-            $isLinked = ($this->params->get("linkProfile") == 1);
-            if ($isLinked && $profileURL != '')
-                $html = '<a target="' . $profileURLTarget . '" href="' . $profileURL . '">' . $html . '</a>';
+            jimport('joomla.environment.browser');
+            $browser = JBrowser::getInstance();
+            $browserType = $browser->getBrowser();
+            $browserVersion = $browser->getMajor();
+            if (($browserType == 'msie') && ($browserVersion <= 9))
+            {
+                // Using addCustomTag to ensure this is the last section added to the head, which ensures that jfbcJQuery has been defined
+                $this->doc->addCustomTag('<script src="' . JURI::base(true) . '/media/sourcecoast/js/jquery.placeholder.js" type="text/javascript"> </script>');
+                $this->doc->addCustomTag("<script>jfbcJQuery(document).ready(function() { jfbcJQuery('input').placeholder(); });</script>");
+            }
         }
+    }
+
+    public function setupTwoFactorAuthentication()
+    {
+        // Two factor authentication check
+        $jVersion = new JVersion();
+        if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($this->user->guest))
+        {
+            $db = JFactory::getDbo();
+            // Check if TFA is enabled. If not, just return false
+            $query = $db->getQuery(true)
+                ->select('COUNT(*)')
+                ->from('#__extensions')
+                ->where('enabled=' . $db->q(1))
+                ->where('folder=' . $db->q('twofactorauth'));
+            $db->setQuery($query);
+            $tfaCount = $db->loadResult();
+
+            if ($tfaCount > 0)
+            {
+                $this->tfaLoaded = true;
+            }
+        }
+    }
+
+    public function setupJavascript()
+    {
+        $needsBootstrap = $this->params->get('displayType') == 'modal' ||
+            (!$this->user->guest && ($this->params->get('showUserMenu') && $this->params->get('userMenuStyle') == 0));
+        if (!$this->isJFBConnectInstalled)
+        {
+            if ($this->params->get('loadJQuery'))
+                $this->doc->addScript(JURI::base(true) . '/media/sourcecoast/js/jq-bootstrap-1.8.3.js');
+            if  ($needsBootstrap || $this->tfaLoaded)
+                $this->doc->addScriptDeclaration('if (typeof jfbcJQuery == "undefined") jfbcJQuery = jQuery;');
+        }
+
+        if ($this->tfaLoaded)
+        {
+            $this->doc->addScript(Juri::base(true) . '/media/sourcecoast/js/mod_sclogin.js');
+            $this->doc->addScriptDeclaration('sclogin.token = "' . JSession::getFormToken() . '";' .
+                //"jfbcJQuery(window).on('load',  function() {
+                // Can't use jQuery here because we don't know if jfbcJQuery has been loaded or not.
+                "window.onload = function() {
+                    sclogin.init();
+                };
+                sclogin.base = '" . JURI::base() . "';\n"
+            );
+        }
+
+    }
+
+    function getPoweredByLink()
+    {
+        $showPoweredBy = $this->params->get('showPoweredByLink');
+        if ($showPoweredBy == 0)
+            return;
+
+        if ($this->isJFBConnectInstalled)
+        {
+            $jfbcAffiliateID = JFBCFactory::config()->getSetting('affiliate_id');
+            $showJFBCPoweredBy = (($showPoweredBy == '2' && JFBCFactory::config()->getSetting('show_powered_by_link')) || ($showPoweredBy == '1'));
+
+            if ($showJFBCPoweredBy)
+            {
+                jimport('sourcecoast.utilities');
+                $title = 'Facebook for Joomla';
+                $poweredByLabel = 'JFBConnect';
+                $link = SCLibraryUtilities::getAffiliateLink($jfbcAffiliateID);
+            }
+        }
+
+        if (isset($link))
+        {
+            return '<div class="powered-by">' . JText::_('MOD_SCLOGIN_POWERED_BY') . ' <a target="_blank" href="' . $link . '" title="' . $title . '">' . $poweredByLabel . '</a></div>';
+        }
+        return "";
+    }
+
+    function getType()
+    {
+        $user = JFactory::getUser();
+        return (!$user->get('guest')) ? 'logout' : 'login';
+    }
+
+    function getSocialAvatar($registerType, $profileLink)
+    {
+        $html = "";
+        if ($this->params->get('enableProfilePic') == 'social')
+        {
+            $userId = $this->user->get('id');
+            $html = JFBCFactory::cache()->get('sclogin.avatar.' . $userId);
+            if ($html === false)
+            {
+                foreach ($this->providers as $provider)
+                {
+                    $html = $this->getProviderAvatar($provider, $this->user);
+                    if ($html != "")
+                    {
+                        JFBCFactory::cache()->store($html, 'sclogin.avatar.' . $userId);
+                        break;
+                    }
+                }
+            }
+        }
+        else // 'joomla')
+        {
+            $html = $this->getJoomlaAvatar($registerType, $profileLink, $this->user);
+        }
+
+        if ($html != "")
+            $html = '<div id="scprofile-pic">' . $html . '</div>';
+
         return $html;
     }
 
@@ -339,6 +351,25 @@ class modSCLoginHelper
             $avatarURL = $provider->profile->getAvatarUrl($providerId, false, $params);
             $profileURL = $provider->profile->getProfileUrl($providerId);
             $html = $this->getAvatarHtml($avatarURL, $profileURL, "_blank");
+        }
+        return $html;
+    }
+
+    function getAvatarHtml($avatarURL, $profileURL, $profileURLTarget)
+    {
+        $html = '';
+        if ($avatarURL)
+        {
+            $picHeightParam = $this->params->get("profileHeight");
+            $picWidthParam = $this->params->get("profileWidth");
+            $picHeight = $picHeightParam != "" ? 'height="' . $picHeightParam . 'px"' : "";
+            $picWidth = $picWidthParam != "" ? 'width="' . $picWidthParam . 'px"' : "";
+
+            $html = '<img src="' . $avatarURL . '" ' . $picWidth . " " . $picHeight . ' />';
+
+            $isLinked = ($this->params->get("linkProfile") == 1);
+            if ($isLinked && $profileURL != '')
+                $html = '<a target="' . $profileURLTarget . '" href="' . $profileURL . '">' . $html . '</a>';
         }
         return $html;
     }
@@ -377,37 +408,6 @@ class modSCLoginHelper
         return $html;
     }
 
-    function getSocialAvatar($registerType, $profileLink)
-    {
-        $html = "";
-        if ($this->params->get('enableProfilePic') == 'social')
-        {
-            $userId = $this->user->get('id');
-            $html = JFBCFactory::cache()->get('sclogin.avatar.' . $userId);
-            if ($html === false)
-            {
-                foreach ($this->providers as $provider)
-                {
-                    $html = $this->getProviderAvatar($provider, $this->user);
-                    if ($html != "")
-                    {
-                        JFBCFactory::cache()->store($html, 'sclogin.avatar.' . $userId);
-                        break;
-                    }
-                }
-            }
-        }
-        else // 'joomla')
-        {
-            $html = $this->getJoomlaAvatar($registerType, $profileLink, $this->user);
-        }
-
-        if ($html != "")
-            $html = '<div id="scprofile-pic">' . $html . '</div>';
-
-        return $html;
-    }
-
     function getLoginButtons($orientation, $alignment)
     {
         $login = '';
@@ -423,6 +423,20 @@ class modSCLoginHelper
             $login = JFBCFactory::getLoginButtons($params);
         }
         return $login;
+    }
+
+    private function getLoginButtonOrdering()
+    {
+        $providers = $this->params->get('loginbuttonsorder', '');
+        if ($providers != '')
+            return $providers;
+        else
+        {
+            $providers = array();
+            foreach ($this->providers as $p)
+                $providers[] = $p->systemName;
+            return $providers;
+        }
     }
 
     function getReconnectButtons($orientation, $alignment)
@@ -442,28 +456,141 @@ class modSCLoginHelper
         return JFBCFactory::getReconnectButtons($params);
     }
 
-    private function getLoginButtonOrdering()
+    function getForgotLinks()
     {
-        $providers = $this->params->get('loginbuttonsorder', '');
-        if ($providers != '')
-            return $providers;
-        else
+        $links = '';
+        $linksToShow = array();
+
+        if($this->params->get('showForgotUsername') == 'link')
+            $linksToShow[] = '<li><a href="' . $this->forgotUsernameLink . '">' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '</a></li>';
+        if($this->params->get('showForgotPassword') == 'link')
+            $linksToShow[] = '<li><a href="' . $this->forgotPasswordLink . '">' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '</a></li>';
+
+        if(count($linksToShow) > 0)
+            $links = '<ul>'.implode('',$linksToShow).'</ul>';
+
+        return $links;
+    }
+
+    function getUserMenu($userMenu, $menuStyle, $menuTitle='0')
+    {
+        $app = JFactory::getApplication();
+        $menu = $app->getMenu();
+        $menu_items = $menu->getItems('menutype', $userMenu);
+
+        $menuNav = '';
+        if ($count = count($menu_items))
         {
-            $providers = array();
-            foreach ($this->providers as $p)
-                $providers[] = $p->systemName;
-            return $providers;
+            $parentTitle = '';
+            if( $showMenuTitle = $this->params->get('showMenuTitle'))
+            {
+                if($menuTitle == '1') //Get User's name
+                    $parentTitle = JFactory::getUser()->get('name');
+                else
+                {
+                    $db = JFactory::getDbo();
+                    $db->setQuery('SELECT title FROM #__menu_types WHERE menutype=' . $db->quote($userMenu));
+                    $parentTitle = $db->loadResult();
+                }
+            }
+
+            $menulink = '';
+            $single = $count < 2;
+            foreach ($menu_items as $menuItem)
+                $menulink .= $this->getUserMenuItem($menuItem, $single);
+
+            if($menuStyle == '1') //Show in List view
+            {
+                if($count == 1 && !$showMenuTitle) //we only show a simple link since its only 1 item and we don't show the menu title
+                    $menuNav .= '<div class="scuser-menu pull-left">' . $menulink . '</div>';
+                else
+                {
+                    $menuNav .= '<div class="scuser-menu list-view">';
+                    $menuNav .= '<ul class="menu nav"><li>';
+
+                    if($showMenuTitle)
+                        $menuNav .= '<span>' . $parentTitle . '</span>';
+
+                    $menuNav .= '<ul class="flat-list">' . $menulink . '</ul>';
+                    $menuNav .= '</li></ul>';
+                    $menuNav .= '</div>';
+                }
+            }
+            else //Show in Bootstrap dropdown list
+            {
+                if($count == 1 && !$showMenuTitle) //we only show a simple link since its only 1 item and we don't show the menu title
+                    $menuNav .= '<div class="scuser-menu pull-left">' . $menulink . '</div>';
+                else
+                {
+                    if ($this->isJFBConnectInstalled)
+                        $ddName = JFBCFactory::config()->getSetting('jquery_load') ? 'sc-dropdown' : 'dropdown';
+                    else
+                        $ddName = $this->params->get('loadJQuery') ? 'sc-dropdown' : 'dropdown';
+
+                    $menuNav = '<div class="scuser-menu dropdown-view">';
+                    $menuNav .= '<div class="btn-group">';
+                    $menuNav .= '<a class="btn dropdown-toggle" data-toggle="' . $ddName . '" href="#">' . $parentTitle . '<span class="caret"></span></a>';
+                    $menuNav .= '<ul class="dropdown-menu">' . $menulink . '</ul>';
+                    $menuNav .= '</div>';
+                    $menuNav .= '</div>';
+                }
+            }
         }
+
+        return $menuNav;
+    }
+
+    private function getUserMenuItem($item, $single = false)
+    {
+        $url = $this->getMenuIdUrl($item->id);
+
+        if ($item->type == 'url')
+        {
+            if ($item->link == 'sclogout')
+                $url = JRoute::_('index.php?option=com_users&task=user.logout&return=' . $this->getLoginRedirect('jlogout') . '&' . JSession::getFormToken() . '=1');
+            if ($item->link == 'scconnect')
+            {
+                $params['image'] = 'icon.png';
+                $html = $single ? $item->title : '<li class="connect">' . $item->title;
+                $html .= JFBCFactory::getReconnectButtons($params);
+                $html .= $single ? '' : '</li>';
+                return $html;
+            }
+        }
+
+        $target = $item->browserNav == 1 ? ' target="_blank" ' : '';
+        $class = $single && !$this->params->get('userMenuStyle') ? 'class="btn"' : '';
+        $link = '<a '.$class.' href="' . $url . '"' . $target . '>' . $item->title . '</a>';
+
+        return $single ? $link : '<li>' . $link . '</li>';
+    }
+
+    public function getRememberMeValue()
+    {
+        $showRememberMeParam = $this->params->get('showRememberMe');
+        if($showRememberMeParam == '0' || $showRememberMeParam == '2')
+            return "";
+        else
+            return 'checked="checked" value="yes"';
+    }
+
+    public function showRememberMe()
+    {
+        $showRememberMeParam = $this->params->get('showRememberMe');
+        if($showRememberMeParam == '2' || $showRememberMeParam == '3')
+            return false;
+        else
+            return true;
+    }
+
+    function getForgotUser($registerType, $showForgotUsername, $forgotLink, $forgotUsernameLink, $buttonImageColor)
+    {
+        return $this->getForgotUserButton();
     }
 
     function getForgotUserButton()
     {
         return $this->getForgotButton($this->params->get('showForgotUsername'), $this->forgotLink, $this->forgotUsernameLink, JText::_('MOD_SCLOGIN_FORGOT_LOGIN'), JText::_('MOD_SCLOGIN_FORGOT_USERNAME'), $this->params->get('register_type'));
-    }
-
-    function getForgotPasswordButton()
-    {
-        return $this->getForgotButton($this->params->get('showForgotPassword'), $this->forgotLink, $this->forgotPasswordLink, JText::_('MOD_SCLOGIN_FORGOT_LOGIN'), JText::_('MOD_SCLOGIN_FORGOT_PASSWORD'), $this->params->get('register_type'));
     }
 
     private function getForgotButton($showForgotButtonType, $forgotSharedLink, $forgotButtonLink, $forgotSharedText, $forgotButtonText, $registerType)
@@ -489,127 +616,15 @@ class modSCLoginHelper
         return $forgotButton;
     }
 
-    function getForgotLinks()
-    {
-        $links = '';
-        $linksToShow = array();
-
-        if($this->params->get('showForgotUsername') == 'link')
-            $linksToShow[] = '<li><a href="' . $this->forgotUsernameLink . '">' . JText::_('MOD_SCLOGIN_FORGOT_USERNAME') . '</a></li>';
-        if($this->params->get('showForgotPassword') == 'link')
-            $linksToShow[] = '<li><a href="' . $this->forgotPasswordLink . '">' . JText::_('MOD_SCLOGIN_FORGOT_PASSWORD') . '</a></li>';
-
-        if(count($linksToShow) > 0)
-            $links = '<ul>'.implode('',$linksToShow).'</ul>';
-
-        return $links;
-    }
-
-    function getUserMenu($userMenu, $menuStyle, $menuTitle='0')
-    {
-        $app = JFactory::getApplication();
-        $menu = $app->getMenu();
-        $menu_items = $menu->getItems('menutype', $userMenu);
-
-        if (!empty($menu_items))
-        {
-            if($menuTitle == '1') //Get User's name
-            {
-                $user = JFactory::getUser();
-                $parentTitle = $user->get('name');
-            }
-            else
-            {
-                $db = JFactory::getDbo();
-                $query = 'SELECT title FROM #__menu_types WHERE menutype=' . $db->quote($userMenu);
-                $db->setQuery($query);
-                $parentTitle = $db->loadResult();
-            }
-
-            if ($menuStyle) //Show in List view
-            {
-                $menuNav = '<div class="scuser-menu list-view">';
-                //$menuNav .= '<ul class="menu nav"><li class="dropdown"><span>'.$parentTitle.'</span>';
-                $menuNav .= '<ul class="menu nav"><li><span>' . $parentTitle . '</span>';
-                //$menuNav .= '<ul class="dropdown-menu">';
-                $menuNav .= '<ul class="flat-list">';
-                foreach ($menu_items as $menuItem)
-                    $menuNav .= $this->getUserMenuItem($menuItem);
-                $menuNav .= '</ul>';
-                $menuNav .= '</li></ul>';
-                $menuNav .= '</div>';
-            }
-            else //Show in Bootstrap dropdown list
-            {
-                if ($this->isJFBConnectInstalled)
-                    $ddName = JFBCFactory::config()->getSetting('jquery_load') ? 'sc-dropdown' : 'dropdown';
-                else
-                    $ddName = $this->params->get('loadJQuery') ? 'sc-dropdown' : 'dropdown';
-
-                $menuNav = '<div class="scuser-menu dropdown-view">';
-                $menuNav .= '<div class="btn-group">';
-                $menuNav .= '<a class="btn dropdown-toggle" data-toggle="' . $ddName . '" href="#">' . $parentTitle . '<span class="caret"></span></a>';
-                $menuNav .= '<ul class="dropdown-menu">';
-                foreach ($menu_items as $menuItem)
-                    $menuNav .= $this->getUserMenuItem($menuItem);
-                $menuNav .= '</ul>';
-                $menuNav .= '</div>';
-                $menuNav .= '</div>';
-            }
-
-        }
-        else
-            $menuNav = '';
-        return $menuNav;
-    }
-
-    private function getUserMenuItem($item)
-    {
-        $url = $this->getMenuIdUrl($item->id);
-
-        if ($item->type == 'url')
-        {
-            if ($item->link == 'sclogout')
-                $url = JRoute::_('index.php?option=com_users&task=user.logout&return=' . $this->getLoginRedirect('jlogout') . '&' . JSession::getFormToken() . '=1');
-            if ($item->link == 'scconnect')
-            {
-                $params['image'] = 'icon.png';
-                $html = '<li class="connect">' . $item->title;
-                $html .= JFBCFactory::getReconnectButtons($params);
-                $html .= '</li>';
-                return $html;
-            }
-        }
-        $target = $item->browserNav == 1 ? ' target="_blank" ' : '';
-        return '<li><a href="' . $url . '"' . $target . '>' . $item->title . '</a></li>';
-    }
-
-    public function getRememberMeValue()
-    {
-        $showRememberMeParam = $this->params->get('showRememberMe');
-        if($showRememberMeParam == '0' || $showRememberMeParam == '2')
-            return "";
-        else
-            return 'checked="checked" value="yes"';
-    }
-
-    public function showRememberMe()
-    {
-        $showRememberMeParam = $this->params->get('showRememberMe');
-        if($showRememberMeParam == '2' || $showRememberMeParam == '3')
-            return false;
-        else
-            return true;
-    }
-
     /* DEPRECATED 6.1 */
-    function getForgotUser($registerType, $showForgotUsername, $forgotLink, $forgotUsernameLink, $buttonImageColor)
-    {
-        return $this->getForgotUserButton();
-    }
 
     function getForgotPassword($registerType, $showForgotPassword, $forgotLink, $forgotPasswordLink, $buttonImageColor)
     {
         return $this->getForgotPasswordButton();
+    }
+
+    function getForgotPasswordButton()
+    {
+        return $this->getForgotButton($this->params->get('showForgotPassword'), $this->forgotLink, $this->forgotPasswordLink, JText::_('MOD_SCLOGIN_FORGOT_LOGIN'), JText::_('MOD_SCLOGIN_FORGOT_PASSWORD'), $this->params->get('register_type'));
     }
 }
