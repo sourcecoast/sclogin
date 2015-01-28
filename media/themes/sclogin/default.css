@@ -23,7 +23,8 @@ div.social-login.reconnect:nth-of-type(2) {
     clear:left;
 }
 
-.sclogin-social-login .pull-left {
+.sclogin-social-login .pull-left,
+.social-login.reconnect.pull-left {
     margin:5px;
 }
 

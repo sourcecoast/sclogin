@@ -194,7 +194,8 @@ input#sclogin-passwd.input-block-level {
     padding-left: 15px;
 }
 
-.sclogin-social-login .pull-left {
+.sclogin-social-login .pull-left,
+.social-login.reconnect.pull-left {
     margin:5px;
 }
 
