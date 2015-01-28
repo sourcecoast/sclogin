@@ -380,7 +380,7 @@ class modSCLoginHelper
     function getSocialAvatar($registerType, $profileLink)
     {
         $html = "";
-        if ($this->params->get('enableProfilePic') == 'social')
+        if ($this->params->get('enableProfilePic') == 'social' && $this->isJFBConnectInstalled)
         {
             $userId = $this->user->get('id');
             $html = JFBCFactory::cache()->get('sclogin.avatar.' . $userId);
