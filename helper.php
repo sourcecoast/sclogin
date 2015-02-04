@@ -505,23 +505,21 @@ class modSCLoginHelper
         return $links;
     }
 
-    function getUserMenu($userMenu, $menuStyle, $menuTitle='0')
+    function getUserMenu($userMenu, $menuStyle, $menuTitle='1')
     {
         $app = JFactory::getApplication();
         $menu = $app->getMenu();
         $menu_items = $menu->getItems('menutype', $userMenu);
-        $showMenuTitle = $this->params->get('showMenuTitle');
 
         if (!empty($menu_items))
         {
             $parentTitle = '';
-
-            if($menuTitle && $showMenuTitle) //Get User's name
+            if($menuTitle == '2') // Get User's name
             {
                 $user = JFactory::getUser();
                 $parentTitle = $user->get('name');
             }
-            elseif(!$menuTitle && $showMenuTitle)
+            elseif($menuTitle == '1') // Get Menu Name
             {
                 $db = JFactory::getDbo();
                 $query = 'SELECT title FROM #__menu_types WHERE menutype=' . $db->quote($userMenu);
