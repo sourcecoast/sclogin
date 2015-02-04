@@ -7,7 +7,7 @@
  * @build-date      @DATE@
  */
 
- // no direct access
+// no direct access
 defined('_JEXEC') or die('Restricted access');
 
 jimport('joomla.filesystem.file');
@@ -505,7 +505,7 @@ class modSCLoginHelper
         return $links;
     }
 
-    function getUserMenu($userMenu, $menuStyle, $menuTitle='0')
+    function getUserMenu($userMenu, $menuStyle, $menuTitle='1')
     {
         $app = JFactory::getApplication();
         $menu = $app->getMenu();
@@ -513,12 +513,13 @@ class modSCLoginHelper
 
         if (!empty($menu_items))
         {
-            if($menuTitle == '1') //Get User's name
+            $parentTitle = '';
+            if($menuTitle == '2') // Get User's name
             {
                 $user = JFactory::getUser();
                 $parentTitle = $user->get('name');
             }
-            else
+            elseif($menuTitle == '1') // Get Menu Name
             {
                 $db = JFactory::getDbo();
                 $query = 'SELECT title FROM #__menu_types WHERE menutype=' . $db->quote($userMenu);
