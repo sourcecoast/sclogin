@@ -18,7 +18,7 @@ $modId = JRequest::getInt('mod_id');
                 <div class="controls">
                     <div class="input-append">
                         <input name="secretkey" tabindex="1" id="sclogin-input-secretkey" alt="secretkey" type="text" class="input-medium"
-                               placeholder="<?php echo JText::_('MOD_SCLOGIN_SECRETKEY'); ?>">
+                               placeholder="<?php echo JText::_('MOD_SCLOGIN_SECRETKEY'); ?>" />
                     </div>
                 </div>
             </div>
