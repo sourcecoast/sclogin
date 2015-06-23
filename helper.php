@@ -172,7 +172,8 @@ class modSCLoginHelper
             $jspath = JPATH_BASE . '/components/com_community';
             include_once($jspath . '/libraries/core.php');
             $this->registerLink = CRoute::_('index.php?option=com_community&view=register');
-            $this->profileLink = CRoute::_('index.php?option=com_community');
+            $user = JFactory::getUser();
+            $this->profileLink = CRoute::_('index.php?option=com_community&view=profile&userid='. $user->id);
         }
         else if ($registerType == 'easysocial' && file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/foundry.php'))
         {
