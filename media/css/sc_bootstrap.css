@@ -550,7 +550,6 @@
   filter: alpha(opacity=80);
 }
 .sourcecoast .modal {
-  bottom: inherit;
   position: fixed;
   top: 10%;
   left: 50%;
@@ -4065,4 +4064,7 @@
 }
 .sourcecoast .affix {
   position: fixed;
+}
+.sourcecoast.modal {
+  bottom: inherit;
 }
