@@ -70,8 +70,7 @@ class SourcecoastTfaCheckWeb extends JApplicationWeb
 
                 if ($result && $result->otpKey != '')
                 {
-                    //jimport('sourcecoast.utilities');
-                    //SCStringUtilities::loadLanguage('mod_sclogin');
+                    //JFBConnectUtilities::loadLanguage('mod_sclogin');
                     JFactory::getLanguage()->load('mod_sclogin');
 
                     //$password = JRequest::getString('p', '', 'POST', JREQUEST_ALLOWRAW);

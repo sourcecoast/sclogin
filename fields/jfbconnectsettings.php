@@ -19,8 +19,7 @@ if (JFile::exists($factoryPath))
 
 if (class_exists('JFBCFactory'))
 {
-    jimport('sourcecoast.utilities');
-    SCStringUtilities::loadLanguage('com_jfbconnect', JPATH_ADMINISTRATOR);
+    JFBConnectUtilities::loadLanguage('com_jfbconnect', JPATH_ADMINISTRATOR);
 
     class JFormFieldJFBConnectSettings extends JFormField
     {
