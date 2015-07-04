@@ -143,6 +143,7 @@ class modSCLoginHelper
 
             if ($showJFBCPoweredBy)
             {
+                jimport('sourcecoast.utilities');
                 $title = 'Facebook for Joomla';
                 $poweredByLabel = 'JFBConnect';
                 $link = SCLibraryUtilities::getAffiliateLink($jfbcAffiliateID);
