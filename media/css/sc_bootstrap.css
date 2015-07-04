@@ -4065,3 +4065,6 @@
 .sourcecoast .affix {
   position: fixed;
 }
+.sourcecoast.modal {
+  bottom: inherit;
+}
