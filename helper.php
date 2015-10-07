@@ -350,7 +350,7 @@ class modSCLoginHelper
         if ($registerType == 'jomsocial' && file_exists(JPATH_BASE . '/components/com_community/libraries/core.php'))
         {
             $jsUser = CFactory::getUser($user->id);
-            $avatarURL = $jsUser->getAvatar();
+            $avatarURL = $jsUser->getThumbAvatar();
             $html = $this->getAvatarHtml($avatarURL, $profileLink, "_self");
         }
         else if ($registerType == 'easysocial' && file_exists(JPATH_ADMINISTRATOR . '/components/com_easysocial/includes/foundry.php'))
