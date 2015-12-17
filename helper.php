@@ -249,7 +249,7 @@ class modSCLoginHelper
         if (!$url)
         {
             $uri = JURI::getInstance();
-            $url = $uri->toString(array('path', 'query'));
+            $url = $uri->toString(array('scheme', 'host', 'path', 'query'));
         }
 
         // Finally, if we're getting the logout URL, make sure we're not going back to a registered page
@@ -266,7 +266,7 @@ class modSCLoginHelper
                 if ($menuItem && $menuItem->access != "1")
                 {
                     $default = JFactory::getApplication()->getMenu()->getDefault();
-                    $url = JRoute::_($default->link . '&Itemid=' . $default->id, false);
+                    $url = 'index.php?Itemid=' . $default->id;
                 }
             }
         }
@@ -291,14 +291,9 @@ class modSCLoginHelper
                     if ($item->type == 'alias')
                         $itemId = $item->params->get('aliasoptions');
 
-                    $router = JFactory::getApplication()->getRouter();
                     if ($item->link)
                     {
-                        if ($router->getMode() == JROUTER_MODE_SEF)
-                            $url = 'index.php?Itemid=' . $itemId;
-                        else
-                            $url = $item->link . '&Itemid=' . $itemId;
-                        $url = JRoute::_($url, false);
+                        $url = 'index.php?Itemid=' . $itemId;
                     }
                 }
             }
