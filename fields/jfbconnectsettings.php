@@ -27,6 +27,10 @@ if (!class_exists('JFBCFactory') && JFile::exists($factoryPath))
                     require_once JPATH_SITE . '/components/com_jfbconnect/autoloader.php';
                     JFBConnectAutoloader::register('Joomla');
                 }
+                else {
+                    jimport('sourcecoast.utilities');
+                    class JFBConnectUtilities extends SCStringUtilities {};
+                }
             }
         }
     }
