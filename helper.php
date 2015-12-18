@@ -248,8 +248,7 @@ class modSCLoginHelper
         // If no URL determined from the Itemid set, use the current page
         if (!$url)
         {
-            $uri = JURI::getInstance();
-            $url = $uri->toString(array('scheme', 'host', 'path', 'query'));
+            $url = JURI::getInstance()->toString();
         }
 
         // Finally, if we're getting the logout URL, make sure we're not going back to a registered page
