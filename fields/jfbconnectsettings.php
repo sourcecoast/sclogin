@@ -12,9 +12,24 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.form.helper');
 
 $factoryPath = JPATH_SITE . '/components/com_jfbconnect/libraries/factory.php';
-if (JFile::exists($factoryPath))
+if (!class_exists('JFBCFactory') && JFile::exists($factoryPath))
 {
-    require_once $factoryPath;
+    $table = JTable::getInstance('extension');
+    $id = $table->find(array('element' => 'com_jfbconnect'));
+    if ($id) {
+        $table->load($id);
+        $componentInfo = json_decode($table->manifest_cache, true);
+        if ($componentInfo) {
+            $version = $componentInfo['version'];
+            if ($version) {
+                require_once $factoryPath;
+                if (version_compare($version, '6.5.0', '>=')) {
+                    require_once JPATH_SITE . '/components/com_jfbconnect/autoloader.php';
+                    JFBConnectAutoloader::register('Joomla');
+                }
+            }
+        }
+    }
 }
 
 if (class_exists('JFBCFactory'))
@@ -67,7 +82,7 @@ else
         public function getInput()
         {
             JFactory::getDocument()->addStyleDeclaration(
-                    '.jfbcButtonImg {margin-bottom:10px;}
+                '.jfbcButtonImg {margin-bottom:10px;}
                     .jfbcLearnMore {clear:left;margin-top:30px;}
                     .jfbcLearnMore a {color:#FFFFFF;}
                     .jfbc-btn-buynow{background-color:#F79C4B; padding:16px 20px; font-size:14px;text-decoration:none;border-radius:5px}
