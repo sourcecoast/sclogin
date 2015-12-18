@@ -12,33 +12,18 @@ defined('JPATH_PLATFORM') or die;
 jimport('joomla.form.helper');
 
 $factoryPath = JPATH_SITE . '/components/com_jfbconnect/libraries/factory.php';
-if (!class_exists('JFBCFactory') && JFile::exists($factoryPath))
-{
-    $table = JTable::getInstance('extension');
-    $id = $table->find(array('element' => 'com_jfbconnect'));
-    if ($id) {
-        $table->load($id);
-        $componentInfo = json_decode($table->manifest_cache, true);
-        if ($componentInfo) {
-            $version = $componentInfo['version'];
-            if ($version) {
-                require_once $factoryPath;
-                if (version_compare($version, '6.5.0', '>=')) {
-                    require_once JPATH_SITE . '/components/com_jfbconnect/autoloader.php';
-                    JFBConnectAutoloader::register('Joomla');
-                }
-                else {
-                    jimport('sourcecoast.utilities');
-                    class JFBConnectUtilities extends SCStringUtilities {};
-                }
-            }
-        }
-    }
-}
+if (JFile::exists($factoryPath))
+    require_once($factoryPath);
 
-if (class_exists('JFBCFactory'))
-{
-    JFBConnectUtilities::loadLanguage('com_jfbconnect', JPATH_ADMINISTRATOR);
+if (class_exists('JFBCFactory')) {
+    if (method_exists('JFBCFactory', 'initializeJoomla'))
+        JFBCFactory::initializeJoomla();
+    else {
+        jimport('sourcecoast.utilities'); // Call no longer necessary in v6.5, but left for compatibility with older JFBC versions
+    }
+    $jlang = JFactory::getLanguage();
+    $jlang->load('com_jfbconnect', JPATH_ADMINISTRATOR, 'en-GB', true); // Load English (British)
+    $jlang->load('com_jfbconnect', JPATH_ADMINISTRATOR, null, true); // Load the currently selected language
 
     class JFormFieldJFBConnectSettings extends JFormField
     {
@@ -51,19 +36,15 @@ if (class_exists('JFBCFactory'))
             $p['params'] = $params;
             $form->bind($p);
 
-            foreach ($form->getFieldsets() as $fiedsets => $fieldset)
-            {
+            foreach ($form->getFieldsets() as $fiedsets => $fieldset) {
                 if (version_compare(JVERSION, '3.2.3', '<='))
                     $html[] = '<ul class="adminformlist">';
-                foreach ($form->getFieldset($fieldset->name) as $field)
-                {
-                    if (version_compare(JVERSION, '3.2.3', '<='))
-                    {
+                foreach ($form->getFieldset($fieldset->name) as $field) {
+                    if (version_compare(JVERSION, '3.2.3', '<=')) {
                         $label = $field->getLabel();
                         $input = $field->getInput();
                         $html[] = '<li>' . $label . $input . '</li>';
-                    }
-                    else
+                    } else
                         $html[] = $field->renderField();
                 }
                 if (version_compare(JVERSION, '3.2.3', '<='))
@@ -78,9 +59,7 @@ if (class_exists('JFBCFactory'))
             return "";
         }
     }
-}
-else
-{
+} else {
     class JFormFieldJFBConnectSettings extends JFormFieldList
     {
         public function getInput()
@@ -93,10 +72,10 @@ else
                     .jfbc-btn-buynow:hover{background-color:rgba(247,130,60,0.6);text-decoration:none;border-radius:5px}
                 ');
 
-            $jfbcNotDetected = '<h3>'.JText::_('MOD_SCLOGIN_SOCIAL_JFBC_NOT_DETECTED').'</h3>';
-            $jfbcInstructions = '<div style="clear:left"><p>'.JText::_('MOD_SCLOGIN_SOCIAL_JFBC_LEARN_MORE1').'</p><p>'.JText::_('MOD_SCLOGIN_SOCIAL_JFBC_LEARN_MORE2').'</p></div>';
+            $jfbcNotDetected = '<h3>' . JText::_('MOD_SCLOGIN_SOCIAL_JFBC_NOT_DETECTED') . '</h3>';
+            $jfbcInstructions = '<div style="clear:left"><p>' . JText::_('MOD_SCLOGIN_SOCIAL_JFBC_LEARN_MORE1') . '</p><p>' . JText::_('MOD_SCLOGIN_SOCIAL_JFBC_LEARN_MORE2') . '</p></div>';
             $loginImage = '<div class="jfbcButtonImg"><img src="' . JURI::root() . 'modules/mod_sclogin/fields/images/socialloginbuttons.png' . '"/></div>';
-            $buyNow = '<div class="jfbcLearnMore"><a class="jfbc-btn-buynow" href="https://www.sourcecoast.com/l/jfbconnect-for-sclogin" target="_blank">'.JText::_('MOD_SCLOGIN_SOCIAL_JFBC_LEARN_MORE').'</a></div>';
+            $buyNow = '<div class="jfbcLearnMore"><a class="jfbc-btn-buynow" href="https://www.sourcecoast.com/l/jfbconnect-for-sclogin" target="_blank">' . JText::_('MOD_SCLOGIN_SOCIAL_JFBC_LEARN_MORE') . '</a></div>';
 
             return $jfbcNotDetected . $loginImage . $jfbcInstructions . $buyNow;
         }
