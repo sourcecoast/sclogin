@@ -38,8 +38,17 @@ if ($params->get('showLogoutButton'))
             <form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure'));?>" method="post" id="sclogin-form">
                 <div class="logout-button" id="scLogoutButton">
                     <input type="submit" name="Submit" class="<?php echo $logoutClass;?>" value="<?php echo JText::_('JLOGOUT');?>" />
+
+                    <?php $option = JFactory::getApplication()->input->get('option');?>
+                    <?php if($option == 'com_easysocial'):?>
+                    <input type="hidden" name="option" value="com_easysocial" />
+                    <input type="hidden" name="controller" value="account" />
+                    <input type="hidden" name="task" value="logout" />
+                    <?php else:?>
                     <input type="hidden" name="option" value="com_users" />
                     <input type="hidden" name="task" value="user.logout" />
+                    <?php endif;?>
+
                     <input type="hidden" name="return" value="<?php echo $jLogoutUrl;?>" />
                     <?php echo JHtml::_('form.token')?>
                 </div>
