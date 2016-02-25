@@ -369,6 +369,11 @@ class modSCLoginHelper
                 $avatarURL = JRoute::_('media/kunena/avatars/' . $avatarURL, false);
             $html = $this->getAvatarHtml($avatarURL, $profileLink, "_self");
         }
+        else if ($registerType == 'k2' && JFile::exists(JPATH_SITE . '/components/com_k2/helpers/utilities.php'))
+        {
+            include_once(JPATH_SITE.'/components/com_k2/helpers/utilities.php');
+            $html =  $this->getAvatarHtml( K2HelperUtilities::getAvatar($user->id) , '', '');
+        }
         return $html;
     }
 

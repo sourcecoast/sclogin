@@ -168,6 +168,7 @@
                     <option value="easysocial">EasySocial</option>
                     <option value="jomsocial">JomSocial</option>
                     <option value="joomla">Joomla</option>
+                    <option value="k2">K2</option>
                     <option value="kunena">Kunena</option>
                     <option value="virtuemart">Virtuemart</option>
                     <option value="custom">MOD_SCLOGIN_LOGIN_REG_COMPONENT_OPTION_CUSTOM</option>
