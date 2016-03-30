@@ -86,7 +86,7 @@ class modSCLoginHelper
         $jVersion = new JVersion();
         if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($this->user->guest))
         {
-            $db = JFactory::getDbo();
+           /** $db = JFactory::getDbo();
             // Check if TFA is enabled. If not, just return false
             $query = $db->getQuery(true)
                 ->select('COUNT(*)')
@@ -95,11 +95,28 @@ class modSCLoginHelper
                 ->where('folder=' . $db->q('twofactorauth'));
             $db->setQuery($query);
             $tfaCount = $db->loadResult();
+            **/
 
-            if ($tfaCount > 0)
+            $this->tfaLoaded = false;
+            $plugins = JPluginHelper::getPlugin('twofactorauth');
+
+            if (count($plugins))
             {
-                $this->tfaLoaded = true;
+                //check section
+                // site = 1, administrator = 2, both = 3
+                foreach($plugins as $plugin)
+                {
+                    $temp = new JRegistry($plugin->params);
+                    $tempO = $temp->toObject();
+
+                    //set TFA to true if section params is either 1, 3 or empty
+                    if(in_array($tempO->section, array(1, 3)) || !isset($tempO->section))
+                    {
+                        $this->tfaLoaded = true;
+                    }
+                }
             }
+
         }
     }
 
