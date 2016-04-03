@@ -25,6 +25,7 @@ if ($params->get('showLoginForm'))
         if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')) // Use Community Builder's login
         {
             include_once(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php');
+            require_once(JPATH_ADMINISTRATOR . '/components/com_comprofiler/library/cb/cb.database.php');
             global $_CB_framework;
             $isCB = true;
             $action = $_CB_framework->viewUrl( 'login', true, null, 'html', $params->get('usesecure') );
