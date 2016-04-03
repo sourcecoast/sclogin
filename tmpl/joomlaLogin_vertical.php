@@ -19,7 +19,18 @@ if ($params->get('showLoginForm'))
     ?>
 
     <div class="sclogin-joomla-login vertical <?php echo $joomlaSpan; ?>">
-        <form action="<?php echo JRoute::_('index.php', true, $params->get('usesecure')); ?>" method="post" id="sclogin-form<?php echo $module->id; ?>">
+        <?php
+        $action = JRoute::_('index.php', true, $params->get('usesecure'));
+        $isCB = false;
+        if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')) // Use Community Builder's login
+        {
+            include_once(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php');
+            global $_CB_framework;
+            $isCB = true;
+            $action = $_CB_framework->viewUrl( 'login', true, null, 'html', $params->get('usesecure') );
+        }
+        ?>
+        <form action="<?php echo $action; ?>" method="post" id="sclogin-form<?php echo $module->id; ?>">
             <fieldset class="input-block-level userdata">
                 <div class="control-group" id="form-sclogin-username">
                     <div class="controls input-block-level">
@@ -66,10 +77,8 @@ if ($params->get('showLoginForm'))
 
 
                 <?php
-                if ($registerType == "communitybuilder" && file_exists(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php')) // Use Community Builder's login
+                if($isCB) // Use Community Builder's login
                 {
-                    include_once(JPATH_ADMINISTRATOR . '/components/com_comprofiler/plugin.foundation.php');
-                    global $_CB_framework;
                     echo '<input type="hidden" name="option" value="com_comprofiler" />' . "\n";
                     echo '<input type="hidden" name="task" value="login" />' . "\n";
                     echo '<input type="hidden" name="op2" value="login" />' . "\n";
