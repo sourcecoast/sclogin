@@ -23,6 +23,8 @@ require_once JPATH_LIBRARIES . '/cms.php';
 error_reporting(0); // We can do this since this is our own (and only) entry-point
 ini_set('display_errors', 0);
 
+require_once JPATH_CONFIGURATION . '/configuration.php';
+
 /**
  * A command line cron job to attempt to remove files that should have been deleted at update.
  *
