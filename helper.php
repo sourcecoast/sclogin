@@ -106,14 +106,19 @@ class modSCLoginHelper
                 // site = 1, administrator = 2, both = 3
                 foreach($plugins as $plugin)
                 {
-                    $temp = new JRegistry($plugin->params);
-                    $tempO = $temp->toObject();
-
-                    //set TFA to true if section params is either 1, 3 or empty
-                    if(in_array($tempO->section, array(1, 3)) || !isset($tempO->section))
+                    if($plugin->params != '')
                     {
-                        $this->tfaLoaded = true;
+                        $temp = new JRegistry($plugin->params);
+                        $tempO = $temp->toObject();
+
+                        //set TFA to true if section params is either 1, 3 or empty
+                        if(in_array($tempO->section, array(1, 3)) || !isset($tempO->section))
+                        {
+                            $this->tfaLoaded = true;
+                        }
                     }
+                    else
+                        $this->tfaLoaded = true;
                 }
             }
 
