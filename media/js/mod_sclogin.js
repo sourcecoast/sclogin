@@ -35,15 +35,13 @@ var sclogin =
                         jfbcJQuery(otpForm).find("form").append(value);
                     });
                     // Copy the username/password fields
-                    var usernameField = jfbcJQuery(formId + ' :input[name=username]')[0].clone();
-                    usernameField.type = 'hidden';
-                    usernameField.val = username;
-                    jfbcJQuery(otpForm).find("form").append(usernameField.outerHTML);
+                    var usernameField = jfbcJQuery(formId + ' :input[name=username]').eq(0).clone(true);
+                    usernameField.attr('type', 'hidden');
+                    jfbcJQuery(otpForm).find("form").append(usernameField);
 
-                    var passwordField = jfbcJQuery(formId + ' :input[name=password]')[0].clone();
-                    passwordField.type = 'hidden';
-                    passwordField.val = password;
-                    jfbcJQuery(otpForm).find("form").append(passwordField.outerHTML);
+                    var passwordField = jfbcJQuery(formId + ' :input[name=password]').eq(0).clone(true);
+                    passwordField.attr('type', 'hidden');
+                    jfbcJQuery(otpForm).find("form").append(passwordField);
 
                     jfbcJQuery('#sclogin-' + modId).fadeOut('1000', function ()
                     {
