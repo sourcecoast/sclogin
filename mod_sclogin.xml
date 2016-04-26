@@ -43,6 +43,7 @@
     </media>
     <languages folder="translations">
         <language tag="ar-AA">ar-AA.mod_sclogin.ini</language>
+        <language tag="bg-BG">bg-BG.mod_sclogin.ini</language>
         <language tag="ca-ES">ca-ES.mod_sclogin.ini</language>
         <language tag="cs-CZ">cs-CZ.mod_sclogin.ini</language>
         <language tag="da-DK">da-DK.mod_sclogin.ini</language>
