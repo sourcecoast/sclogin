@@ -604,7 +604,11 @@ class modSCLoginHelper
             }
         }
         $target = $item->browserNav == 1 ? ' target="_blank" ' : '';
-        return '<li><a href="' . $url . '"' . $target . '>' . $item->title . '</a></li>';
+        $image = $item->params->get('menu_image');
+        if($image)
+            $image = '<img src="'. JURI::root().$image .'" height="30" width="30" />&nbsp;&nbsp;';
+
+        return '<li><a href="' . $url . '"' . $target . '>' . $image . $item->title . '</a></li>';
     }
 
     public function getRememberMeValue()
