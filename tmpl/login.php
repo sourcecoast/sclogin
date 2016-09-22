@@ -79,9 +79,12 @@ if ($params->get('displayType') == 'modal')
 jfbcJQuery(document).ready(function() {
     jfbcJQuery("#login-modal").appendTo("body");
 });
+jfbcJQuery("#login-modal").on("shown.bs.modal", function () {
+	jfbcJQuery("#sclogin-username").focus();
+})
 jfbcJQuery("#login-modal").on("show", function() {
-        jfbcJQuery("#login-modal").css({"margin-left": function() {return -(jfbcJQuery("#login-modal").width() / 2)}})
-        });
+    jfbcJQuery("#login-modal").css({"margin-left": function() {return -(jfbcJQuery("#login-modal").width() / 2)}})
+});
 </script>';
     }
 }

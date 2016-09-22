@@ -36,7 +36,7 @@ if ($params->get('showLoginForm'))
                 <div class="control-group pull-left" id="form-sclogin-username">
                     <div class="controls">
                         <div class="input-append">
-                            <input name="username" tabindex="0" id="sclogin-username" alt="username" type="text" class="input-small"
+                            <input name="username" tabindex="0" autofocus id="sclogin-username" alt="username" type="text" class="input-small"
                                    placeholder="<?php echo JText::_('MOD_SCLOGIN_USERNAME'); ?>">
                             <?php echo $helper->getForgotUserButton(); ?>
                         </div>
