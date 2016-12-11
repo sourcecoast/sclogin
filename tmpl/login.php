@@ -76,16 +76,19 @@ if ($params->get('displayType') == 'modal')
                 '</div></div>';
 
         echo '<script type="text/javascript">
-jfbcJQuery(document).ready(function() {
-    jfbcJQuery("#login-modal").appendTo("body");
-});
-jfbcJQuery("#login-modal").on("shown.bs.modal", function () {
-	jfbcJQuery("#sclogin-username").focus();
-})
-jfbcJQuery("#login-modal").on("show", function() {
-    jfbcJQuery("#login-modal").css({"margin-left": function() {return -(jfbcJQuery("#login-modal").width() / 2)}})
-});
-</script>';
+                jfbcJQuery(document).ready(function() {
+                    jfbcJQuery("#login-modal").appendTo("body");
+                });';
+        if ($params->get('autoFocusUsername')) {
+            echo 'jfbcJQuery("#login-modal").on("shown.bs.modal", function () {
+                jfbcJQuery("#sclogin-username").focus();
+            });';
+        }
+        echo 'jfbcJQuery("#login-modal").on("show", function() {
+            jfbcJQuery("#login-modal").css({"margin-left": function() {return -(jfbcJQuery("#login-modal").width() / 2)}})
+        });
+        </script>';
+
     }
 }
 ?>
