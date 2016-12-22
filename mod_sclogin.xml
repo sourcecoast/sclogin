@@ -160,6 +160,15 @@
                     <option value="2">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_HIDE_UNCHECKED</option>
                     <option value="3">MOD_SCLOGIN_SHOW_REMEMBER_ME_VALUE_HIDE_CHECKED</option>
                 </field>
+                <field name="autoFocusUsername"
+                       type="radio"
+                       class="btn-group"
+                       default="0"
+                       label="MOD_SCLOGIN_LOGIN_AUTOFOCUS_USERNAME_LABEL"
+                       description="MOD_SCLOGIN_LOGIN_AUTOFOCUS_USERNAME_DESC">
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
                 <field name="register_type"
                        type="list"
                        default="joomla"
