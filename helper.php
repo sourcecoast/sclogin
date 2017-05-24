@@ -419,7 +419,7 @@ class modSCLoginHelper
                 }
             }
         }
-        else // 'joomla')
+        if($html == '') //Joomla avatar is selected or no social network avatar is found, so fall back to Joomla avatar
         {
             $html = $this->getJoomlaAvatar($registerType, $profileLink, $this->user);
         }
