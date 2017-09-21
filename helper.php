@@ -557,7 +557,10 @@ class modSCLoginHelper
                 //$menuNav .= '<ul class="dropdown-menu">';
                 $menuNav .= '<ul class="flat-list">';
                 foreach ($menu_items as $menuItem)
-                    $menuNav .= $this->getUserMenuItem($menuItem);
+                {
+                    if($menuItem->params->get('menu_show'))
+                        $menuNav .= $this->getUserMenuItem($menuItem);
+                }
                 $menuNav .= '</ul>';
                 $menuNav .= '</li></ul>';
                 $menuNav .= '</div>';
@@ -574,7 +577,10 @@ class modSCLoginHelper
                 $menuNav .= '<a class="btn dropdown-toggle" data-toggle="' . $ddName . '" href="#">' . $parentTitle . '<span class="caret"></span></a>';
                 $menuNav .= '<ul class="dropdown-menu">';
                 foreach ($menu_items as $menuItem)
-                    $menuNav .= $this->getUserMenuItem($menuItem);
+                {
+                    if($menuItem->params->get('menu_show'))
+                        $menuNav .= $this->getUserMenuItem($menuItem);
+                }
                 $menuNav .= '</ul>';
                 $menuNav .= '</div>';
                 $menuNav .= '</div>';
