@@ -27,6 +27,7 @@ class modSCLoginHelper
     var $forgotPasswordLink;
     var $registerLink;
     var $profileLink;
+    var $customRegisterComponent;
 
     var $user;
     var $tfaLoaded = false;
@@ -86,16 +87,16 @@ class modSCLoginHelper
         $jVersion = new JVersion();
         if (version_compare($jVersion->getShortVersion(), '3.2.0', '>=') && ($this->user->guest))
         {
-           /** $db = JFactory::getDbo();
+            /** $db = JFactory::getDbo();
             // Check if TFA is enabled. If not, just return false
             $query = $db->getQuery(true)
-                ->select('COUNT(*)')
-                ->from('#__extensions')
-                ->where('enabled=' . $db->q(1))
-                ->where('folder=' . $db->q('twofactorauth'));
+            ->select('COUNT(*)')
+            ->from('#__extensions')
+            ->where('enabled=' . $db->q(1))
+            ->where('folder=' . $db->q('twofactorauth'));
             $db->setQuery($query);
             $tfaCount = $db->loadResult();
-            **/
+             **/
 
             $this->tfaLoaded = false;
             $plugins = JPluginHelper::getPlugin('twofactorauth');
@@ -245,6 +246,25 @@ class modSCLoginHelper
         {
             $this->profileLink = '';
             $this->registerLink = $this->getLoginRedirect('registrationlink', false);
+
+            //Custom link - determine what component we're in
+            $uri = JURI::getInstance($this->registerLink);
+            $uriParts = $uri->getQuery(true);
+            if(isset($uriParts['option']))
+            {
+                switch($uriParts['option'])
+                {
+                    case 'com_community':
+                        $this->customRegisterComponent = 'jomsocial';
+                        break;
+                    case 'com_comprofiler':
+                        $this->customRegisterComponent = 'communitybuilder';
+                        break;
+                    default:
+                        $this->customRegisterComponent = str_replace('com_', '', $uriParts['option']);
+                        break;
+                }
+            }
         }
         else
         {
@@ -363,6 +383,10 @@ class modSCLoginHelper
     function getJoomlaAvatar($registerType, $profileLink, $user)
     {
         $html = '';
+
+        if($registerType == 'custom' && !empty($this->customRegisterComponent))
+            $registerType = $this->customRegisterComponent;
+
         if ($registerType == 'jomsocial' && file_exists(JPATH_BASE . '/components/com_community/libraries/core.php'))
         {
             $jsUser = CFactory::getUser($user->id);
