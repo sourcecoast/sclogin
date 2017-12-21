@@ -582,7 +582,7 @@ class modSCLoginHelper
                 $menuNav .= '<ul class="flat-list">';
                 foreach ($menu_items as $menuItem)
                 {
-                    if($menuItem->params->get('menu_show'))
+                    if($menuItem->params->get('menu_show', '1'))
                         $menuNav .= $this->getUserMenuItem($menuItem);
                 }
                 $menuNav .= '</ul>';
@@ -602,7 +602,7 @@ class modSCLoginHelper
                 $menuNav .= '<ul class="dropdown-menu">';
                 foreach ($menu_items as $menuItem)
                 {
-                    if($menuItem->params->get('menu_show'))
+                    if($menuItem->params->get('menu_show', '1'))
                         $menuNav .= $this->getUserMenuItem($menuItem);
                 }
                 $menuNav .= '</ul>';
