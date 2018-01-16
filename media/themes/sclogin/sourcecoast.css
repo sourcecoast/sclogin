@@ -13,6 +13,10 @@ top:15%;
 height: auto !important;
 }
 
+div#login-modal.sourcecoast.modal {
+    transform: none;
+}
+
 div.sclogin-social-login a.show,
 div.sclogin-joomla-login a.show,
 div.sclogin-social-connect a.show {

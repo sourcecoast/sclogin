@@ -9,6 +9,10 @@ top:15%;
 height: auto !important;
 }
 
+div#login-modal.sourcecoast.modal {
+    transform: none;
+}
+
 .sclogin .powered-by {
     clear: both;
 }
